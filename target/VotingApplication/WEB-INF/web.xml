@@ -4,4 +4,25 @@
 
 <web-app>
   <display-name>Archetype Created Web Application</display-name>
+
+
+  <filter>
+    <filter-name>roleFilter</filter-name>
+    <filter-class>filter.Role</filter-class>
+  </filter>
+
+  <filter-mapping>
+    <filter-name>roleFilter</filter-name>
+    <url-pattern>/home</url-pattern>
+  </filter-mapping>
+
+<!--  <welcome-file-list>-->
+
+<!--    <welcome-file>login</welcome-file>-->
+<!--    <welcome-file>home</welcome-file>-->
+
+
+<!--  </welcome-file-list>-->
+
+
 </web-app>
