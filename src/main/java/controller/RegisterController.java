@@ -8,11 +8,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(urlPatterns = { "/home"})
-public class HomeController extends HttpServlet {
+@WebServlet(urlPatterns = { "/register"})
+public class RegisterController extends HttpServlet {
+
     private static final long serialVersionUID = 1L;
 
-    public HomeController() {
+    public RegisterController() {
         super();
     }
 
@@ -21,7 +22,7 @@ public class HomeController extends HttpServlet {
             throws ServletException, IOException {
 
 
-        RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/WEB-INF/views/home.jsp");
+        RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/WEB-INF/views/register.jsp");
 
         dispatcher.forward(request, response);
 

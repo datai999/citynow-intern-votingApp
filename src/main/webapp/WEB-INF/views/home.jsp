@@ -14,18 +14,34 @@
 <body>
 
 
-<h3>Home Page</h3>
+<div class="container">
+    <button type="button" class="cancelbtn">App</button>
+</div>
 
-This is demo Simple web application using jsp,servlet &amp; Jdbc. <br><br>
-<b>It includes the following functions:</b>
-<ul>
-    <li>Login</li>
-    <li>Storing user information in cookies</li>
-    <li>Product List</li>
-    <li>Create Product</li>
-    <li>Edit Product</li>
-    <li>Delete Product</li>
-</ul>
+<br>
+
+<div class="container" >
+    <button type="button" class="cancelbtn">Register</button>
+</div>
+
+<br>
+
+<div>
+
+    <form method="post" action="/login">
+
+        <div class="container">
+            <label ><b>Username</b></label>
+            <input type="text" placeholder="Enter Username" name="username" required>
+
+            <label ><b>Password</b></label>
+            <input type="password" placeholder="Enter Password" name="password" required>
+
+            <button type="submit">Login</button>
+        </div>
+
+    </form>
+</div>
 
 
 </body>

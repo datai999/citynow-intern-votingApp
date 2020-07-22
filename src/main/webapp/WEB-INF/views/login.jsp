@@ -14,13 +14,13 @@
 
 
 <div class="container">
-    <button type="button" class="cancelbtn">App</button>
+    <button type="button">App</button>
 </div>
 
 <br>
 
 <div class="container" >
-    <button type="button" class="cancelbtn">Register</button>
+    <button type="button" onclick="location.href ='/register'">Register</button>
 </div>
 
 <br>

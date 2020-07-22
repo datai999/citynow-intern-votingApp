@@ -27,7 +27,7 @@ public class LoginFilter implements Filter {
 
         System.out.println(path);
 
-        if (path.matches("/login/?|/")){
+        if (path.matches("/|/login/?|/register/?")){
             filterChain.doFilter(servletRequest, servletResponse);
             return;
         }
