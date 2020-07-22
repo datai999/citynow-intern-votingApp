@@ -1,6 +1,7 @@
 package controller;
 
-import model.Login;
+import model.DAO.Login;
+import model.DTO.UserAccount;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -8,16 +9,17 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.logging.Logger;
 
-@WebServlet(urlPatterns = { "/login"})
-public class LoginServlet extends HttpServlet {
+@WebServlet(urlPatterns = { "/","/login",})
+public class LoginController extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
     private final Logger _logger;
 
-    public LoginServlet() {
+    public LoginController() {
         super();
         _logger = Logger.getLogger(this.getClass().getName());
     }
@@ -34,19 +36,19 @@ public class LoginServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws IOException {
 
         String username = request.getParameter("username");
         String password = request.getParameter("password");
 
-        boolean loginValid = Login.getInstance().login(username,password);
+        boolean isLoginSuccess = Login.getInstance().login(username,password, request.getSession());
 
-        if (loginValid){
-            _logger.info("Login success");
+        if (isLoginSuccess){
+//            _logger.info("Login success");
             response.sendRedirect(request.getContextPath() + "/home");
         }
         else{
-            _logger.info("Login invalid");
+//            _logger.info("Login invalid");
             response.sendRedirect(request.getContextPath() + "/login");
         }
 

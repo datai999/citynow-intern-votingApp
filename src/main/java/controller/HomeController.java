@@ -9,10 +9,10 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @WebServlet(urlPatterns = { "/home"})
-public class HomeServlet extends HttpServlet {
+public class HomeController extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
-    public HomeServlet() {
+    public HomeController() {
         super();
     }
 
@@ -29,7 +29,9 @@ public class HomeServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        doGet(request, response);
+            throws IOException {
+
+
+        response.sendRedirect(request.getContextPath() + "/login");
     }
 }
