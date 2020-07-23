@@ -36,16 +36,16 @@
         <div class="container">
             <label ><b>full name</b></label>
             <input type="text" placeholder="Enter your full name" name="fullName" required>
-
+            <br><br>
             <label ><b>username</b></label>
             <input type="text" placeholder="Enter your user name" name="username" required>
-
+            <br><br>
             <label ><b>email</b></label>
             <input type="text" placeholder="Enter your email" name="email" required>
-
+            <br><br>
             <label ><b>Password</b></label>
             <input type="password" placeholder="Enter Password" name="password" required>
-
+            <br><br>
             <button type="submit">submit</button>
         </div>
 

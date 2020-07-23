@@ -1,5 +1,6 @@
 package model.DAO;
 
+import controller.session.Session;
 import model.DTO.UserAccount;
 import database.MySQLConnection;
 
@@ -37,7 +38,7 @@ public class LoginAction {
             try {
                 if (rs.next()) {
                     UserAccount user = new UserAccount(rs);
-                    storeLoginSuccess(session, user);
+                    Session.storeLoginSuccess(session, user);
                     flag.set(true);
                 }
             } catch (SQLException throwables) {
@@ -47,13 +48,4 @@ public class LoginAction {
         return flag.get();
     }
 
-    //  todo : create new class
-    void storeLoginSuccess(HttpSession session, UserAccount user){
-        user.setPassword("");
-        session.setAttribute("loginSuccess", user);
-    }
-
-    public UserAccount getUserLoginSuccess(HttpSession session){
-        return (UserAccount) session.getAttribute("loginSuccess");
-    }
 }

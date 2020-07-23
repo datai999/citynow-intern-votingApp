@@ -25,7 +25,7 @@
 <br>
 
 <div class="container" >
-    <button type="button" >logout</button>
+    <button type="button" onclick="location.href ='/logout'">logout</button>
 </div>
 
 <br>

@@ -1,6 +1,6 @@
 package filter;
 
-import model.DAO.LoginAction;
+import controller.session.Session;
 import model.DTO.UserAccount;
 
 import javax.servlet.*;
@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-@WebFilter(urlPatterns = { "/*" })
+@WebFilter(filterName = "LoginFilter", urlPatterns = { "/*" })
 public class LoginFilter implements Filter {
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
@@ -34,7 +34,7 @@ public class LoginFilter implements Filter {
 
 
         HttpSession session = req.getSession();
-        UserAccount userInSession = LoginAction.getInstance().getUserLoginSuccess(session);
+        UserAccount userInSession = Session.getUserLoginSuccess(session);
 
         if (userInSession != null) {
             filterChain.doFilter(servletRequest, servletResponse);

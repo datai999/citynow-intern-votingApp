@@ -2,9 +2,9 @@ package setting;
 
 public interface IConst {
 
-    class UserRole{
-        public static int ROOT = 2;
-        public static int ADMIN = 2;
-        public static int CUSTOMER = 3;
-    };
+    interface UserRole{
+        int ROOT = 2;
+        int ADMIN = 2;
+        int CUSTOMER = 3;
+    }
 }
