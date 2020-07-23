@@ -15,16 +15,9 @@
 
 <div class="container">
     <button type="button" onclick="location.href ='/home'">App</button>
-</div>
-
-<br>
-
-<h3>Login page</h3>
-
-<br>
-
-<div class="container" >
+    <h3>Login page</h3>
     <button type="button" onclick="location.href ='/register'">Register</button>
+    <br>
 </div>
 
 <br>
@@ -45,5 +38,7 @@
 
     </form>
 </div>
+
+
 </body>
 </html>

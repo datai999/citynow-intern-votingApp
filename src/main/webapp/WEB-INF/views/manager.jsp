@@ -11,7 +11,12 @@
     <title>Title</title>
 </head>
 <body>
-<h3>manager question</h3>
+
+<div class="container">
+    <button type="button" onclick="location.href ='/home'">App</button>
+    <h3>Manager page</h3>
+    <br>
+</div>
 
 </body>
 </html>

@@ -8,10 +8,17 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Title</title>
+    <title>Create page</title>
 </head>
 <body>
-<h3>create question</h3>
+
+<div class="container">
+    <button type="button" onclick="location.href ='/home'">App</button>
+    <h3>Create page</h3>
+    <button type="button" onclick="location.href ='/home'">Back</button>
+    <button type="button" onclick="location.href ='/logout'">Logout</button>
+    <br>
+</div>
 
 </body>
 </html>
