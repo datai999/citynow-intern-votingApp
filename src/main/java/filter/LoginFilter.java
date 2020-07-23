@@ -9,12 +9,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.logging.Logger;
 
 @WebFilter(filterName = "LoginFilter", urlPatterns = { "/*" })
 public class LoginFilter implements Filter {
-    @Override
-    public void init(FilterConfig filterConfig) throws ServletException {
 
+    Logger _logger;
+
+    @Override
+    public void init(FilterConfig filterConfig) {
+        _logger = Logger.getLogger(this.getClass().getName());
     }
 
     @Override
@@ -24,10 +28,10 @@ public class LoginFilter implements Filter {
         HttpServletRequest req = (HttpServletRequest) servletRequest;
 
         String path = req.getRequestURI();
-
-//        System.out.println(path);
+        System.out.println(path);
 
         if (path.matches("/|/login/?|/register/?")){
+            _logger.info("chain by /login/register");
             filterChain.doFilter(servletRequest, servletResponse);
             return;
         }

@@ -5,7 +5,7 @@ import setting.IConst;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public final class UserAccount {
+public final class UserAccount implements IConst.UserRole{
 
     private int id;
     private int role;
@@ -30,7 +30,7 @@ public final class UserAccount {
     }
 
     public UserAccount(String username, String password, String email, String fullName){
-        this.role = IConst.UserRole.CUSTOMER;
+        this.role = CUSTOMER;
         this.username = username;
         this.password = password;
         this.email = email;
@@ -39,6 +39,10 @@ public final class UserAccount {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public int getRole() {
+        return role;
     }
 
     public Object[] getArrObj(){
