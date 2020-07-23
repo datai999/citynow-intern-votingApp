@@ -11,7 +11,23 @@
     <title>Title</title>
 </head>
 <body>
-<h3>register</h3>
+
+
+<div class="container">
+    <button type="button" onclick="location.href ='/home'">App</button>
+</div>
+
+<br>
+
+<h3>Register page</h3>
+
+<br>
+
+<div class="container" >
+    <button type="button" onclick="location.href ='/login'">Login</button>
+</div>
+
+<br>
 
 <div>
 

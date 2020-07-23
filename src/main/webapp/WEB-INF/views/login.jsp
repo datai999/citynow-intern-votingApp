@@ -14,8 +14,12 @@
 
 
 <div class="container">
-    <button type="button">App</button>
+    <button type="button" onclick="location.href ='/home'">App</button>
 </div>
+
+<br>
+
+<h3>Login page</h3>
 
 <br>
 
