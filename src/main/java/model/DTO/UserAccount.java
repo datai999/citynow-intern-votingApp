@@ -1,5 +1,7 @@
 package model.DTO;
 
+import setting.IConst;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -27,7 +29,19 @@ public final class UserAccount {
         fullName = rs.getString("fullName");
     }
 
+    public UserAccount(String username, String password, String email, String fullName){
+        this.role = IConst.UserRole.CUSTOMER;
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        this.fullName = fullName;
+    }
+
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public Object[] getArrObj(){
+        return new Object[]{role, username, password, email, fullName};
     }
 }

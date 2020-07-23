@@ -1,6 +1,6 @@
 package controller;
 
-import model.DAO.Login;
+import model.DAO.LoginAction;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -39,7 +39,7 @@ public class LoginController extends HttpServlet {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
 
-        boolean isLoginSuccess = Login.getInstance().login(username,password, request.getSession());
+        boolean isLoginSuccess = LoginAction.getInstance().login(username,password, request.getSession());
 
         if (isLoginSuccess){
 //            _logger.info("Login success");

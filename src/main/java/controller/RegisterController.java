@@ -1,5 +1,9 @@
 package controller;
 
+import model.DAO.LoginAction;
+import model.DAO.RegisterAction;
+import model.DTO.UserAccount;
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -31,6 +35,25 @@ public class RegisterController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {
-        doGet(request, response);
+
+        String fullName = request.getParameter("fullName");
+        String username = request.getParameter("username");
+        String email = request.getParameter("email");
+        String password = request.getParameter("password");
+
+        UserAccount user = new UserAccount(username, password, email, fullName);
+
+        boolean isRegisterSuccess = RegisterAction.getInstance().register(user);
+
+        if (isRegisterSuccess){
+            if (LoginAction.getInstance().login(username,password,request.getSession()))
+                response.sendRedirect(request.getContextPath() + "/home");
+            else
+                response.sendRedirect(request.getContextPath() + "/login");
+        }
+        else{
+//            _logger.info("Login invalid");
+            response.sendRedirect(request.getContextPath() + "/register");
+        }
     }
 }

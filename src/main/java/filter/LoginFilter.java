@@ -1,6 +1,6 @@
 package filter;
 
-import model.DAO.Login;
+import model.DAO.LoginAction;
 import model.DTO.UserAccount;
 
 import javax.servlet.*;
@@ -25,7 +25,7 @@ public class LoginFilter implements Filter {
 
         String path = req.getRequestURI();
 
-        System.out.println(path);
+//        System.out.println(path);
 
         if (path.matches("/|/login/?|/register/?")){
             filterChain.doFilter(servletRequest, servletResponse);
@@ -34,7 +34,7 @@ public class LoginFilter implements Filter {
 
 
         HttpSession session = req.getSession();
-        UserAccount userInSession = Login.getInstance().getUserLoginSuccess(session);
+        UserAccount userInSession = LoginAction.getInstance().getUserLoginSuccess(session);
 
         if (userInSession != null) {
             filterChain.doFilter(servletRequest, servletResponse);

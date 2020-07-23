@@ -7,20 +7,23 @@ import javax.servlet.http.HttpSession;
 import java.sql.*;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 
-public class Login {
+public class LoginAction {
 
-    private Login(){}
+    private LoginAction(){}
     private static class LazyHolder{
-        public static final Login INSTANCE = new Login();
+        public static final LoginAction INSTANCE = new LoginAction();
     }
 
-    public static Login getInstance(){
+    public static LoginAction getInstance(){
         return LazyHolder.INSTANCE;
     }
 
 
     public boolean login(String username, String password, HttpSession session){
+
+        AtomicBoolean flag = new AtomicBoolean(false);
 
 //            Todo: better query
 //            String query = "SELECT EXISTS (SELECT username,password FROM user WHERE username = ? AND password = ? )"
@@ -29,18 +32,19 @@ public class Login {
 
         List<Object> params = Arrays.asList(new Object[]{username, password});
 
-        try {
-            MySQLConnection database = new MySQLConnection();
-            ResultSet rs =  database.execute(query, params);
-            if(rs.next()){
-                storeLoginSuccess(session, new UserAccount(rs));
-                return true;
+        MySQLConnection database = new MySQLConnection();
+        database.execute(query, params, rs ->{
+            try {
+                if (rs.next()) {
+                    UserAccount user = new UserAccount(rs);
+                    storeLoginSuccess(session, user);
+                    flag.set(true);
+                }
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
             }
-        } catch (SQLException | ClassNotFoundException throwables) {
-            throwables.printStackTrace();
-        }
-
-        return false;
+        });
+        return flag.get();
     }
 
     //  todo : create new class

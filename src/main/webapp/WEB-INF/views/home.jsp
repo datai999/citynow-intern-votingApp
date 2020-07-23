@@ -15,33 +15,22 @@
 
 
 <div class="container">
-    <button type="button" class="cancelbtn">App</button>
+    <button type="button" onclick="location.href ='/home'">App</button>
 </div>
+
+<br>
+
+<h3>Home page: user name</h3>
 
 <br>
 
 <div class="container" >
-    <button type="button" class="cancelbtn">Register</button>
+    <button type="button" >logout</button>
 </div>
 
 <br>
 
-<div>
 
-    <form method="post" action="/login">
-
-        <div class="container">
-            <label ><b>Username</b></label>
-            <input type="text" placeholder="Enter Username" name="username" required>
-
-            <label ><b>Password</b></label>
-            <input type="password" placeholder="Enter Password" name="password" required>
-
-            <button type="submit">Login</button>
-        </div>
-
-    </form>
-</div>
 
 
 </body>
