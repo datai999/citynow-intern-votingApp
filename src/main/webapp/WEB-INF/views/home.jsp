@@ -23,8 +23,9 @@
 
         <% if (user.getRole() != UserAccount.CUSTOMER)  {%>
     <button type="button" onclick="location.href ='/create'">Create</button>
+    <br><br>
         <%  } %>
-    <br>
+    <br><br>
     <button type="button" onclick="location.href ='/logout'">Logout</button>
 </div>
 

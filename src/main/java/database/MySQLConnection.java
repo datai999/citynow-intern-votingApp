@@ -58,6 +58,7 @@ public class MySQLConnection {
             for (int index=0; index < params.size(); index++){
                 _preStmt.setObject(index+1, params.get(index));
             }
+        System.out.println(_preStmt.toString());
     }
 
     public void execute(String query, List<Object> params, Consumer<ResultSet> func) {
@@ -81,8 +82,6 @@ public class MySQLConnection {
         int res = 0;
         try {
             createPreStmt(query,params);
-            System.out.println(_preStmt.toString());
-
             res = _preStmt.executeUpdate();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
