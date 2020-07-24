@@ -2,7 +2,6 @@ package filter;
 
 import controller.session.Session;
 import model.DTO.UserAccount;
-import setting.IConst;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
@@ -29,10 +28,10 @@ public class RoleFilter implements Filter {
         HttpServletRequest req = (HttpServletRequest) servletRequest;
 
         String path = req.getRequestURI();
-        System.out.println(path);
+//        System.out.println(path);
 
         if (path.matches("/|/login/?|/register/?")){
-            _logger.info("chain by /login/register");
+//            _logger.info("chain by /login/register");
             filterChain.doFilter(servletRequest, servletResponse);
             return;
         }
@@ -41,7 +40,7 @@ public class RoleFilter implements Filter {
         UserAccount userInSession = Session.getUserLoginSuccess(session);
 
         if (userInSession.getRole() == UserAccount.ROOT){
-            _logger.info("visit by root");
+//            _logger.info("visit by root");
             filterChain.doFilter(servletRequest, servletResponse);
             return;
         }
@@ -57,7 +56,7 @@ public class RoleFilter implements Filter {
         }
 
         if (path.matches("/manager/?")){
-            _logger.info("visit manager");
+//            _logger.info("visit manager");
             if (userInSession.getRole() == UserAccount.ROOT){
                 filterChain.doFilter(servletRequest, servletResponse);
                 return;

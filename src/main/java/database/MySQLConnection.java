@@ -54,9 +54,10 @@ public class MySQLConnection {
 
     void createPreStmt(String query, List<Object> params) throws SQLException {
         _preStmt = _connection.prepareStatement(query);
-        for (int index=0; index < params.size(); index++){
-            _preStmt.setObject(index+1, params.get(index));
-        }
+        if (params != null)
+            for (int index=0; index < params.size(); index++){
+                _preStmt.setObject(index+1, params.get(index));
+            }
     }
 
     public void execute(String query, List<Object> params, Consumer<ResultSet> func) {
@@ -71,8 +72,8 @@ public class MySQLConnection {
         }
         finally {
             close();
-            assert rs != null;
-            close(rs);
+            if ( rs != null)
+                close(rs);
         }
     }
 

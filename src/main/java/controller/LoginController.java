@@ -48,7 +48,7 @@ public class LoginController extends HttpServlet {
 //            _logger.info("Login success");
             UserAccount user = Session.getUserLoginSuccess(request.getSession());
             if (user.getRole() == UserAccount.ROOT){
-                System.out.println("redirect to manager");
+//                System.out.println("redirect to manager");
                 response.sendRedirect((request.getContextPath() + "/root"));
                 return;
             }

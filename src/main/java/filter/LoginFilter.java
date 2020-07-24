@@ -28,10 +28,10 @@ public class LoginFilter implements Filter {
         HttpServletRequest req = (HttpServletRequest) servletRequest;
 
         String path = req.getRequestURI();
-        System.out.println(path);
+//        System.out.println(path);
 
         if (path.matches("/|/login/?|/register/?")){
-            _logger.info("chain by /login/register");
+//            _logger.info("chain by /login/register");
             filterChain.doFilter(servletRequest, servletResponse);
             return;
         }

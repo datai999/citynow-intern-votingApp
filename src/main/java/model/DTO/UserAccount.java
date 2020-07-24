@@ -23,7 +23,7 @@ public final class UserAccount implements IConst.UserRole{
         id = rs.getInt("id");
         role = rs.getInt("role");
         username = rs.getString("username");
-        password = rs.getString("password");
+//        password = rs.getString("password");
         password = "";
         email = rs.getString("email");
         fullName = rs.getString("fullName");
@@ -35,6 +35,11 @@ public final class UserAccount implements IConst.UserRole{
         this.password = password;
         this.email = email;
         this.fullName = fullName;
+    }
+
+    public UserAccount(int id, int role){
+        this.id = id;
+        this.role = role;
     }
 
     public int getId() {
