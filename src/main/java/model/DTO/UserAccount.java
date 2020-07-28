@@ -1,11 +1,9 @@
-package model.DTO;
-
-import setting.IConst;
+package model.dto;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public final class UserAccount implements IConst.UserRole{
+public final class UserAccount{
 
     private int id;
     private int role;
@@ -30,7 +28,7 @@ public final class UserAccount implements IConst.UserRole{
     }
 
     public UserAccount(String username, String password, String email, String fullName){
-        this.role = CUSTOMER;
+        this.role = UserRole.CUSTOMER.value;
         this.username = username;
         this.password = password;
         this.email = email;

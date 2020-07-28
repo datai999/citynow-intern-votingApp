@@ -1,7 +1,7 @@
 package controller;
 
-import controller.session.Session;
-import model.DTO.UserAccount;
+import controller.session_and_cookie.UserSession;
+import model.dto.UserAccount;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -24,7 +24,7 @@ public class HomeController extends HttpServlet {
             throws ServletException, IOException {
 
 
-        UserAccount user = Session.getUserLoginSuccess(request.getSession());
+        UserAccount user = UserSession.getUserLoginSuccess(request.getSession());
         request.setAttribute("user", user);
 
         RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/WEB-INF/views/home.jsp");

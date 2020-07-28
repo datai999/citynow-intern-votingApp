@@ -1,6 +1,6 @@
 package controller;
 
-import controller.session.Session;
+import controller.session_and_cookie.UserSession;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -26,7 +26,7 @@ public class LogoutController extends HttpServlet {
 
         if (session != null) {
 
-            Session.removeSession(session);
+            UserSession.removeSession(session);
             response.sendRedirect(request.getContextPath() + "/");
         }
     }

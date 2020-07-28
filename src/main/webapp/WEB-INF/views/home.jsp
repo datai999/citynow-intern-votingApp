@@ -1,4 +1,5 @@
-<%@ page import="model.DTO.UserAccount" %><%--
+<%@ page import="model.dto.UserAccount" %>
+<%@ page import="model.dto.UserRole" %><%--
   Created by IntelliJ IDEA.
   User: HP
   Date: 7/20/2020
@@ -21,7 +22,7 @@
     <button type="button" onclick="location.href ='/home'">App</button>
     <h3>Home page: <%=user.getFullName()%></h3>
 
-        <% if (user.getRole() != UserAccount.CUSTOMER)  {%>
+        <% if (user.getRole() != UserRole.CUSTOMER.value)  {%>
     <button type="button" onclick="location.href ='/create'">Create</button>
     <br><br>
         <%  } %>
@@ -30,6 +31,8 @@
 </div>
 
 <br>
+
+
 
 </body>
 </html>

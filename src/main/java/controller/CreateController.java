@@ -1,8 +1,8 @@
 package controller;
 
-import controller.session.Session;
-import model.DAO.AdminAction;
-import model.DTO.UserAccount;
+import controller.session_and_cookie.UserSession;
+import model.dao.extend.AdminDao;
+import model.dto.UserAccount;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -46,10 +46,10 @@ public class CreateController extends HttpServlet {
         String deadline = request.getParameter("deadline");
 
         HttpSession session = request.getSession();
-        UserAccount userInSession = Session.getUserLoginSuccess(session);
+        UserAccount userInSession = UserSession.getUserLoginSuccess(session);
         int userId = userInSession.getId();
 
-        boolean isSuccess = AdminAction.getInstance().createQuestion(userId, deadline, title, question, options);
+        boolean isSuccess = AdminDao.getInstance().createQuestion(userId, deadline, title, question, options);
         if (isSuccess){
             response.sendRedirect(request.getContextPath() + "/home");
         }

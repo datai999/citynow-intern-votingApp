@@ -1,7 +1,6 @@
-package model.DTO;
+package model.dto;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class Poll {
@@ -9,7 +8,8 @@ public class Poll {
     int id;
     int userId;
     int timeCreate;
-    int timeDeadline;
+    int timeStart;
+    int timeEnd;
     String title;
     String question;
 
@@ -20,7 +20,7 @@ public class Poll {
 
     @Override
     public String toString(){
-        String str = String.format ("Poll[%d,%d,%d,%d,%s,%s]\n",id,userId,timeCreate,timeDeadline,title,question);
+        String str = String.format ("Poll[%d,%d,%d,%d,%d,%s,%s]\n",id,userId,timeCreate,timeStart,timeEnd,title,question);
         str += option1.toString() + "\n";
         str += option2.toString() + "\n";
         str += option3.toString() + "\n";
@@ -31,7 +31,8 @@ public class Poll {
     public Poll(int userId, int timeDeadline, String title, String question, String[] options) {
         this.userId = userId;
         this.timeCreate = (int) (System.currentTimeMillis()/1000);
-        this.timeDeadline = timeDeadline;
+        this.timeStart = timeCreate;
+        this.timeEnd = timeDeadline;
         this.title = title;
         this.question = question;
         option1 = new PollOption(this.id, options[0]);
@@ -58,7 +59,7 @@ public class Poll {
     }
 
     public Object[] getArrObj(){
-        return new Object[]{userId, timeCreate, timeDeadline, title, question};
+        return new Object[]{userId, timeCreate, timeStart, timeEnd, title, question};
     }
     public Object[] getArrOptionObj() {
 

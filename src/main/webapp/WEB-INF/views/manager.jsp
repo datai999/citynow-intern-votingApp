@@ -1,7 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page import="model.DTO.UserAccount" %>
+<%@ page import="model.dto.UserAccount" %>
 <%@ page import="java.util.List" %>
-<%@ page import="setting.IConst" %><%--
+<%@ page import="model.dto.UserRole" %><%--
   Created by IntelliJ IDEA.
   User: HP
   Date: 7/23/2020
@@ -49,7 +49,7 @@
 <br>
 
 <form method="post" action="/root">
-    <button type="submit">Submit</button>
+    <button type="submit">Update</button>
 <table>
     <tr>
         <th>id</th>
@@ -67,10 +67,10 @@
         <th><%=user.getEmail()%></th>
         <th>
             <input type="checkbox" name="checkboxes" value=<%=user.getId()%>
-                <%if (user.getRole() != UserAccount.CUSTOMER) {%>
+                <%if (user.getRole() != UserRole.CUSTOMER.value) {%>
                    checked="checked"
                 <%}%>
-                <%if (user.getRole() == UserAccount.ROOT) {%>
+                <%if (user.getRole() == UserRole.ROOT.value) {%>
                    disabled="disabled"
                 <%}%>
             >

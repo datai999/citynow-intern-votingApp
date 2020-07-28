@@ -1,8 +1,7 @@
 package controller;
 
-import model.DAO.LoginAction;
-import model.DAO.RegisterAction;
-import model.DTO.UserAccount;
+import model.dao.extend.RegisterDao;
+import model.dto.UserAccount;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -43,12 +42,12 @@ public class RegisterController extends HttpServlet {
 
         UserAccount user = new UserAccount(username, password, email, fullName);
 
-        boolean isRegisterSuccess = RegisterAction.getInstance().register(user);
+        boolean isRegisterSuccess = RegisterDao.getInstance().register(user);
 
         if (isRegisterSuccess){
-            if (LoginAction.getInstance().login(username,password,request.getSession()))
-                response.sendRedirect(request.getContextPath() + "/home");
-            else
+//            if (LoginDao.getInstance().login(username,password) != null)
+//                response.sendRedirect(request.getContextPath() + "/home");
+//            else
                 response.sendRedirect(request.getContextPath() + "/login");
         }
         else{

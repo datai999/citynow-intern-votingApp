@@ -1,7 +1,7 @@
 package filter;
 
-import controller.session.Session;
-import model.DTO.UserAccount;
+import controller.session_and_cookie.UserSession;
+import model.dto.UserAccount;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
@@ -28,7 +28,6 @@ public class LoginFilter implements Filter {
         HttpServletRequest req = (HttpServletRequest) servletRequest;
 
         String path = req.getRequestURI();
-//        System.out.println(path);
 
         if (path.matches("/|/login/?|/register/?")){
 //            _logger.info("chain by /login/register");
@@ -38,7 +37,7 @@ public class LoginFilter implements Filter {
 
 
         HttpSession session = req.getSession();
-        UserAccount userInSession = Session.getUserLoginSuccess(session);
+        UserAccount userInSession = UserSession.getUserLoginSuccess(session);
 
         if (userInSession != null) {
             filterChain.doFilter(servletRequest, servletResponse);

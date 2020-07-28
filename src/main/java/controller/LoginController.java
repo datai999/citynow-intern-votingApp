@@ -1,9 +1,9 @@
 package controller;
 
-import controller.session.Session;
-import model.DAO.LoginAction;
-import model.DTO.UserAccount;
-import setting.IConst;
+import controller.session_and_cookie.UserSession;
+import model.dao.extend.LoginDao;
+import model.dto.UserAccount;
+import model.dto.UserRole;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -42,12 +42,15 @@ public class LoginController extends HttpServlet {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
 
-        boolean isLoginSuccess = LoginAction.getInstance().login(username,password, request.getSession());
+        LoginDao instance = LoginDao.getInstance();
+        UserAccount user = null;
+        if (instance != null)
+            user = instance.login(username,password);
 
-        if (isLoginSuccess){
-//            _logger.info("Login success");
-            UserAccount user = Session.getUserLoginSuccess(request.getSession());
-            if (user.getRole() == UserAccount.ROOT){
+        if (user != null){
+            _logger.info("Login success");
+            UserSession.storeLoginSuccess(request.getSession(), user);
+            if (user.getRole() == UserRole.ROOT.value){
 //                System.out.println("redirect to manager");
                 response.sendRedirect((request.getContextPath() + "/root"));
                 return;
@@ -55,7 +58,7 @@ public class LoginController extends HttpServlet {
             response.sendRedirect(request.getContextPath() + "/home");
         }
         else{
-//            _logger.info("Login invalid");
+            _logger.info("Login invalid");
             response.sendRedirect(request.getContextPath() + "/login");
         }
 

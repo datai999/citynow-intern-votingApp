@@ -1,7 +1,8 @@
 package filter;
 
-import controller.session.Session;
-import model.DTO.UserAccount;
+import controller.session_and_cookie.UserSession;
+import model.dto.UserAccount;
+import model.dto.UserRole;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
@@ -11,7 +12,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.logging.Logger;
 
-@WebFilter(filterName = "RoleFilter", urlPatterns = { "/*" })
+@WebFilter(filterName = "RoleFilter", urlPatterns = { "/home" })
 public class RoleFilter implements Filter {
 
     Logger _logger;
@@ -28,27 +29,25 @@ public class RoleFilter implements Filter {
         HttpServletRequest req = (HttpServletRequest) servletRequest;
 
         String path = req.getRequestURI();
-//        System.out.println(path);
-
-        if (path.matches("/|/login/?|/register/?")){
-//            _logger.info("chain by /login/register");
-            filterChain.doFilter(servletRequest, servletResponse);
-            return;
-        }
 
         HttpSession session = req.getSession();
-        UserAccount userInSession = Session.getUserLoginSuccess(session);
+        UserAccount userInSession = UserSession.getUserLoginSuccess(session);
 
-        if (userInSession.getRole() == UserAccount.ROOT){
+        boolean hasError = false;
+
+        if (userInSession == null){
+            hasError = true;
+        }
+
+        if (userInSession.getRole() == UserRole.ROOT.value){
 //            _logger.info("visit by root");
             filterChain.doFilter(servletRequest, servletResponse);
             return;
         }
 
-        boolean hasError = false;
 
         if (path.matches("/create/?")){
-            if (userInSession.getRole() == UserAccount.ADMIN){
+            if (userInSession.getRole() == UserRole.ADMIN.value){
                 filterChain.doFilter(servletRequest, servletResponse);
                 return;
             }
@@ -57,7 +56,7 @@ public class RoleFilter implements Filter {
 
         if (path.matches("/manager/?")){
 //            _logger.info("visit manager");
-            if (userInSession.getRole() == UserAccount.ROOT){
+            if (userInSession.getRole() == UserRole.ROOT.value){
                 filterChain.doFilter(servletRequest, servletResponse);
                 return;
             }

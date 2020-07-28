@@ -1,7 +1,7 @@
 package controller;
 
-import model.DAO.RootAction;
-import model.DTO.UserAccount;
+import model.dao.extend.RootDao;
+import model.dto.UserAccount;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -28,11 +28,13 @@ public class ManageController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        List<UserAccount> lsUser = RootAction.getInstance().getAllUser();
+        List<UserAccount> lsUser = RootDao.getInstance().getAllUser();
         request.setAttribute("lsUser", lsUser);
 
+//        lsUser.forEach(System.out::println);
+
         RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/WEB-INF/views/manager.jsp");
-        dispatcher.forward(request, response);
+            dispatcher.forward(request, response);
 
 
     }
@@ -43,9 +45,12 @@ public class ManageController extends HttpServlet {
         String[] lsId = request.getParameterValues("checkboxes");
 
         if (lsId != null){
-            if (!RootAction.getInstance().updateRole(lsId)){
+            if (!RootDao.getInstance().updateRole(lsId)){
                 _logger.info("Update role failed");
             }
+        }
+        else {
+            System.out.println("lsid null");
         }
 
         doGet(request,response);
