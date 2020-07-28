@@ -1,6 +1,8 @@
 package controller;
 
-import model.dao.extend.RootDao;
+import model.dao.RootService;
+import model.dao.Service;
+import model.dao.impl.RootDao;
 import model.dto.UserAccount;
 
 import javax.servlet.RequestDispatcher;
@@ -19,8 +21,11 @@ public class ManageController extends HttpServlet {
     private static final long serialVersionUID = 1L;
     Logger _logger;
 
+    RootService root;
+
     public ManageController() {
         super();
+        root = Service.getInstance().getRootService();
         _logger = Logger.getLogger(this.getClass().getName());
     }
 
@@ -28,7 +33,7 @@ public class ManageController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        List<UserAccount> lsUser = RootDao.getInstance().getAllUser();
+        List<UserAccount> lsUser = root.getAllUser();
         request.setAttribute("lsUser", lsUser);
 
 //        lsUser.forEach(System.out::println);

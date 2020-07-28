@@ -1,7 +1,7 @@
 package controller;
 
 import controller.session_and_cookie.UserSession;
-import model.dao.extend.LoginDao;
+import model.dao.impl.LoginDao;
 import model.dto.UserAccount;
 import model.dto.UserRole;
 

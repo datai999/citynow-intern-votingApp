@@ -1,7 +1,8 @@
 package controller;
 
 import controller.session_and_cookie.UserSession;
-import model.dao.extend.AdminDao;
+import model.dao.AdminService;
+import model.dao.impl.AdminDao;
 import model.dto.UserAccount;
 
 import javax.servlet.RequestDispatcher;
@@ -19,7 +20,7 @@ public class CreateController extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
     Logger _logger;
-
+    AdminService admin;
 
     public CreateController() {
         super();
@@ -49,7 +50,7 @@ public class CreateController extends HttpServlet {
         UserAccount userInSession = UserSession.getUserLoginSuccess(session);
         int userId = userInSession.getId();
 
-        boolean isSuccess = AdminDao.getInstance().createQuestion(userId, deadline, title, question, options);
+        boolean isSuccess = admin.createQuestion(userId, deadline, title, question, options);
         if (isSuccess){
             response.sendRedirect(request.getContextPath() + "/home");
         }

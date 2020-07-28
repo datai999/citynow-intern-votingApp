@@ -1,6 +1,6 @@
 package controller;
 
-import model.dao.extend.RegisterDao;
+import model.dao.impl.RegisterDao;
 import model.dto.UserAccount;
 
 import javax.servlet.RequestDispatcher;

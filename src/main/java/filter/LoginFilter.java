@@ -1,6 +1,8 @@
 package filter;
 
+import controller.session_and_cookie.UserCookie;
 import controller.session_and_cookie.UserSession;
+import model.dao.impl.RootDao;
 import model.dto.UserAccount;
 
 import javax.servlet.*;
@@ -27,25 +29,42 @@ public class LoginFilter implements Filter {
 
         HttpServletRequest req = (HttpServletRequest) servletRequest;
 
-        String path = req.getRequestURI();
-
-        if (path.matches("/|/login/?|/register/?")){
-//            _logger.info("chain by /login/register");
-            filterChain.doFilter(servletRequest, servletResponse);
-            return;
-        }
-
 
         HttpSession session = req.getSession();
         UserAccount userInSession = UserSession.getUserLoginSuccess(session);
 
         if (userInSession != null) {
+            System.out.println("user in session");
+            session.setAttribute("COOKIE_CHECKED", "CHECKED");
             filterChain.doFilter(servletRequest, servletResponse);
+            return;
         }
-        else{
-            HttpServletResponse rep = (HttpServletResponse) servletResponse;
-            rep.sendRedirect(req.getContextPath() + "/login");
+
+        String checked = (String) session.getAttribute("COOKIE_CHECKED");
+        if (checked == null) {
+            System.out.println("checked == null");
+            String userName = UserCookie.getUserNameInCookie(req);
+            UserAccount user = RootDao.getInstance().getUserByUsername(userName);
+            if (user != null){
+                System.out.println("user != null");
+                UserSession.storeLoginSuccess(session, user);
+                session.setAttribute("COOKIE_CHECKED", "CHECKED");
+                filterChain.doFilter(servletRequest, servletResponse);
+            }
         }
+
+        String path = req.getRequestURI();
+
+        if (path.matches("/|/login/?|/register/?")){
+            System.out.println("pass chan");
+            filterChain.doFilter(servletRequest, servletResponse);
+            return;
+        }
+
+        System.out.println("redirect");
+
+        HttpServletResponse rep = (HttpServletResponse) servletResponse;
+        rep.sendRedirect(req.getContextPath() + "/login");
 
     }
 
