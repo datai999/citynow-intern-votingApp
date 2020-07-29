@@ -1,9 +1,9 @@
 package controller;
 
 import controller.session_and_cookie.UserSession;
-import model.dao.AdminService;
-import model.dao.impl.AdminDao;
+import model.service.IAdminService;
 import model.dto.UserAccount;
+import model.service.impl.AdminServiceImpl;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -20,10 +20,11 @@ public class CreateController extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
     Logger _logger;
-    AdminService admin;
+    IAdminService adminService;
 
     public CreateController() {
         super();
+        adminService = new AdminServiceImpl();
         _logger = Logger.getLogger(this.getClass().getName());
     }
 
@@ -50,7 +51,7 @@ public class CreateController extends HttpServlet {
         UserAccount userInSession = UserSession.getUserLoginSuccess(session);
         int userId = userInSession.getId();
 
-        boolean isSuccess = admin.createQuestion(userId, deadline, title, question, options);
+        boolean isSuccess = adminService.createQuestion(userId, deadline, title, question, options);
         if (isSuccess){
             response.sendRedirect(request.getContextPath() + "/home");
         }

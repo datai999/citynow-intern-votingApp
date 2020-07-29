@@ -1,7 +1,9 @@
 package controller;
 
-import model.dao.impl.RegisterDao;
+import model.service.IUserService;
+import model.service.dao.user.RegisterDao;
 import model.dto.UserAccount;
+import model.service.impl.UserServiceImpl;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -16,8 +18,11 @@ public class RegisterController extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
 
+    IUserService userService;
+
     public RegisterController() {
         super();
+        userService = new UserServiceImpl();
     }
 
     @Override
@@ -42,7 +47,7 @@ public class RegisterController extends HttpServlet {
 
         UserAccount user = new UserAccount(username, password, email, fullName);
 
-        boolean isRegisterSuccess = RegisterDao.getInstance().register(user);
+        boolean isRegisterSuccess = userService.register(user);
 
         if (isRegisterSuccess){
 //            if (LoginDao.getInstance().login(username,password) != null)

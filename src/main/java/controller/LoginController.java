@@ -1,9 +1,11 @@
 package controller;
 
 import controller.session_and_cookie.UserSession;
-import model.dao.impl.LoginDao;
+import model.service.IUserService;
+import model.service.dao.user.LoginDao;
 import model.dto.UserAccount;
 import model.dto.UserRole;
+import model.service.impl.UserServiceImpl;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -19,9 +21,11 @@ public class LoginController extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
     private final Logger _logger;
+    IUserService userService;
 
     public LoginController() {
         super();
+        userService = new UserServiceImpl();
         _logger = Logger.getLogger(this.getClass().getName());
     }
 
@@ -42,10 +46,9 @@ public class LoginController extends HttpServlet {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
 
-        LoginDao instance = LoginDao.getInstance();
         UserAccount user = null;
-        if (instance != null)
-            user = instance.login(username,password);
+        if (userService != null)
+            user = userService.login(username,password);
 
         if (user != null){
             _logger.info("Login success");

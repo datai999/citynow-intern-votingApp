@@ -1,8 +1,8 @@
 package controller;
 
-import model.dao.RootService;
-import model.dao.Service;
-import model.dao.impl.RootDao;
+import model.service.*;
+import model.service.impl.RootServiceImpl;
+import model.service.dao.root.UpdateRoleDao;
 import model.dto.UserAccount;
 
 import javax.servlet.RequestDispatcher;
@@ -21,11 +21,13 @@ public class ManageController extends HttpServlet {
     private static final long serialVersionUID = 1L;
     Logger _logger;
 
-    RootService root;
+    IRootService rootService;
+    List<UserAccount> lsUser;
 
     public ManageController() {
         super();
-        root = Service.getInstance().getRootService();
+        rootService = new RootServiceImpl();
+        lsUser = rootService.getAllUser();
         _logger = Logger.getLogger(this.getClass().getName());
     }
 
@@ -33,7 +35,6 @@ public class ManageController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        List<UserAccount> lsUser = root.getAllUser();
         request.setAttribute("lsUser", lsUser);
 
 //        lsUser.forEach(System.out::println);
@@ -50,12 +51,16 @@ public class ManageController extends HttpServlet {
         String[] lsId = request.getParameterValues("checkboxes");
 
         if (lsId != null){
-            if (!RootDao.getInstance().updateRole(lsId)){
+            if (UpdateRoleDao.getInstance().updateRole(lsId)){
+                lsUser.clear();
+                lsUser = rootService.getAllUser();
+            }
+            else {
                 _logger.info("Update role failed");
             }
         }
         else {
-            System.out.println("lsid null");
+            _logger.info("lsId is null");
         }
 
         doGet(request,response);

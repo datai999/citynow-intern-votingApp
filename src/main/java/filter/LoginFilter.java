@@ -2,8 +2,10 @@ package filter;
 
 import controller.session_and_cookie.UserCookie;
 import controller.session_and_cookie.UserSession;
-import model.dao.impl.RootDao;
+import model.service.IRootService;
+import model.service.dao.root.UpdateRoleDao;
 import model.dto.UserAccount;
+import model.service.impl.RootServiceImpl;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
@@ -34,34 +36,30 @@ public class LoginFilter implements Filter {
         UserAccount userInSession = UserSession.getUserLoginSuccess(session);
 
         if (userInSession != null) {
-            System.out.println("user in session");
-            session.setAttribute("COOKIE_CHECKED", "CHECKED");
+//            session.setAttribute("COOKIE_CHECKED", "CHECKED");
             filterChain.doFilter(servletRequest, servletResponse);
             return;
         }
 
-        String checked = (String) session.getAttribute("COOKIE_CHECKED");
-        if (checked == null) {
-            System.out.println("checked == null");
-            String userName = UserCookie.getUserNameInCookie(req);
-            UserAccount user = RootDao.getInstance().getUserByUsername(userName);
-            if (user != null){
-                System.out.println("user != null");
-                UserSession.storeLoginSuccess(session, user);
-                session.setAttribute("COOKIE_CHECKED", "CHECKED");
-                filterChain.doFilter(servletRequest, servletResponse);
-            }
-        }
+        // TODO: 7/29/2020 Cookie
+//        String checked = (String) session.getAttribute("COOKIE_CHECKED");
+//        if (checked == null) {
+//            String userName = UserCookie.getUserNameInCookie(req);
+//            IRootService service = new RootServiceImpl();
+//            UserAccount user = service.getUserByUsername(userName);
+//            if (user != null){
+//                UserSession.storeLoginSuccess(session, user);
+//                session.setAttribute("COOKIE_CHECKED", "CHECKED");
+//                filterChain.doFilter(servletRequest, servletResponse);
+//            }
+//        }
 
         String path = req.getRequestURI();
 
         if (path.matches("/|/login/?|/register/?")){
-            System.out.println("pass chan");
             filterChain.doFilter(servletRequest, servletResponse);
             return;
         }
-
-        System.out.println("redirect");
 
         HttpServletResponse rep = (HttpServletResponse) servletResponse;
         rep.sendRedirect(req.getContextPath() + "/login");
