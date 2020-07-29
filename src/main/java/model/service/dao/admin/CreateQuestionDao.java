@@ -1,5 +1,6 @@
 package model.service.dao.admin;
 
+import model.dto.PollBuilder;
 import model.service.dao.BaseDao;
 import model.service.IAdminService;
 import model.dto.Poll;
@@ -50,9 +51,9 @@ public class CreateQuestionDao extends BaseDao implements IAdminService {
     public boolean createQuestion(int userId, String strDeadline, String tittle, String question, String[] options){
 
 //        insert question to database
-        String insertQuestion = "INSERT INTO poll (userId, timeCreate, timeStart, timeEnd, title, question) VALUES (?, ?, ?, ?, ?, ?)";
+        String insertQuestion = "INSERT INTO poll (userId, timeCreate, timeStart, timeEnd, viewRole, minVote, maxVote, title, question) VALUES (?,?,?,?,?,?,?,?,?)";
         int deadline = convert(strDeadline);
-        Poll poll = new Poll(userId, deadline, tittle, question, options);
+        Poll poll = new PollBuilder().buildBase(userId, deadline, tittle, question, options).build();
         List<Object> paramsQuestion = Arrays.asList(poll.getArrObj());
 
         int countQuestion = execute(insertQuestion, paramsQuestion);

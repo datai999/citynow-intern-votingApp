@@ -10,8 +10,12 @@ public class Poll {
     int timeCreate;
     int timeStart;
     int timeEnd;
+    UserRole viewRole;
+    int minVote;
+    int maxVote;
     String title;
     String question;
+
 
     PollOption option1;
     PollOption option2;
@@ -20,7 +24,7 @@ public class Poll {
 
     @Override
     public String toString(){
-        String str = String.format ("Poll[%d,%d,%d,%d,%d,%s,%s]\n",id,userId,timeCreate,timeStart,timeEnd,title,question);
+        String str = String.format ("Poll[%d,%d,%d,%d,%d,%d,%d,%d,%s,%s]\n",id,userId,timeCreate,timeStart,timeEnd,viewRole.value,minVote,maxVote,title,question);
         str += option1.toString() + "\n";
         str += option2.toString() + "\n";
         str += option3.toString() + "\n";
@@ -28,11 +32,14 @@ public class Poll {
         return str;
     }
 
-    public Poll(int userId, int timeDeadline, String title, String question, String[] options) {
+    public Poll(int userId, int timeStart, int timeEnd, UserRole viewRole, int minVote, int maxVote, String title, String question, String[] options) {
         this.userId = userId;
         this.timeCreate = (int) (System.currentTimeMillis()/1000);
         this.timeStart = timeCreate;
-        this.timeEnd = timeDeadline;
+        this.timeEnd = timeEnd;
+        this.viewRole = UserRole.GEST;
+        this.minVote = 0;
+        this.maxVote = 9999;
         this.title = title;
         this.question = question;
         option1 = new PollOption(this.id, options[0]);
@@ -59,7 +66,7 @@ public class Poll {
     }
 
     public Object[] getArrObj(){
-        return new Object[]{userId, timeCreate, timeStart, timeEnd, title, question};
+        return new Object[]{userId, timeCreate, timeStart, timeEnd, viewRole.value, minVote, maxVote, title, question};
     }
     public Object[] getArrOptionObj() {
 
