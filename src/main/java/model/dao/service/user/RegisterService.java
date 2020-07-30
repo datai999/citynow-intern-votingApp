@@ -12,7 +12,6 @@ public class RegisterService extends BaseDao {
     private static class LazyHolder{
         public static final RegisterService INSTANCE = new RegisterService();
     }
-
     public static RegisterService getInstance(){
         return RegisterService.LazyHolder.INSTANCE;
     }

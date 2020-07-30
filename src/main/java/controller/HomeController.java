@@ -27,14 +27,18 @@ public class HomeController extends HttpServlet {
     public HomeController() {
         super();
         userService = new UserServiceImpl();
-        lsObj = userService.getAllPoll();
-        size = ((List<Poll>) lsObj.get(0)).size();
-        currentVote = size-1;
+//        lsObj = userService.getAllPoll();
+//        size = ((List<Poll>) lsObj.get(0)).size();
+//        currentVote = size-1;
     }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+
+        lsObj = userService.getAllPoll();
+        size = ((List<Poll>) lsObj.get(0)).size();
+        currentVote = size-1;
 
         UserAccount user = UserSession.getUserLoginSuccess(request.getSession());
         request.setAttribute("user", user);

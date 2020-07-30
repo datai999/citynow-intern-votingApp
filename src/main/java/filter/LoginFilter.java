@@ -52,7 +52,7 @@ public class LoginFilter implements Filter {
 
         String path = req.getRequestURI();
 
-        if (path.matches("/|/login/?|/register/?|/home/?")){
+        if (path.matches("/|/login/?|/register/?|/home/?|/vote/?")){
             filterChain.doFilter(servletRequest, servletResponse);
             return;
         }
