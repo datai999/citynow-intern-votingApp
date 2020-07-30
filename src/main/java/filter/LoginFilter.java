@@ -1,11 +1,7 @@
 package filter;
 
-import controller.session_and_cookie.UserCookie;
 import controller.session_and_cookie.UserSession;
-import model.service.IRootService;
-import model.service.dao.root.UpdateRoleDao;
-import model.dto.UserAccount;
-import model.service.impl.RootServiceImpl;
+import model.dto.user.UserAccount;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
@@ -56,7 +52,7 @@ public class LoginFilter implements Filter {
 
         String path = req.getRequestURI();
 
-        if (path.matches("/|/login/?|/register/?")){
+        if (path.matches("/|/login/?|/register/?|/home/?")){
             filterChain.doFilter(servletRequest, servletResponse);
             return;
         }

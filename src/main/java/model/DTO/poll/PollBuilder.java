@@ -1,4 +1,6 @@
-package model.dto;
+package model.dto.poll;
+
+import model.dto.user.UserRole;
 
 public class PollBuilder implements IPollBuilder{
 

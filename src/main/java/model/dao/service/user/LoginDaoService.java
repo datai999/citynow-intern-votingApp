@@ -1,31 +1,30 @@
-package model.service.dao.user;
+package model.dao.service.user;
 
-import model.service.dao.BaseDao;
-import model.service.IUserService;
-import model.dto.UserAccount;
+import model.dao.service.BaseDao;
+import model.dto.user.UserAccount;
 
 import java.sql.*;
 import java.util.Arrays;
 import java.util.List;
 
-public class LoginDao extends BaseDao {
+public class LoginDaoService extends BaseDao {
 
-    private LoginDao(){
+    private LoginDaoService(){
         super();
     }
     private static class LazyHolder{
-        public static final LoginDao INSTANCE = new LoginDao();
+        public static final LoginDaoService INSTANCE = new LoginDaoService();
     }
-
-    public static LoginDao getInstance(){
+    public static LoginDaoService getInstance(){
         return LazyHolder.INSTANCE;
     }
 
 
     public UserAccount login(String username, String password){
 
-        final UserAccount[] user = new UserAccount[1];
+        System.out.println(password.hashCode());
 
+        final UserAccount[] user = new UserAccount[1];
 
 //            Todo: better query
 //            String query = "SELECT EXISTS (SELECT username,password FROM user WHERE username = ? AND password = ? )"

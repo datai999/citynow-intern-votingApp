@@ -12,7 +12,6 @@
     String getMinTime(){
         Long currentTimestamp = System.currentTimeMillis();
         Long minTime = currentTimestamp + 5*60*1000;
-        Date date = new Date(minTime);
 
         SimpleDateFormat df1 = new SimpleDateFormat("yyyy-MM-dd");
         SimpleDateFormat df2 = new SimpleDateFormat("HH:mm");

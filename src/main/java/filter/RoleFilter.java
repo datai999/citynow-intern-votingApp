@@ -1,8 +1,8 @@
 package filter;
 
 import controller.session_and_cookie.UserSession;
-import model.dto.UserAccount;
-import model.dto.UserRole;
+import model.dto.user.UserAccount;
+import model.dto.user.UserRole;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
@@ -12,7 +12,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.logging.Logger;
 
-@WebFilter(filterName = "RoleFilter", urlPatterns = { "/home" })
+@WebFilter(filterName = "RoleFilter", urlPatterns = { "/*" })
 public class RoleFilter implements Filter {
 
     Logger _logger;
@@ -33,19 +33,24 @@ public class RoleFilter implements Filter {
         HttpSession session = req.getSession();
         UserAccount userInSession = UserSession.getUserLoginSuccess(session);
 
-        boolean hasError = false;
 
-        if (userInSession == null){
-            hasError = true;
+
+        if (userInSession != null){
+            if (userInSession.getRole() == UserRole.ROOT.value){
+    //            _logger.info("visit by root");
+                filterChain.doFilter(servletRequest, servletResponse);
+                return;
+            }
         }
 
-        if (userInSession.getRole() == UserRole.ROOT.value){
-//            _logger.info("visit by root");
+        if (path.matches("/|/login/?|/register/?|/home/?")){
             filterChain.doFilter(servletRequest, servletResponse);
             return;
         }
 
 
+
+        boolean hasError = false;
         if (path.matches("/create/?")){
             if (userInSession.getRole() == UserRole.ADMIN.value){
                 filterChain.doFilter(servletRequest, servletResponse);

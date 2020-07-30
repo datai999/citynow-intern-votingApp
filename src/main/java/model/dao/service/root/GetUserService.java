@@ -1,23 +1,23 @@
-package model.service.dao.root;
+package model.dao.service.root;
 
-import model.dto.UserAccount;
-import model.service.dao.BaseDao;
+import model.dto.user.UserAccount;
+import model.dao.service.BaseDao;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GetUserDao extends BaseDao {
+public class GetUserService extends BaseDao {
 
 
-    private GetUserDao(){
+    private GetUserService(){
         super();
     }
     private static class LazyHolder{
-        public static final GetUserDao INSTANCE = new GetUserDao();
+        public static final GetUserService INSTANCE = new GetUserService();
     }
-    public static GetUserDao getInstance(){
-        return GetUserDao.LazyHolder.INSTANCE;
+    public static GetUserService getInstance(){
+        return GetUserService.LazyHolder.INSTANCE;
     }
 
 

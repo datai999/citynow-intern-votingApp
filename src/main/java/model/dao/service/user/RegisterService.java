@@ -1,21 +1,20 @@
-package model.service.dao.user;
+package model.dao.service.user;
 
-import model.service.dao.BaseDao;
-import model.service.IUserService;
-import model.dto.UserAccount;
+import model.dao.service.BaseDao;
+import model.dto.user.UserAccount;
 
 import java.util.Arrays;
 import java.util.List;
 
-public class RegisterDao extends BaseDao {
+public class RegisterService extends BaseDao {
 
-    private RegisterDao(){}
+    private RegisterService(){}
     private static class LazyHolder{
-        public static final RegisterDao INSTANCE = new RegisterDao();
+        public static final RegisterService INSTANCE = new RegisterService();
     }
 
-    public static RegisterDao getInstance(){
-        return RegisterDao.LazyHolder.INSTANCE;
+    public static RegisterService getInstance(){
+        return RegisterService.LazyHolder.INSTANCE;
     }
 
 

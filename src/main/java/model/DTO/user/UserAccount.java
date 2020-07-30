@@ -1,4 +1,4 @@
-package model.dto;
+package model.dto.user;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -18,7 +18,7 @@ public final class UserAccount{
     }
 
     public UserAccount(ResultSet rs) throws SQLException {
-        id = rs.getInt("id");
+        id = rs.getInt("user.id");
         role = rs.getInt("role");
         username = rs.getString("username");
 //        password = rs.getString("password");

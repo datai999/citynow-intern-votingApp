@@ -1,9 +1,8 @@
 package controller;
 
-import model.service.IUserService;
-import model.service.dao.user.RegisterDao;
-import model.dto.UserAccount;
-import model.service.impl.UserServiceImpl;
+import model.dao.IUserService;
+import model.dto.user.UserAccount;
+import model.dao.impl.UserServiceImpl;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;

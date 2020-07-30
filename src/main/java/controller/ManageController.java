@@ -1,9 +1,9 @@
 package controller;
 
-import model.service.*;
-import model.service.impl.RootServiceImpl;
-import model.service.dao.root.UpdateRoleDao;
-import model.dto.UserAccount;
+import model.dao.*;
+import model.dao.impl.RootServiceImpl;
+import model.dao.service.root.UpdateRoleService;
+import model.dto.user.UserAccount;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -51,7 +51,7 @@ public class ManageController extends HttpServlet {
         String[] lsId = request.getParameterValues("checkboxes");
 
         if (lsId != null){
-            if (UpdateRoleDao.getInstance().updateRole(lsId)){
+            if (UpdateRoleService.getInstance().updateRole(lsId)){
                 lsUser.clear();
                 lsUser = rootService.getAllUser();
             }

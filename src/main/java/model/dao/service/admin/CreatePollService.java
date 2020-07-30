@@ -1,9 +1,9 @@
-package model.service.dao.admin;
+package model.dao.service.admin;
 
-import model.dto.PollBuilder;
-import model.service.dao.BaseDao;
-import model.service.IAdminService;
-import model.dto.Poll;
+import model.dto.poll.PollBuilder;
+import model.dao.service.BaseDao;
+import model.dao.IAdminService;
+import model.dto.poll.Poll;
 
 import java.sql.SQLException;
 import java.text.ParseException;
@@ -14,20 +14,20 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.logging.Logger;
 
-public class CreateQuestionDao extends BaseDao implements IAdminService {
+public class CreatePollService extends BaseDao implements IAdminService {
 
     Logger _logger;
 
-    private CreateQuestionDao(){
+    private CreatePollService(){
         super();
         _logger = Logger.getLogger(this.getClass().getName());
     }
     private static class LazyHolder{
-        public static final CreateQuestionDao INSTANCE = new CreateQuestionDao();
+        public static final CreatePollService INSTANCE = new CreatePollService();
     }
 
-    public static CreateQuestionDao getInstance(){
-        return CreateQuestionDao.LazyHolder.INSTANCE;
+    public static CreatePollService getInstance(){
+        return CreatePollService.LazyHolder.INSTANCE;
     }
 
 
@@ -48,7 +48,7 @@ public class CreateQuestionDao extends BaseDao implements IAdminService {
     }
 
     @Override
-    public boolean createQuestion(int userId, String strDeadline, String tittle, String question, String[] options){
+    public boolean createPoll(int userId, String strDeadline, String tittle, String question, String[] options){
 
 //        insert question to database
         String insertQuestion = "INSERT INTO poll (userId, timeCreate, timeStart, timeEnd, viewRole, minVote, maxVote, title, question) VALUES (?,?,?,?,?,?,?,?,?)";

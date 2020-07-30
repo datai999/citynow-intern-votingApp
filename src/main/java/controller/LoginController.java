@@ -1,11 +1,10 @@
 package controller;
 
 import controller.session_and_cookie.UserSession;
-import model.service.IUserService;
-import model.service.dao.user.LoginDao;
-import model.dto.UserAccount;
-import model.dto.UserRole;
-import model.service.impl.UserServiceImpl;
+import model.dao.IUserService;
+import model.dto.user.UserAccount;
+import model.dto.user.UserRole;
+import model.dao.impl.UserServiceImpl;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -16,7 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.logging.Logger;
 
-@WebServlet(urlPatterns = { "/","/login",})
+@WebServlet(urlPatterns = { "/login",})
 public class LoginController extends HttpServlet {
     private static final long serialVersionUID = 1L;
 

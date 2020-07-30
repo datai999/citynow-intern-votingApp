@@ -1,4 +1,4 @@
-package model.service.dao;
+package model.dao.service;
 
 import database.MySQLConnection;
 

@@ -1,9 +1,9 @@
 package controller;
 
 import controller.session_and_cookie.UserSession;
-import model.service.IAdminService;
-import model.dto.UserAccount;
-import model.service.impl.AdminServiceImpl;
+import model.dao.IAdminService;
+import model.dto.user.UserAccount;
+import model.dao.impl.AdminServiceImpl;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -51,7 +51,7 @@ public class CreateController extends HttpServlet {
         UserAccount userInSession = UserSession.getUserLoginSuccess(session);
         int userId = userInSession.getId();
 
-        boolean isSuccess = adminService.createQuestion(userId, deadline, title, question, options);
+        boolean isSuccess = adminService.createPoll(userId, deadline, title, question, options);
         if (isSuccess){
             response.sendRedirect(request.getContextPath() + "/home");
         }

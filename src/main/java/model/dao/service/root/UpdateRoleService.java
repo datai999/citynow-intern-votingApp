@@ -1,16 +1,16 @@
-package model.service.dao.root;
+package model.dao.service.root;
 
-import model.service.IRootService;
-import model.service.dao.BaseDao;
-import model.dto.UserAccount;
-import model.dto.UserRole;
-import model.service.impl.RootServiceImpl;
+import model.dao.IRootService;
+import model.dao.service.BaseDao;
+import model.dto.user.UserAccount;
+import model.dto.user.UserRole;
+import model.dao.impl.RootServiceImpl;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class UpdateRoleDao extends BaseDao {
+public class UpdateRoleService extends BaseDao {
 
 
     IRootService rootService;
@@ -18,17 +18,17 @@ public class UpdateRoleDao extends BaseDao {
     List<Integer> idAdmins = new ArrayList<>();
 
 
-    private UpdateRoleDao(){
+    private UpdateRoleService(){
         super();
         rootService = new RootServiceImpl();
         lsUser = rootService.getAllUser();
         getIdAdmins();
     }
     private static class LazyHolder{
-        public static final UpdateRoleDao INSTANCE = new UpdateRoleDao();
+        public static final UpdateRoleService INSTANCE = new UpdateRoleService();
     }
-    public static UpdateRoleDao getInstance(){
-        return UpdateRoleDao.LazyHolder.INSTANCE;
+    public static UpdateRoleService getInstance(){
+        return UpdateRoleService.LazyHolder.INSTANCE;
     }
 
 

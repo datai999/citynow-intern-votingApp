@@ -1,6 +1,6 @@
-package model.service;
+package model.dao;
 
-import model.dto.UserAccount;
+import model.dto.user.UserAccount;
 
 import java.util.List;
 
