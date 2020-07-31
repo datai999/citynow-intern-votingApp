@@ -3,7 +3,8 @@
 <%@ page import="model.dto.poll.Poll" %>
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.Date" %>
-<%@ page import="java.text.SimpleDateFormat" %><%--
+<%@ page import="java.text.SimpleDateFormat" %>
+<%@ page import="model.dto.poll.PollBuilder" %><%--
   Created by IntelliJ IDEA.
   User: HP
   Date: 7/20/2020
@@ -25,6 +26,8 @@
     UserAccount user;
     Poll currentPoll;
     UserAccount currentPollUser;
+    boolean voted;
+    int votedOptionId;
 
     int getPollVote(){
         int count = 0;
@@ -45,8 +48,25 @@
 
 <%
     user = (UserAccount) request.getAttribute("user");
+
+    try{
+        voted = (boolean) request.getAttribute("voted");
+        votedOptionId = (int) request.getAttribute("votedOptionId");
+    }catch (Exception e){
+        voted = false;
+        votedOptionId = 0;
+    }
+
+
     currentPoll = (Poll) request.getAttribute("currentPoll");
     currentPollUser = (UserAccount) request.getAttribute("currentPollUser");
+    if (currentPoll == null) currentPoll = new PollBuilder().buildBase(0, 0, null, null, null).build();
+    if (currentPollUser == null) {
+        currentPollUser = new UserAccount(null,null,null,"null");
+        voted = true;
+    }
+
+
 %>
 
 
@@ -79,6 +99,7 @@
 
     <br>
 
+
     <h2>Vote create by: <%=currentPollUser.getFullName()%></h2>
 
     <label>Begin: <input type="datetime-local" disabled="disabled" value="<%=getTime(currentPoll.getTimeStart())%>"></label>
@@ -94,21 +115,34 @@
 
             <label ><b>Option <%=i+1%>:</b></label>
             <label>
-                <input type="radio"  name="options" value="<%=currentPoll.getOption(i).getId()%>">
+                <input type="radio"  name="options"
+                    <%if (currentPoll.getOption(i).getId() == votedOptionId) {%>
+                       checked="checked"
+                    <%}%>
+                    <%if (voted) {%>
+                       disabled="disabled"
+                    <%}%>
+                       value="<%=currentPoll.getOption(i).getId()%>">
                  <%=currentPoll.getOption(i).getContent()%>
             </label>
             <br>
 
         <%}%>
         <br>
-        <button type="submit">Vote</button>
+        <button type="submit"
+                <%if (voted) {%>
+                disabled="disabled"
+                <%}%>
+        >
+            Vote
+        </button>
+
         <br>
         <br>
         <p><%=getPollVote()%><label> Vote</label></p>
         <label>Deadline: <input type="datetime-local" disabled="disabled" value="<%=getTime(currentPoll.getTimeEnd())%>"></label>
         <br>
     </form>
-
 
 
 </div>

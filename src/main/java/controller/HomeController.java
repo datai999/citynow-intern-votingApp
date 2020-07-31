@@ -21,7 +21,8 @@ public class HomeController extends HttpServlet {
 
     IUserService userService;
     List<Object> lsObj;
-    int currentVote = 0;
+    List<Object> lsObj2;
+    int currentVote = -1;
     int size = 0;
 
     public HomeController() {
@@ -36,18 +37,56 @@ public class HomeController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        lsObj = userService.getAllPoll();
-        size = ((List<Poll>) lsObj.get(0)).size();
-        currentVote = size-1;
+
+        int timeNow = (int) (System.currentTimeMillis()/1000);
+
 
         UserAccount user = UserSession.getUserLoginSuccess(request.getSession());
         request.setAttribute("user", user);
 
-        Poll currentPoll = ((List<Poll>) lsObj.get(0)).get(currentVote);
-        request.setAttribute("currentPoll", currentPoll);
+        lsObj = userService.getPollBeforeEnd(timeNow);
+        size = ((List<Poll>) lsObj.get(0)).size();
+        if (currentVote < 0)
+            currentVote = size-1;
 
-        UserAccount currentPollUser = ((List<UserAccount>) lsObj.get(1)).get(currentVote);
+        List<Poll> lsPoll = (List<Poll>) lsObj.get(0);
+        if (lsPoll.size() < 1){
+            RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/WEB-INF/views/home.jsp");
+            dispatcher.forward(request, response);
+            return;
+        }
+        Poll currentPoll = lsPoll.get(currentVote);
+
+        List<UserAccount> lsPollUser = (List<UserAccount>) lsObj.get(1);
+        UserAccount currentPollUser = lsPollUser.get(currentVote);
+
+
+        request.setAttribute("currentPoll", currentPoll);
         request.setAttribute("currentPollUser", currentPollUser);
+
+
+
+
+        if (user != null){
+            lsObj2 = userService.getVoteByUserId(timeNow,lsPoll.get(0).getId(),user.getId());
+            List<Integer> lsVotedPoll = (List<Integer>) lsObj2.get(0);
+            List<Integer> lsVotedOptionPoll = (List<Integer>) lsObj2.get(1);
+
+            boolean voted = false;
+            int votedOptionId = 0;
+            for (int i = 0; i<lsVotedPoll.size(); i++){
+                if (currentPoll.getId() == lsVotedPoll.get(i)){
+                    voted = true;
+                    votedOptionId = lsVotedOptionPoll.get(i);
+                    break;
+                }
+            }
+
+
+            request.setAttribute("voted", voted);
+            request.setAttribute("votedOptionId", votedOptionId);
+        }
+
 
         RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/WEB-INF/views/home.jsp");
 

@@ -11,7 +11,9 @@ public interface IUserService {
 
     boolean register(UserAccount user);
 
-    List<Object> getAllPoll();
+    List<Object> getPollBeforeEnd(int timeNow);
 
     boolean vote(Vote vote);
+
+    List<Object> getVoteByUserId(int timeEnd, int minPollId, int userId);
 }

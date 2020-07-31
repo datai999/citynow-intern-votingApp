@@ -8,6 +8,7 @@ public class PollBuilder implements IPollBuilder{
     int timeStart;
     int timeEnd;
     UserRole viewRole;
+    UserRole voteRole;
     int minVote;
     int maxVote;
     String title;
@@ -37,6 +38,12 @@ public class PollBuilder implements IPollBuilder{
     }
 
     @Override
+    public IPollBuilder buildVoteRole(UserRole voteRole) {
+        this.voteRole = voteRole;
+        return this;
+    }
+
+    @Override
     public IPollBuilder buildMinVote(int minVote) {
         this.minVote = minVote;
         return this;
@@ -50,6 +57,6 @@ public class PollBuilder implements IPollBuilder{
 
     @Override
     public Poll build() {
-        return new Poll(userId, timeStart, timeEnd, viewRole, minVote, maxVote, title, question, options);
+        return new Poll(userId, timeStart, timeEnd, viewRole, voteRole, minVote, maxVote, title, question, options);
     }
 }

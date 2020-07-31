@@ -22,14 +22,17 @@ public class GetPollService extends BaseDao {
         return GetPollService.LazyHolder.INSTANCE;
     }
 
-    public List<Object> getAllPoll(){
+    public List<Object> getPollBeforeEnd(int timeNow){
 
         List<Poll> lsPoll = new ArrayList<>();
         List<UserAccount> lsUser = new ArrayList<>();
 
-        String query = "SELECT * FROM poll INNER JOIN user ON poll.userId = user.id";
+        // TODO: 7/31/2020 select where time > now + 1 day 
 
-        execute(query, null, rs ->{
+        String query = "SELECT * FROM poll INNER JOIN user ON poll.userId = user.id WHERE timeEnd >= ?";
+        List<Object> params = Arrays.asList(new Object[]{timeNow});
+
+        execute(query, params, rs ->{
             try {
                 while (rs.next()) {
                     Poll poll = new Poll(rs);

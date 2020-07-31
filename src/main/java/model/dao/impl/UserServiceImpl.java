@@ -1,12 +1,9 @@
 package model.dao.impl;
 
-import model.dao.service.user.VoteService;
+import model.dao.service.user.*;
 import model.dto.poll.Poll;
 import model.dto.user.UserAccount;
 import model.dao.IUserService;
-import model.dao.service.user.GetPollService;
-import model.dao.service.user.LoginDaoService;
-import model.dao.service.user.RegisterService;
 import model.dto.vote.Vote;
 
 import java.util.List;
@@ -24,12 +21,17 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
-    public List<Object> getAllPoll() {
-        return GetPollService.getInstance().getAllPoll();
+    public List<Object> getPollBeforeEnd(int timeNow) {
+        return GetPollService.getInstance().getPollBeforeEnd(timeNow);
     }
 
     @Override
     public boolean vote(Vote vote) {
         return VoteService.getInstance().vote(vote);
+    }
+
+    @Override
+    public List<Object> getVoteByUserId(int timeEnd, int minPollId, int userId) {
+        return GetVoteService.getInstance().getVoteByUserId(timeEnd, minPollId, userId);
     }
 }
