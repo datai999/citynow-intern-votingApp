@@ -51,7 +51,7 @@ public class CreatePollService extends BaseDao implements IAdminService {
     public boolean createPoll(int userId, String strDeadline, String tittle, String question, String[] options){
 
 //        insert question to database
-        String insertQuestion = "INSERT INTO poll (userId, timeCreate, timeStart, timeEnd, viewRole, voteRole, minVote, maxVote, title, question) VALUES (?,?,?,?,?,?,?,?,?,?)";
+        String insertQuestion = "INSERT INTO poll (userId, timeCreate, timeStart, timeEnd, viewRole, voteRole, minBallot, maxBallot, numBallot, title, question) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
         int deadline = convert(strDeadline);
         Poll poll = new PollBuilder().buildBase(userId, deadline, tittle, question, options).build();
         List<Object> paramsQuestion = Arrays.asList(poll.getArrObj());

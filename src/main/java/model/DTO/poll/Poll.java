@@ -16,8 +16,9 @@ public class Poll {
     int timeEnd;
     UserRole viewRole;
     UserRole voteRole;
-    int minVote;
-    int maxVote;
+    int minBallot;
+    int maxBallot;
+    int numBallot;
     String title;
     String question;
 
@@ -30,7 +31,7 @@ public class Poll {
 
     @Override
     public String toString(){
-        String str = String.format ("Poll[%d,%d,%d,%d,%d,%d,%d,%d,%d,%s,%s]",id,userId,timeCreate,timeStart,timeEnd,viewRole.value,voteRole.value,minVote,maxVote,title,question);
+        String str = String.format ("Poll[%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%s,%s]",id,userId,timeCreate,timeStart,timeEnd,viewRole.value,voteRole.value,minBallot,maxBallot,numBallot,title,question);
         String str1 = option1!=null?option1.toString():"Option 1 is null";
         String str2 = option2!=null?option2.toString():"Option 2 is null";
         String str3 = option3!=null?option3.toString():"Option 3 is null";
@@ -40,29 +41,34 @@ public class Poll {
 
     public Poll(ResultSet rs) throws SQLException {
         id = rs.getInt("poll.id");
-        userId = rs.getInt("userId");
-        timeCreate = rs.getInt("timeCreate");
+        userId = rs.getInt("poll.userId");
+        timeCreate = rs.getInt("poll.timeCreate");
         timeStart = rs.getInt("timeStart");
         timeEnd = rs.getInt("timeEnd");
         viewRole = UserRole.fromInteger(rs.getInt("viewRole"));
         voteRole = UserRole.fromInteger(rs.getInt("voteRole"));
-        minVote = rs.getInt("minVote");
-        maxVote = rs.getInt("maxVote");
+        minBallot = rs.getInt("minBallot");
+        maxBallot = rs.getInt("maxBallot");
+        numBallot = rs.getInt("numBallot");
         title = rs.getString("title");
         question = rs.getString("question");
     }
 
-    public Poll(int userId, int timeStart, int timeEnd, UserRole viewRole, UserRole voteRole, int minVote, int maxVote, String title, String question, String[] options) {
+    public Poll(int userId, int timeStart, int timeEnd, UserRole viewRole, UserRole voteRole, int minBallot, int maxBallot, int numBallot, String title, String question, String[] options) {
         this.userId = userId;
         this.timeCreate = (int) (System.currentTimeMillis()/1000);
         this.timeStart = timeCreate;
         this.timeEnd = timeEnd;
         this.viewRole = UserRole.GUEST;
         this.voteRole = UserRole.CUSTOMER;
-        this.minVote = 0;
-        this.maxVote = 9999;
+        this.minBallot = 0;
+        this.maxBallot = 9999;
+        this.numBallot = 0;
         this.title = title;
         this.question = question;
+        if (options == null){
+            options = new String[]{null, null, null, null};
+        }
         option1 = new PollOption(this.id, options[0]);
         option2 = new PollOption(this.id, options[1]);
         option3 = new PollOption(this.id, options[2]);
@@ -89,6 +95,10 @@ public class Poll {
         return timeEnd;
     }
 
+    public int getNumBallot() {
+        return numBallot;
+    }
+
     public String getTitle() {
         return title;
     }
@@ -106,6 +116,7 @@ public class Poll {
         }
     }
 
+
     public void setOptions(List<PollOption> lsOption) {
         option1 = lsOption.get(0);
         option2 = lsOption.get(1);
@@ -114,7 +125,7 @@ public class Poll {
     }
 
     public Object[] getArrObj(){
-        return new Object[]{userId, timeCreate, timeStart, timeEnd, viewRole.value, voteRole.value, minVote, maxVote, title, question};
+        return new Object[]{userId, timeCreate, timeStart, timeEnd, viewRole.value, voteRole.value, minBallot, maxBallot, numBallot, title, question};
     }
     public Object[] getArrOptionObj() {
 

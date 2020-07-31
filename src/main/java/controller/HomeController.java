@@ -20,8 +20,6 @@ public class HomeController extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
     IUserService userService;
-    List<Object> lsObj;
-    List<Object> lsObj2;
     int currentVote = -1;
     int size = 0;
 
@@ -44,7 +42,7 @@ public class HomeController extends HttpServlet {
         UserAccount user = UserSession.getUserLoginSuccess(request.getSession());
         request.setAttribute("user", user);
 
-        lsObj = userService.getPollBeforeEnd(timeNow);
+        List<Object> lsObj = userService.getPollBeforeEnd(timeNow);
         size = ((List<Poll>) lsObj.get(0)).size();
         if (currentVote < 0)
             currentVote = size-1;
@@ -65,10 +63,18 @@ public class HomeController extends HttpServlet {
         request.setAttribute("currentPollUser", currentPollUser);
 
 
+//        Get top vote
+
+        List<Object> lsObj1 = userService.getTopVote(timeNow - 3*24*60*60, timeNow);
+        request.setAttribute("lsTopPoll", lsObj1.get(0));
+        request.setAttribute("lsTopPollUser", lsObj1.get(1));
 
 
+
+
+//        Kiểm tra user đã vote hay chưa
         if (user != null){
-            lsObj2 = userService.getVoteByUserId(timeNow,lsPoll.get(0).getId(),user.getId());
+            List<Object> lsObj2 = userService.getVoteByUserId(timeNow,lsPoll.get(0).getId(),user.getId());
             List<Integer> lsVotedPoll = (List<Integer>) lsObj2.get(0);
             List<Integer> lsVotedOptionPoll = (List<Integer>) lsObj2.get(1);
 

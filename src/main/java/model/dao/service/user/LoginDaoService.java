@@ -22,7 +22,6 @@ public class LoginDaoService extends BaseDao {
 
     public UserAccount login(String username, String password){
 
-        System.out.println(password.hashCode());
 
         final UserAccount[] user = new UserAccount[1];
 

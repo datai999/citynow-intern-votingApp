@@ -5,6 +5,7 @@ import model.dto.poll.Poll;
 import model.dto.poll.PollOption;
 import model.dto.user.UserAccount;
 
+import java.sql.Array;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -48,5 +49,29 @@ public class GetVoteService extends BaseDao{
             }
         });
         return Arrays.asList(new Object[]{lsPollId, lsPollOptionId});
+    }
+
+    public List<Object> getTopVote(int timeLeft, int timeRight){
+
+        List<Poll> lsPoll = new ArrayList<>();
+        List<UserAccount> lsUser = new ArrayList<>();
+
+        String query = "SELECT * FROM poll INNER JOIN user ON poll.userId = user.id ";
+                query += "WHERE timeStart >= ? AND timeStart <= ? ORDER BY numBallot DESC LIMIT ?";
+
+        List<Object> params = Arrays.asList(new Object[]{timeLeft, timeRight, 10});
+
+        execute(query, params, rs ->{
+            try {
+                while (rs.next()) {
+                    lsPoll.add(new Poll(rs));
+                    lsUser.add(new UserAccount(rs));
+                }
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+        });
+
+        return Arrays.asList(new Object[]{lsPoll,lsUser});
     }
 }

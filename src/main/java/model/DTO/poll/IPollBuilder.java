@@ -8,8 +8,9 @@ public interface IPollBuilder {
     IPollBuilder buildTimeStart(int timeStart);
     IPollBuilder buildViewRole(UserRole viewRole);
     IPollBuilder buildVoteRole(UserRole voteRole);
-    IPollBuilder buildMinVote(int minVote);
-    IPollBuilder buildMaxVote(int maxVote);
+    IPollBuilder buildMinBallot(int minBallot);
+    IPollBuilder buildMaxBallot(int maxBallot);
+    IPollBuilder buildNumBallot(int numBallot);
 
     Poll build();
 }

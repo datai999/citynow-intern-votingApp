@@ -39,9 +39,11 @@ public class VoteController extends HttpServlet {
             return;
         }
 
+        int pollId = Integer.parseInt(request.getParameter("poll"));
+
         Vote vote = new Vote(Integer.parseInt(options[0]), user.getId());
 
-        boolean voteSuccess =  userService.vote(vote);
+        boolean voteSuccess =  userService.vote(vote, pollId);
 
         response.sendRedirect(request.getContextPath() + "/home");
     }

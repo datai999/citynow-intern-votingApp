@@ -16,13 +16,13 @@ import java.io.IOException;
 import java.util.logging.Logger;
 
 @WebServlet(urlPatterns = { "/create" })
-public class CreateController extends HttpServlet {
+public class CreatePollController extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
     Logger _logger;
     IAdminService adminService;
 
-    public CreateController() {
+    public CreatePollController() {
         super();
         adminService = new AdminServiceImpl();
         _logger = Logger.getLogger(this.getClass().getName());
@@ -35,12 +35,18 @@ public class CreateController extends HttpServlet {
 
         RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/WEB-INF/views/create.jsp");
 
+        response.setContentType("text/html;charset=UTF-8");
+        request.setCharacterEncoding("utf-8");
+
         dispatcher.forward(request, response);
 
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+
+        response.setContentType("text/html;charset=UTF-8");
+        request.setCharacterEncoding("utf-8");
 
         String title = request.getParameter("title");
         String question = request.getParameter("question");

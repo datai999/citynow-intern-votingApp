@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.net.URLDecoder;
 import java.util.logging.Logger;
 
 @WebServlet(urlPatterns = { "/login",})
@@ -34,6 +35,7 @@ public class LoginController extends HttpServlet {
 
         RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/WEB-INF/views/login.jsp");
 
+
         dispatcher.forward(request, response);
 
     }
@@ -42,8 +44,10 @@ public class LoginController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws IOException {
 
+
         String username = request.getParameter("username");
         String password = request.getParameter("password");
+
 
         UserAccount user = null;
         if (userService != null)

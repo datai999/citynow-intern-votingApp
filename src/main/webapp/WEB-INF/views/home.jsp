@@ -29,13 +29,9 @@
     boolean voted;
     int votedOptionId;
 
-    int getPollVote(){
-        int count = 0;
-        for (int i=0; i<4; i++){
-            count += currentPoll.getOption(i).getCount();
-        }
-        return count;
-    }
+    List<Poll> lsTopPoll;
+    List<UserAccount> lsTopPollUser;
+
 
     String getTime(long timeStamp){
 
@@ -67,6 +63,8 @@
     }
 
 
+    lsTopPoll = (List<Poll>) request.getAttribute("lsTopPoll");
+    lsTopPollUser = (List<UserAccount>) request.getAttribute("lsTopPollUser");
 %>
 
 
@@ -107,10 +105,12 @@
 
     <h2><%=currentPoll.getTitle()%></h2>
     <p><%=currentPoll.getQuestion()%></p>
-    <br>
 
-    <form method="post" action="/vote">
 
+    <form method="post" action="/vote" >
+
+        <input style="visibility: hidden" name="poll" value="<%=currentPoll.getId()%>">
+        <br>
         <% for (int i=0; i < 4; i ++) {  %>
 
             <label ><b>Option <%=i+1%>:</b></label>
@@ -139,13 +139,36 @@
 
         <br>
         <br>
-        <p><%=getPollVote()%><label> Vote</label></p>
+        <p><%=currentPoll.getNumBallot()%><label> Vote</label></p>
         <label>Deadline: <input type="datetime-local" disabled="disabled" value="<%=getTime(currentPoll.getTimeEnd())%>"></label>
         <br>
     </form>
 
-
 </div>
+
+<h2>Top poll</h2>
+<table>
+    <tr>
+        <th>No</th>
+        <th>Tittle</th>
+        <th>Create by</th>
+        <th>Start</th>
+        <th>End</th>
+        <th>Ballot</th>
+    </tr>
+
+    <% for (int i =0; i < lsTopPoll.size(); i++) { Poll poll = lsTopPoll.get(i); UserAccount user = lsTopPollUser.get(i); %>
+    <tr >
+        <th><%=i+1%></th>
+        <th><%=poll.getTitle()%></th>
+        <th><%=user.getFullName()%></th>
+        <th><%=poll.getTimeStart()%></th>
+        <th><%=poll.getTimeEnd()%></th>
+        <th><%=poll.getNumBallot()%></th>
+    </tr>
+    <% } %>
+
+</table>
 
 
 

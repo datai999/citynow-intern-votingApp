@@ -18,29 +18,23 @@ public class VoteService extends BaseDao {
         return VoteService.LazyHolder.INSTANCE;
     }
 
-    public boolean vote(Vote vote){
+    public boolean vote(Vote vote, int pollId){
 
         String queryInsert = "INSERT INTO vote (pollOptionId, userId, timeCreate) VALUES (?, ?, ?)";
         List<Object> paramsInsert = Arrays.asList(vote.getArrObj());
         int countInsert = execute(queryInsert, paramsInsert);
 
-        String query = "SELECT * FROM vote WHERE pollOptionId = ?";;
-        List<Object> params = Arrays.asList(new Object[]{vote.getPollOptionId()});
-        AtomicInteger count = new AtomicInteger();
-        execute(query, params, rs -> {
-            try {
-                if (rs.next()) {
-                    count.getAndIncrement();
-                }
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
-            }
-        });
 
-        String queryUpdate = "UPDATE poll_option SET count = ? WHERE id = ? ";
-        List<Object> paramsUpdate = Arrays.asList(new Object[]{count.get(),vote.getPollOptionId()});
-        int countUpdate = execute(queryUpdate, paramsUpdate);
+        String queryUpdatePoll = "UPDATE poll SET numBallot = numBallot + 1 WHERE id = ? ";
+        List<Object> paramsUpdatePoll = Arrays.asList(new Object[]{pollId});
+        int countUpdatePoll = execute(queryUpdatePoll, paramsUpdatePoll);
 
-        return countInsert>0 && countUpdate>0;
+        String queryUpdateOption = "UPDATE poll_option SET count = count + 1 WHERE id = ? ";
+        List<Object> paramsUpdateOption = Arrays.asList(new Object[]{vote.getPollOptionId()});
+        int countUpdateOption = execute(queryUpdateOption, paramsUpdateOption);
+
+
+
+        return countInsert>0 && countUpdatePoll>0 && countUpdateOption>0;
     }
 }

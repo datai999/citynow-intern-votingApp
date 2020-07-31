@@ -1,5 +1,6 @@
 package model.dao;
 
+import model.dto.comment.Comment;
 import model.dto.user.UserAccount;
 import model.dto.vote.Vote;
 
@@ -13,7 +14,11 @@ public interface IUserService {
 
     List<Object> getPollBeforeEnd(int timeNow);
 
-    boolean vote(Vote vote);
+    boolean vote(Vote vote, int pollId);
 
     List<Object> getVoteByUserId(int timeEnd, int minPollId, int userId);
+
+    List<Object> getTopVote(int timeLeft, int timeRight);
+
+    boolean comment(Comment comment);
 }
