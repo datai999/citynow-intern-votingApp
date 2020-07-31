@@ -28,15 +28,15 @@ public class Comment {
         this.content = rs.getString("comment.content");
     }
 
-    public Comment(int pollId, int userId, int timeCreate, int replyCommentId, String content){
+    public Comment(int pollId, int userId, int replyCommentId, String content){
         this.pollId = pollId;
         this.userId = userId;
-        this.timeCreate = timeCreate;
+        this.timeCreate =  (int) (System.currentTimeMillis()/1000);
         this.replyCommentId = replyCommentId;
         this.content = content;
     }
 
     public Object[] getArrObj(){
-        return new Object[]{id,pollId,userId,timeCreate,replyCommentId,content};
+        return new Object[]{pollId,userId,timeCreate,replyCommentId,content};
     }
 }

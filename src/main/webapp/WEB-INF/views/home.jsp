@@ -146,6 +146,18 @@
 
 </div>
 
+<br>
+<br>
+<div>
+    <form method="post" action="/comment" >
+
+        <input style="visibility: hidden" name="pollId" value="<%=currentPoll.getId()%>">
+        <br>
+        <input type="text" placeholder="Enter your comment" name="content">
+
+    </form>
+</div>
+
 <h2>Top poll</h2>
 <table>
     <tr>

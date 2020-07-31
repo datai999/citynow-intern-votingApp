@@ -2,7 +2,6 @@ package model.dao.impl;
 
 import model.dao.service.user.*;
 import model.dto.comment.Comment;
-import model.dto.poll.Poll;
 import model.dto.user.UserAccount;
 import model.dao.IUserService;
 import model.dto.vote.Vote;
@@ -44,5 +43,10 @@ public class UserServiceImpl implements IUserService {
     @Override
     public boolean comment(Comment comment) {
         return CommentService.getInstance().comment(comment);
+    }
+
+    @Override
+    public List<Comment> getCommentByPollId(int pollId) {
+        return GetCommentService.getInstance().getCommentByPollId(pollId);
     }
 }

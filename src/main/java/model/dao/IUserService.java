@@ -21,4 +21,6 @@ public interface IUserService {
     List<Object> getTopVote(int timeLeft, int timeRight);
 
     boolean comment(Comment comment);
+
+    List<Comment> getCommentByPollId(int pollId);
 }
