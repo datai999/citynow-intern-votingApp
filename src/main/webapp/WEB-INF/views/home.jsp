@@ -6,7 +6,7 @@
 <%@ page import="java.text.SimpleDateFormat" %>
 <%@ page import="model.dto.poll.PollBuilder" %>
 <%@ page import="java.util.ArrayList" %>
-<%@ page import="model.dto.comment.Comment" %><%--
+<%@ page import="model.dto.comment.CommentPoll" %><%--
   Created by IntelliJ IDEA.
   User: HP
   Date: 7/20/2020
@@ -27,13 +27,12 @@
 <%!
     UserAccount user;
     Poll currentPoll;
-    UserAccount currentPollUser;
+    UserAccount pollCreator;
     boolean voted;
     int votedOptionId;
 
     List<Poll> lsTopPoll;
-    List<UserAccount> lsTopPollUser;
-    List<Comment> lsComment;
+    List<CommentPoll> lsComment;
 
 
     String getTime(long timeStamp){
@@ -58,21 +57,20 @@
 
 
     currentPoll = (Poll) request.getAttribute("currentPoll");
-    currentPollUser = (UserAccount) request.getAttribute("currentPollUser");
-    if (currentPoll == null) currentPoll = new PollBuilder().buildBase(0, 0, null, null, null).build();
-    if (currentPollUser == null) {
-        currentPollUser = new UserAccount(null,null,null,"null");
+    if (currentPoll == null) {
+        currentPoll = new PollBuilder().buildBase(0, 0, null, null, null).build();
+        pollCreator = new UserAccount(null,null,null,"null");
         voted = true;
     }
+    else pollCreator = currentPoll.getCreator();
 
 
     lsTopPoll = (List<Poll>) request.getAttribute("lsTopPoll");
-    lsTopPollUser = (List<UserAccount>) request.getAttribute("lsTopPollUser");
     if (lsTopPoll == null) lsTopPoll = new ArrayList<>();
-    if (lsTopPollUser == null) lsTopPollUser = new ArrayList<>();
 
 
-    lsComment = (List<Comment>) request.getAttribute("lsComment");
+    lsComment = (List<CommentPoll>) request.getAttribute("lsComment");
+    if (lsComment == null) lsComment = new ArrayList<>();
 %>
 
 
@@ -106,7 +104,7 @@
     <br>
 
 
-    <h2>Vote create by: <%=currentPollUser.getFullName()%></h2>
+    <h2>Vote create by: <%=pollCreator.getFullName()%></h2>
 
     <label>Begin: <input type="datetime-local" disabled="disabled" value="<%=getTime(currentPoll.getTimeStart())%>"></label>
     <br>
@@ -165,9 +163,9 @@
         <th>Content</th>
     </tr>
 
-    <% for (int i =0; i < lsComment.size(); i++) { Comment cmt = lsComment.get(i); %>
+    <% for (int i =0; i < lsComment.size(); i++) { CommentPoll cmt = lsComment.get(i); %>
     <tr >
-        <th><%=cmt.getCommentByUser().getFullName()%></th>
+        <th><%=cmt.getCommentator().getFullName()%></th>
         <th><%=cmt.getTimeCreate()%></th>
         <th><%=cmt.getContent()%></th>
     </tr>
@@ -210,7 +208,11 @@
         <th>Ballot</th>
     </tr>
 
-    <% for (int i =0; i < lsTopPoll.size(); i++) { Poll poll = lsTopPoll.get(i); UserAccount user = lsTopPollUser.get(i); %>
+    <% for (int i =0; i < lsTopPoll.size(); i++) {
+        Poll poll = lsTopPoll.get(i);
+        UserAccount user = poll.getCreator();
+        if (user == null) user = new UserAccount(null,null,null,"null");
+    %>
     <tr >
         <th><%=i+1%></th>
         <th><%=poll.getTitle()%></th>

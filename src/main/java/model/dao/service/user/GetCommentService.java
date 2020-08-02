@@ -1,7 +1,7 @@
 package model.dao.service.user;
 
 import model.dao.service.BaseDao;
-import model.dto.comment.Comment;
+import model.dto.comment.CommentPoll;
 import model.dto.user.UserAccount;
 
 import java.sql.SQLException;
@@ -18,9 +18,9 @@ public class GetCommentService extends BaseDao {
         return GetCommentService.LazyHolder.INSTANCE;
     }
 
-    public List<Comment> getCommentByPollId(int pollId){
+    public List<CommentPoll> getCommentByPollId(int pollId){
 
-        List<Comment> lsComment = new ArrayList<>();
+        List<CommentPoll> lsComment = new ArrayList<>();
 
         String query = "SELECT * FROM comment INNER JOIN user ON comment.userId = user.id WHERE pollId = ?";
         List<Object> params = Arrays.asList(new Object[]{pollId});
@@ -28,8 +28,8 @@ public class GetCommentService extends BaseDao {
         execute(query, params, rs ->{
             try {
                 while (rs.next()) {
-                    Comment comment = new Comment(rs);
-                    comment.setCommentByUser(new UserAccount(rs));
+                    CommentPoll comment = new CommentPoll(rs);
+                    comment.setCommentator(new UserAccount(rs));
                     lsComment.add(comment);
                 }
             } catch (SQLException throwables) {

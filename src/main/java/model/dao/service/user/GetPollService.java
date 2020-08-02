@@ -22,12 +22,9 @@ public class GetPollService extends BaseDao {
         return GetPollService.LazyHolder.INSTANCE;
     }
 
-    public List<Object> getPollBeforeEnd(int timeNow){
+    public List<Poll> getPollBeforeEnd(int timeNow){
 
         List<Poll> lsPoll = new ArrayList<>();
-        List<UserAccount> lsUser = new ArrayList<>();
-
-        // TODO: 7/31/2020 select where time > now + 1 day 
 
         String query = "SELECT * FROM poll INNER JOIN user ON poll.userId = user.id WHERE timeEnd >= ?";
         List<Object> params = Arrays.asList(new Object[]{timeNow});
@@ -38,14 +35,14 @@ public class GetPollService extends BaseDao {
                     Poll poll = new Poll(rs);
                     List<PollOption> lsPollOption = getOptionsByPollId(poll.getId());
                     poll.setOptions(lsPollOption);
+                    poll.setCreator(new UserAccount(rs));
                     lsPoll.add(poll);
-                    lsUser.add(new UserAccount(rs));
                 }
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
             }
         });
-        return Arrays.asList(new Object[]{lsPoll, lsUser});
+        return lsPoll;
     }
 
     List<PollOption> getOptionsByPollId(int pollId){

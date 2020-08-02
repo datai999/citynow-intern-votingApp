@@ -3,7 +3,7 @@ package controller;
 import controller.session_and_cookie.UserSession;
 import model.dao.IUserService;
 import model.dao.impl.UserServiceImpl;
-import model.dto.comment.Comment;
+import model.dto.comment.CommentPoll;
 import model.dto.user.UserAccount;
 
 import javax.servlet.ServletException;
@@ -43,7 +43,7 @@ public class CommentController extends HttpServlet {
 
         UserAccount user = UserSession.getUserLoginSuccess(request.getSession());
 
-        Comment comment = new Comment(pollId, user.getId(), replyCommentId, content);
+        CommentPoll comment = new CommentPoll(pollId, user.getId(), replyCommentId, content);
 
         boolean isSuccess = userService.comment(comment);
 

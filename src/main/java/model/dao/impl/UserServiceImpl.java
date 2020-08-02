@@ -1,7 +1,8 @@
 package model.dao.impl;
 
 import model.dao.service.user.*;
-import model.dto.comment.Comment;
+import model.dto.comment.CommentPoll;
+import model.dto.poll.Poll;
 import model.dto.user.UserAccount;
 import model.dao.IUserService;
 import model.dto.vote.Vote;
@@ -21,7 +22,7 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
-    public List<Object> getPollBeforeEnd(int timeNow) {
+    public List<Poll> getPollBeforeEnd(int timeNow) {
         return GetPollService.getInstance().getPollBeforeEnd(timeNow);
     }
 
@@ -31,22 +32,22 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
-    public List<Object> getVoteByUserId(int timeEnd, int minPollId, int userId) {
-        return GetVoteService.getInstance().getVoteByUserId(timeEnd, minPollId, userId);
+    public int getVoteOptionByUserId(int pollId, int userId) {
+        return GetVoteService.getInstance().getVoteOptionByUserId(pollId, userId);
     }
 
     @Override
-    public List<Object> getTopVote(int timeLeft, int timeRight) {
+    public List<Poll> getTopVote(int timeLeft, int timeRight) {
         return GetVoteService.getInstance().getTopVote(timeLeft, timeRight);
     }
 
     @Override
-    public boolean comment(Comment comment) {
+    public boolean comment(CommentPoll comment) {
         return CommentService.getInstance().comment(comment);
     }
 
     @Override
-    public List<Comment> getCommentByPollId(int pollId) {
+    public List<CommentPoll> getCommentByPollId(int pollId) {
         return GetCommentService.getInstance().getCommentByPollId(pollId);
     }
 }

@@ -1,12 +1,15 @@
 package model.dto.comment;
 
+import model.dto.user.UserAccount;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.List;
 
-public class Comment {
+public class CommentPoll {
 
+//    Same database
     int id;
     int pollId;
     int userId;
@@ -14,12 +17,15 @@ public class Comment {
     int replyCommentId;
     String content;
 
+//    Extend database
+    UserAccount commentator;
+
     @Override
     public String toString(){
         return String.format("Comment[%d,%d,%d,%d,%s]",id,pollId,userId,timeCreate,replyCommentId,content);
     }
 
-    public Comment(ResultSet rs) throws SQLException {
+    public CommentPoll(ResultSet rs) throws SQLException {
         this.id = rs.getInt("comment.id");
         this.pollId = rs.getInt("comment.pollId");
         this.userId = rs.getInt("comment.userId");
@@ -28,7 +34,23 @@ public class Comment {
         this.content = rs.getString("comment.content");
     }
 
-    public Comment(int pollId, int userId, int replyCommentId, String content){
+    public int getTimeCreate() {
+        return timeCreate;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public UserAccount getCommentator() {
+        return commentator;
+    }
+
+    public void setCommentator(UserAccount commentator) {
+        this.commentator = commentator;
+    }
+
+    public CommentPoll(int pollId, int userId, int replyCommentId, String content){
         this.pollId = pollId;
         this.userId = userId;
         this.timeCreate =  (int) (System.currentTimeMillis()/1000);
