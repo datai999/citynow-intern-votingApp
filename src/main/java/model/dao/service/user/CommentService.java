@@ -19,7 +19,7 @@ public class CommentService extends BaseDao {
 
     public boolean comment(Comment comment){
 
-        String queryInsert = "INSERT INTO comment (pollId, userId, timeCreate, content) VALUES (?, ?, ?, ?)";
+        String queryInsert = "INSERT INTO comment (pollId, userId, timeCreate,replyCommentId, content) VALUES (?, ?, ?, ?, ?)";
         List<Object> paramsInsert = Arrays.asList(comment.getArrObj());
         int count = execute(queryInsert, paramsInsert);
 

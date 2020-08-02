@@ -4,7 +4,9 @@
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.Date" %>
 <%@ page import="java.text.SimpleDateFormat" %>
-<%@ page import="model.dto.poll.PollBuilder" %><%--
+<%@ page import="model.dto.poll.PollBuilder" %>
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="model.dto.comment.Comment" %><%--
   Created by IntelliJ IDEA.
   User: HP
   Date: 7/20/2020
@@ -31,6 +33,7 @@
 
     List<Poll> lsTopPoll;
     List<UserAccount> lsTopPollUser;
+    List<Comment> lsComment;
 
 
     String getTime(long timeStamp){
@@ -65,6 +68,11 @@
 
     lsTopPoll = (List<Poll>) request.getAttribute("lsTopPoll");
     lsTopPollUser = (List<UserAccount>) request.getAttribute("lsTopPollUser");
+    if (lsTopPoll == null) lsTopPoll = new ArrayList<>();
+    if (lsTopPollUser == null) lsTopPollUser = new ArrayList<>();
+
+
+    lsComment = (List<Comment>) request.getAttribute("lsComment");
 %>
 
 
@@ -148,13 +156,46 @@
 
 <br>
 <br>
+
+<h2>Comment</h2>
+<table>
+    <tr>
+        <th>Comment by user</th>
+        <th>Time comment</th>
+        <th>Content</th>
+    </tr>
+
+    <% for (int i =0; i < lsComment.size(); i++) { Comment cmt = lsComment.get(i); %>
+    <tr >
+        <th><%=cmt.getCommentByUser().getFullName()%></th>
+        <th><%=cmt.getTimeCreate()%></th>
+        <th><%=cmt.getContent()%></th>
+    </tr>
+    <% } %>
+
+</table>
+
+
+
+<br>
+<br>
 <div>
     <form method="post" action="/comment" >
 
         <input style="visibility: hidden" name="pollId" value="<%=currentPoll.getId()%>">
         <br>
-        <input type="text" placeholder="Enter your comment" name="content">
-
+        <input type="text" placeholder="Enter your comment" name="content"
+            <%if (user == null) {%>
+               disabled="disabled"
+            <%}%>
+        >
+        <button type="submit"
+                <%if (user == null) {%>
+                disabled="disabled"
+                <%}%>
+        >
+            Comment
+        </button>
     </form>
 </div>
 

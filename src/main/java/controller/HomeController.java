@@ -1,6 +1,7 @@
 package controller;
 
 import controller.session_and_cookie.UserSession;
+import model.dto.comment.Comment;
 import model.dto.poll.Poll;
 import model.dto.user.UserAccount;
 import model.dao.IUserService;
@@ -92,6 +93,11 @@ public class HomeController extends HttpServlet {
             request.setAttribute("voted", voted);
             request.setAttribute("votedOptionId", votedOptionId);
         }
+
+
+//        Get comment
+        List<Comment> lsComment =  userService.getCommentByPollId(currentPoll.getId());
+        request.setAttribute("lsComment", lsComment);
 
 
         RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/WEB-INF/views/home.jsp");
