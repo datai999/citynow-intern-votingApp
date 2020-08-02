@@ -1,14 +1,21 @@
 package model.dto.vote;
 
+import model.dto.user.UserAccount;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class Vote {
 
+
     int id;
     int pollOptionId;
     int userId;
     int timeCreate;
+
+//    Extend database
+    UserAccount creator;
+
 
     @Override
     public String toString(){
@@ -33,7 +40,16 @@ public class Vote {
         return pollOptionId;
     }
 
+    public UserAccount getCreator() {
+        return creator;
+    }
+
+    public void setCreator(UserAccount creator) {
+        this.creator = creator;
+    }
+
     public Object[] getArrObj(){
         return new Object[]{pollOptionId, userId, timeCreate};
     }
+
 }

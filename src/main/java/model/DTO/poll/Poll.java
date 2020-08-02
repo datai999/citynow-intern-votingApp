@@ -1,5 +1,6 @@
 package model.dto.poll;
 
+import model.dto.user.UserAccount;
 import model.dto.user.UserRole;
 
 import java.sql.ResultSet;
@@ -22,6 +23,9 @@ public class Poll {
     String title;
     String question;
 
+
+//    Extend database
+    UserAccount creator;
 
 
     PollOption option1;
@@ -122,6 +126,14 @@ public class Poll {
         option2 = lsOption.get(1);
         option3 = lsOption.get(2);
         option4 = lsOption.get(3);
+    }
+
+    public UserAccount getCreator() {
+        return creator;
+    }
+
+    public void setCreator(UserAccount creator) {
+        this.creator = creator;
     }
 
     public Object[] getArrObj(){

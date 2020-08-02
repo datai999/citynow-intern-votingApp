@@ -24,6 +24,7 @@
 <body>
 
 
+
 <%!
     UserAccount user;
     Poll currentPoll;
@@ -71,6 +72,8 @@
 
     lsComment = (List<CommentPoll>) request.getAttribute("lsComment");
     if (lsComment == null) lsComment = new ArrayList<>();
+
+//    System.out.println("context:"+request.getContextPath());
 %>
 
 

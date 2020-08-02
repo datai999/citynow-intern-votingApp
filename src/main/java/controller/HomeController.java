@@ -6,7 +6,6 @@ import model.dto.poll.Poll;
 import model.dto.user.UserAccount;
 import model.dao.IUserService;
 import model.dao.impl.UserServiceImpl;
-import model.dto.vote.Vote;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
