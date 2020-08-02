@@ -5,10 +5,13 @@
   Time: 11:55 AM
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" language="java" %>
 <html>
 <head>
     <title>Title</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
 </head>
 <body>
 
@@ -24,25 +27,49 @@
 
 <div>
 
-    <form method="post" action="/register">
+    <div class="container">
+        <div class="card">
+            <div class="card-body">
+                <form action="<%=request.getContextPath()%>/register" method="post">
 
-        <div class="container">
-            <label ><b>full name</b></label>
-            <input type="text" placeholder="Enter your full name" name="fullName" required>
-            <br><br>
-            <label ><b>username</b></label>
-            <input type="text" placeholder="Enter your user name" name="username" required>
-            <br><br>
-            <label ><b>email</b></label>
-            <input type="text" placeholder="Enter your email" name="email" required>
-            <br><br>
-            <label ><b>Password</b></label>
-            <input type="password" placeholder="Enter Password" name="password" required>
-            <br><br>
-            <button type="submit">submit</button>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">First Name</label>
+                        <div class="col-sm-7">
+                            <input type="text" class="form-control" name="fullName"
+                                   placeholder="Enter full name" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Email</label>
+                        <div class="col-sm-7">
+                            <input type="text" class="form-control" name="email"
+                                   placeholder="Enter email" required>
+                        </div>
+                    </div>
+
+                    <div class=" form-group row">
+                        <label class="col-sm-2 col-form-label">User Name</label>
+                        <div class="col-sm-7">
+                            <input type="text" class="form-control" name="username"
+                                   placeholder="Enter user name" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Password</label>
+                        <div class="col-sm-7">
+                            <input type="password" class="form-control" name="password"
+                                   placeholder="Enter Password" required>
+                        </div>
+                    </div>
+
+
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+            </div>
         </div>
-
-    </form>
+    </div>
 </div>
 
 

@@ -35,8 +35,7 @@
                 <form action="<%=request.getContextPath()%>/login" method="post">
 
                     <div class=" form-group row">
-                        <label class="col-sm-2 col-form-label">User
-                            Name</label>
+                        <label class="col-sm-2 col-form-label">User Name</label>
                         <div class="col-sm-7">
                             <input type="text" class="form-control" name="username"
                                    placeholder="Enter user name" required>
