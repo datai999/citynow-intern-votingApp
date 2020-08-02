@@ -1,22 +1,45 @@
 package model.dto.comment;
 
+import model.dto.poll.Poll;
+import model.dto.user.UserAccount;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Arrays;
-import java.util.List;
 
 public class Comment {
 
+//    Same database
     int id;
     int pollId;
     int userId;
+
+    public int getTimeCreate() {
+        return timeCreate;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
     int timeCreate;
     int replyCommentId;
     String content;
 
+//    Extend database
+    UserAccount commentByUser;
+    Poll commentOnPoll;
+
     @Override
     public String toString(){
-        return String.format("Comment[%d,%d,%d,%d,%s]",id,pollId,userId,timeCreate,replyCommentId,content);
+        return String.format("Comment[%d,%d,%d,%d,%d,%s]",id,pollId,userId,timeCreate,replyCommentId,content);
+    }
+
+    public UserAccount getCommentByUser() {
+        return commentByUser;
+    }
+
+    public void setCommentByUser(UserAccount commentByUser) {
+        this.commentByUser = commentByUser;
     }
 
     public Comment(ResultSet rs) throws SQLException {
@@ -39,4 +62,5 @@ public class Comment {
     public Object[] getArrObj(){
         return new Object[]{pollId,userId,timeCreate,replyCommentId,content};
     }
+
 }
