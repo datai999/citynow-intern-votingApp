@@ -20,25 +20,10 @@
 
 <html>
 <head>
-    <title>Title</title>
-    <style>
-        table {
-            font-family: arial, sans-serif;
-            border-collapse: collapse;
-            width: 100%;
-        }
+    <title>Manager page</title>
 
-        td,
-        th {
-            border: 1px solid #dddddd;
-            text-align: left;
-            padding: 8px;
-        }
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
-        tr:nth-child(even) {
-            background-color: #dddddd;
-        }
-    </style>
 </head>
 <body>
 
@@ -48,39 +33,55 @@
 </div>
 <br>
 
-<form method="post" action="/root">
-    <button type="submit">Update</button>
-<table>
-    <tr>
-        <th>id</th>
-        <th>Full name</th>
-        <th>Username</th>
-        <th>Email</th>
-        <th>Admin</th>
-    </tr>
 
-<% for (UserAccount user:lsUser) {  %>
-    <tr >
-        <th><%=user.getId()%></th>
-        <th><%=user.getFullName()%></th>
-        <th><%=user.getUsername()%></th>
-        <th><%=user.getEmail()%></th>
-        <th>
-            <input type="checkbox" name="checkboxes" value=<%=user.getId()%>
-                <%if (user.getRole() != UserRole.CUSTOMER.value) {%>
-                   checked="checked"
-                <%}%>
-                <%if (user.getRole() == UserRole.ROOT.value) {%>
-                   disabled="disabled"
-                <%}%>
-            >
-        </th>
-    </tr>
-<% } %>
+<div>
 
-</table>
+    <form method="post" action="/root" class="m-3">
+        <button class="btn btn-primary" type="submit">Update</button>
+        <br>
+        <br>
+        <table  class="table table-striped table-bordered table-hover">
+            <thead>
+            <tr >
+                <th scope="col">No</th>
+                <th scope="col">Id</th>
+                <th scope="col">Full name</th>
+                <th scope="col">Username</th>
+                <th scope="col">Email</th>
+                <th scope="col">Admin</th>
+            </tr>
+            </thead>
 
-</form>
+            <tbody>
+
+            <% for (int i=0; i < lsUser.size(); i++) {
+                UserAccount user = lsUser.get(i);  %>
+            <tr >
+                <th scope="row"><%=i+1%></th>
+                <td><%=user.getId()%></td>
+                <td><%=user.getFullName()%></td>
+                <td><%=user.getUsername()%></td>
+                <td><%=user.getEmail()%></td>
+                <td>
+                    <input type="checkbox" name="checkboxes" value=<%=user.getId()%>
+                        <%if (user.getRole() != UserRole.CUSTOMER.value) {%>
+                            checked="checked"
+                        <%}%>
+                        <%if (user.getRole() == UserRole.ROOT.value) {%>
+                           disabled="disabled"
+                        <%}%>
+                    >
+                </td>
+            </tr>
+            <% } %>
+
+            </tbody>
+
+
+        </table>
+
+    </form>
+</div>
 
 
 </body>
