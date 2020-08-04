@@ -17,17 +17,17 @@
 </head>
 <body>
 
-
-<div class="container">
-    <button type="button" onclick="location.href ='/home'">App</button>
-    <h3>Login page</h3>
-    <button type="button" onclick="location.href ='/register'">Register</button>
-    <br>
-</div>
-
-<br>
-
 <div>
+
+
+    <nav class="navbar navbar-light bg-light justify-content-between">
+
+        <button type="button" class="btn btn-primary" onclick="location.href ='/home'">App</button>
+        <h3>Login page</h3>
+        <button type="button" class="btn btn-primary" onclick="location.href ='/register'">Register</button>
+    </nav>
+
+    <br>
 
     <div class="container">
         <div class="card">

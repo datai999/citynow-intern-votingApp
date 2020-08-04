@@ -30,17 +30,20 @@
 </head>
 <body>
 
-<div class="container">
-    <button type="button" onclick="location.href ='/home'">App</button>
-    <h3>Create page</h3>
-    <button type="button" onclick="location.href ='/home'">Back</button>
-    <br><br>
-    <button type="button" onclick="location.href ='/logout'">Logout</button>
-</div>
-
-<br><br><br><br>
 
 <div>
+
+    <nav class="navbar navbar-light bg-light justify-content-between">
+
+        <button type="button" class="btn btn-primary" onclick="location.href ='/home'">App</button>
+        <h3>Create question page</h3>
+        <div>
+            <button type="button" class="btn btn-primary" onclick="location.href ='/home'">Back</button>
+            <button type="button" class="btn btn-primary" onclick="location.href ='/logout'">Logout</button>
+        </div>
+    </nav>
+
+    <br>
 
     <div class="container">
         <div class="card">

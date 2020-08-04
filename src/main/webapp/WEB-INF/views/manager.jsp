@@ -27,19 +27,18 @@
 </head>
 <body>
 
-<div class="container">
-    <button type="button" onclick="location.href ='/home'">App</button>
-    <h3>Manager page</h3>
-</div>
-<br>
-
-
 <div>
+    <nav class="navbar navbar-light bg-light justify-content-between">
+
+        <button type="button" class="btn btn-primary" onclick="location.href ='/home'">App</button>
+        <h3>Manager page</h3>
+        <button type="button" class="btn btn-primary" onclick="location.href ='/logout'">Logout</button>
+    </nav>
+
+    <br>
 
     <form method="post" action="/root" class="m-3">
-        <button class="btn btn-primary" type="submit">Update</button>
-        <br>
-        <br>
+
         <table  class="table table-striped table-bordered table-hover">
             <thead>
             <tr >
@@ -80,6 +79,7 @@
 
         </table>
 
+        <button class="btn btn-primary" type="submit">Update</button>
     </form>
 </div>
 
