@@ -16,12 +16,9 @@
 <%!
     UserAccount user;
 
-    String getTime(long timeStamp){
-
-        SimpleDateFormat df1 = new SimpleDateFormat("yyyy-MM-dd");
-        SimpleDateFormat df2 = new SimpleDateFormat("HH:mm");
-
-        return df1.format(timeStamp*1000) + "T" + df2.format(timeStamp*1000);
+    String time2String(long timeStamp){
+        SimpleDateFormat df = new SimpleDateFormat("MM/dd-HH:mm");
+        return df.format(timeStamp*1000);
     }
 %>
 
@@ -79,7 +76,11 @@
             </div>
 
             <div class=" col-sm-4">
-                <%@ include file="homeParts/topVote.jsp" %>
+                <div class="card card-body">
+                    <h2>Top last 3 days</h2>
+                    <%@ include file="homeParts/topVote.jsp" %>
+                    <%@ include file="homeParts/topCmt.jsp" %>
+                </div>
             </div>
         </div>
 

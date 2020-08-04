@@ -9,6 +9,8 @@
 
 <%!
     List<CommentPoll> lsComment;
+
+
 %>
 
 <%
@@ -19,23 +21,33 @@
 <html>
 <body>
 <div class="card card-body">
-    <h2>Comment</h2>
-    <table>
-        <tr>
-            <th>Comment by user</th>
-            <th>Time comment</th>
-            <th>Content</th>
-        </tr>
 
-        <% for (int i =0; i < lsComment.size(); i++) { CommentPoll cmt = lsComment.get(i); %>
-        <tr >
-            <th><%=cmt.getCommentator().getFullName()%></th>
-            <th><%=cmt.getTimeCreate()%></th>
-            <th><%=cmt.getContent()%></th>
-        </tr>
-        <% } %>
+    <% for (int i =0; i < lsComment.size(); i++) { CommentPoll cmt = lsComment.get(i); %>
 
-    </table>
+    <div class="media mb-1" style="border: 0.5px solid; border-radius: 5px;">
+        <img class="media-object" src="https://upload.wikimedia.org/wikipedia/vi/b/b0/Avatar-Teaser-Poster.jpg" width="48" height="48" alt="...">
+
+        <div class="media-body pl-2">
+
+            <div class="row">
+                <div class="col-sm-10">
+                    <h6><%=cmt.getCommentator().getFullName()%></h6>
+                </div>
+                <div class="col-sm-2 p-0" style="font-size: 0.8em">
+                    <p class="my-1"><%=time2String(cmt.getTimeCreate())%></p>
+                </div>
+            </div>
+
+            <p style="font-size: 0.8em"><%=cmt.getContent()%></p>
+
+
+        </div>
+
+    </div>
+
+    <% } %>
+
+
 </div>
 </body>
 </html>

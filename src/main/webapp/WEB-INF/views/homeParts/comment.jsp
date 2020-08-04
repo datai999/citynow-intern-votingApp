@@ -11,14 +11,14 @@
 
 <html>
 <body>
-<div class="card card-body">
-    <div>
-        <form method="post" action="/comment" >
-            <input style="visibility: hidden" name="pollId" value="<%=currentPoll.getId()%>">
-            <input type="text" placeholder="Enter your comment" name="content">
+<div class="card card-body p-1">
+    <form method="post" action="${pageContext.request.contextPath}/comment" >
+        <input type="hidden" name="pollId" value="<%=currentPoll.getId()%>">
+        <div class="d-flex">
+            <input class="form-control mr-sm-1" type="text" placeholder="Enter your comment" name="content">
             <button class="btn btn-primary" type="submit">Comment</button>
-        </form>
-    </div>
+        </div>
+    </form>
 </div>
 </body>
 </html>

@@ -13,6 +13,14 @@
 
     boolean voted;
     int votedOptionId;
+
+    String getTime(long timeStamp){
+
+        SimpleDateFormat df1 = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat df2 = new SimpleDateFormat("HH:mm");
+
+        return df1.format(timeStamp*1000) + "T" + df2.format(timeStamp*1000);
+    }
 %>
 
 <%
@@ -37,27 +45,43 @@
 <html>
 <body>
 <div class="card card-body">
-    <form method="post" action="/home">
-        <button type="submit" name="previous">Previous</button>
-        <button type="submit" name="next">Next</button>
-    </form>
+
+    <div class="row">
+        <div class="col-sm-10">
+            <h3>Creator: <%=pollCreator.getFullName()%></h3>
+
+            <div class="row">
+                <div class="col">
+                    <label><b>Start: </b><%=time2String(currentPoll.getTimeStart())%></label>
+                </div>
+                <div class="col">
+                    <label><b>End: </b><%=time2String(currentPoll.getTimeEnd())%></label>
+                </div>
+                <div class="col">
+                    <label><b>Voted: </b> <%=currentPoll.getNumBallot()%></label>
+                </div>
+            </div>
+
+        </div>
+        <div class="col-sm">
+            <form method="post" action="/home">
+                <div class="d-flex justify-content-end">
+                        <button type="submit" class="btn btn-primary mr-3" name="previous">Previous</button>
+                        <button type="submit" class="btn btn-primary" name="next">Next</button>
+                </div>
+            </form>
+        </div>
+    </div>
 
     <br>
 
-
-    <h2>Vote create by: <%=pollCreator.getFullName()%></h2>
-
-    <label>Begin: <input type="datetime-local" disabled="disabled" value="<%=getTime(currentPoll.getTimeStart())%>"></label>
-    <br>
-
-    <h2><%=currentPoll.getTitle()%></h2>
-    <p><%=currentPoll.getQuestion()%></p>
-
+    <h3>Title: <%=currentPoll.getTitle()%></h3>
+    <h4><%=currentPoll.getQuestion()%></h4>
 
     <form method="post" action="/vote" >
 
-        <input style="visibility: hidden" name="poll" value="<%=currentPoll.getId()%>">
-        <br>
+        <input type="hidden" name="poll" value="<%=currentPoll.getId()%>">
+
         <% for (int i=0; i < 4; i ++) {  %>
 
         <label ><b>Option <%=i+1%>:</b></label>
@@ -75,8 +99,8 @@
         <br>
 
         <%}%>
-        <br>
-        <button type="submit"
+<%--        <br>--%>
+        <button type="submit" class="btn btn-primary"
                 <%if (voted) {%>
                 disabled="disabled"
                 <%}%>
@@ -84,11 +108,6 @@
             Vote
         </button>
 
-        <br>
-        <br>
-        <p><%=currentPoll.getNumBallot()%><label> Vote</label></p>
-        <label>Deadline: <input type="datetime-local" disabled="disabled" value="<%=getTime(currentPoll.getTimeEnd())%>"></label>
-        <br>
     </form>
 </div>
 </body>

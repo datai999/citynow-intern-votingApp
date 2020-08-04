@@ -23,6 +23,7 @@ public class HomeController extends HttpServlet {
     IUserService userService;
     int currentVote = -1;
     int size = 0;
+    int day = 3;
 
     public HomeController() {
         super();
