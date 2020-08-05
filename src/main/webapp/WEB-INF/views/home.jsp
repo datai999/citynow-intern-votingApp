@@ -24,12 +24,6 @@
     }
     Poll currentPoll;
     List<Poll> lsPoll;
-    int current;
-    void next(){
-        if (current == lsPoll.size()-1) current = -1;
-        current ++;
-        currentPoll = lsPoll.get(current);
-    }
 %>
 
 <%

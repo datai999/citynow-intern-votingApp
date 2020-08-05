@@ -17,7 +17,7 @@
 %>
 
 <%
-//    currentPoll = (Poll) request.getAttribute("currentPoll");
+
     if (currentPoll == null) {
         currentPoll = new PollBuilder().buildBase(0, 0, null, null, null).build();
         pollCreator = new UserAccount(null,null,null,"null", "https://res.cloudinary.com/datai/image/upload/v1596599502/city_now/voting_app/avatar/defaul_avatar.png");

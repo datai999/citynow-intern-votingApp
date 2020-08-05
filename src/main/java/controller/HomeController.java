@@ -43,12 +43,12 @@ public class HomeController extends HttpServlet {
 
 
         //        Get top vote
-        List<Poll> lsTopPoll = userService.getTopVote(timeNow - 3*24*60*60, timeNow);
+        List<Poll> lsTopPoll = userService.getTopVote(timeNow - day*24*60*60, timeNow);
         request.setAttribute("lsTopPoll", lsTopPoll);
 
 
 
-        List<Poll> lsPoll = userService.getPollBeforeEnd(timeNow - 3*24*60*60);
+        List<Poll> lsPoll = userService.getPollBeforeEnd(timeNow - day*24*60*60);
         size = lsPoll.size();
 
         if (size < 1){
@@ -63,7 +63,6 @@ public class HomeController extends HttpServlet {
             currentVote = size-1;
 
         Poll currentPoll = lsPoll.get(currentVote);
-        request.setAttribute("currentPoll", currentPoll);
         request.setAttribute("lsPoll", lsPoll);
 
 
@@ -85,25 +84,5 @@ public class HomeController extends HttpServlet {
         RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/WEB-INF/views/home.jsp");
         dispatcher.forward(request, response);
 
-    }
-
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-
-        String previous = request.getParameter("previous");
-        String next = request.getParameter("next");
-
-        if (previous != null){
-            if (currentVote == 0) currentVote = size;
-            currentVote--;
-        }
-
-        if (next != null){
-            if (currentVote == size-1) currentVote = -1;
-            currentVote ++;
-        }
-
-        doGet(request, response);
     }
 }

@@ -107,6 +107,10 @@ public class Poll {
         return title;
     }
 
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
     public String getQuestion() {
         return question;
     }
