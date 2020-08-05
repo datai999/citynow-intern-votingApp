@@ -34,23 +34,28 @@
             <div class="card-body">
                 <form action="<%=request.getContextPath()%>/login" method="post">
 
-                    <div class=" form-group row">
+                    <div class="form-group row">
+                        <div class="col-sm-2"></div>
                         <label class="col-sm-2 col-form-label">User Name</label>
-                        <div class="col-sm-7">
+                        <div class="col-sm-5">
                             <input type="text" class="form-control" name="username"
                                    placeholder="Enter user name" required>
                         </div>
                     </div>
 
                     <div class="form-group row">
+                        <div class="col-sm-2"></div>
                         <label class="col-sm-2 col-form-label">Passwrod</label>
-                        <div class="col-sm-7">
+                        <div class="col-sm-5">
                             <input type="password" class="form-control" name="password"
                                    placeholder="Enter Password" required>
                         </div>
                     </div>
 
-                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <div class="d-flex justify-content-center">
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+
                 </form>
             </div>
         </div>

@@ -34,6 +34,10 @@ public class CommentPoll {
         this.content = rs.getString("comment.content");
     }
 
+    public int getPollId() {
+        return pollId;
+    }
+
     public int getTimeCreate() {
         return timeCreate;
     }
