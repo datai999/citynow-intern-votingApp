@@ -5,6 +5,7 @@ import model.dto.comment.CommentPoll;
 import model.dto.poll.Poll;
 import model.dto.user.UserAccount;
 import model.dao.IUserService;
+import model.dto.user.UserRole;
 import model.dto.vote.Vote;
 
 import java.util.List;
@@ -22,8 +23,8 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
-    public List<Poll> getPollBeforeEnd(int timeNow) {
-        return GetPollService.getInstance().getPollBeforeEnd(timeNow);
+    public List<Poll> getPollBeforeEnd(int timeNow, UserRole viewRole) {
+        return GetPollService.getInstance().getPollBeforeEnd(timeNow, viewRole);
     }
 
     @Override

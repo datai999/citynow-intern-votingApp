@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.logging.Logger;
 
-public class CreatePollService extends BaseDao implements IAdminService {
+public class CreatePollService extends BaseDao {
 
     Logger _logger;
 
@@ -31,29 +31,12 @@ public class CreatePollService extends BaseDao implements IAdminService {
     }
 
 
-    int convert(String strDeadline){
 
-        strDeadline = strDeadline.substring(0,10) + "+" + strDeadline.substring(11);
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd+HH:mm");
-
-        Date date = null;
-        try {
-            date = dateFormat.parse(strDeadline);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-
-        assert date != null;
-        return (int) (date.getTime()/1000);
-    }
-
-    @Override
-    public boolean createPoll(int userId, String strDeadline, String tittle, String question, String[] options){
+    public boolean createPoll(Poll poll){
 
 //        insert question to database
         String insertQuestion = "INSERT INTO poll (userId, timeCreate, timeStart, timeEnd, viewRole, voteRole, minBallot, maxBallot, numBallot, title, question) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
-        int deadline = convert(strDeadline);
-        Poll poll = new PollBuilder().buildBase(userId, deadline, tittle, question, options).build();
+
         List<Object> paramsQuestion = Arrays.asList(poll.getArrObj());
 
         int countQuestion = execute(insertQuestion, paramsQuestion);
@@ -64,7 +47,7 @@ public class CreatePollService extends BaseDao implements IAdminService {
 //        query id question
         String queryQuestion = "SELECT id FROM poll WHERE userId=? AND timeCreate=?";
         AtomicInteger id = new AtomicInteger();
-        execute(queryQuestion, Arrays.asList(userId, paramsQuestion.get(1)), rs -> {
+        execute(queryQuestion, Arrays.asList(poll.getUserId(), paramsQuestion.get(1)), rs -> {
             try {
                 if (rs.next()) {
                     id.set(rs.getInt("id"));

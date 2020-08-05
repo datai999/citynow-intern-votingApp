@@ -4,6 +4,7 @@ import model.dto.poll.Poll;
 import model.dao.service.BaseDao;
 import model.dto.poll.PollOption;
 import model.dto.user.UserAccount;
+import model.dto.user.UserRole;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -22,7 +23,7 @@ public class GetPollService extends BaseDao {
         return GetPollService.LazyHolder.INSTANCE;
     }
 
-    public List<Poll> getPollBeforeEnd(int day){
+    public List<Poll> getPollBeforeEnd(int day, UserRole viewRole){
 
         List<Poll> lsPoll = new ArrayList<>();
 
@@ -31,8 +32,8 @@ public class GetPollService extends BaseDao {
         String query = "SELECT * FROM poll ";
                 query += "INNER JOIN user ON poll.userId = user.id ";
                 query += "INNER JOIN poll_option ON poll.id = poll_option.pollId ";
-                query += "WHERE timeStart>= ? OR timeEnd >= ?";
-        List<Object> params = Arrays.asList(new Object[]{timeNow, timeNow - day*24*60*60});
+                query += "WHERE (timeStart>= ? OR timeEnd >= ?) AND viewRole <= ?";
+        List<Object> params = Arrays.asList(new Object[]{timeNow, timeNow - day*24*60*60, viewRole.value});
 
         execute(query, params, rs ->{
             try {

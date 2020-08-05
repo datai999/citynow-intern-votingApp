@@ -6,6 +6,7 @@ import model.dto.poll.Poll;
 import model.dto.user.UserAccount;
 import model.dao.IUserService;
 import model.dao.impl.UserServiceImpl;
+import model.dto.user.UserRole;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -35,17 +36,20 @@ public class HomeController extends HttpServlet {
 
         int timeNow = (int) (System.currentTimeMillis()/1000);
 
+        //                Get top vote
+        List<Poll> lsTopPoll = userService.getTopVote(timeNow - day*24*60*60, timeNow);
+        request.setAttribute("lsTopPoll", lsTopPoll);
+
 
         UserAccount user = UserSession.getUserLoginSuccess(request.getSession());
         request.setAttribute("user", user);
 
 
-//                Get top vote
-        List<Poll> lsTopPoll = userService.getTopVote(timeNow - day*24*60*60, timeNow);
-        request.setAttribute("lsTopPoll", lsTopPoll);
-
-
-        List<Poll> lsPoll = userService.getPollBeforeEnd(day);
+//        Get poll
+        UserRole viewRole = UserRole.GUEST;
+        if (user != null)
+            viewRole = UserRole.fromInteger(user.getRole());
+        List<Poll> lsPoll = userService.getPollBeforeEnd(day, viewRole);
 
         if (lsPoll.size() < 1){
             RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/WEB-INF/views/home.jsp");

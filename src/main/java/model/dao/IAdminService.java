@@ -1,7 +1,9 @@
 package model.dao;
 
 
+import model.dto.poll.Poll;
+
 public interface IAdminService {
 
-    boolean createPoll(int userId, String strDeadline, String tittle, String question, String[] options);
+    boolean createPoll(Poll poll);
 }

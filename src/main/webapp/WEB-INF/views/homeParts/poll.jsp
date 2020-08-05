@@ -14,6 +14,7 @@
     boolean voted;
     int votedOptionId;
 
+    int typeNote = 0;
 %>
 
 <%
@@ -28,11 +29,18 @@
     if (user != null){
         votedOptionId = currentPoll.getVotedId();
         voted = votedOptionId>0;
+        typeNote = voted? 1:0;
     }
 
-    if (!voted)
+    if (!voted) {
         voted = ((int) (System.currentTimeMillis()/1000)) > currentPoll.getTimeEnd();
+        typeNote = voted? 2:0;
+    }
 
+    if (!voted && user !=null) {
+        voted = currentPoll.getVoteRole().value  > user.getRole();
+        typeNote = voted? 3:0;
+    }
 %>
 
 <html>
@@ -105,6 +113,16 @@
         >
             Vote
         </button>
+
+        <%
+            switch (typeNote){
+                default: break;
+                case 1: %> (You have already voted) <% break;
+                case 2: %> (The poll is out of date) <% break;
+                case 3: %> (The poll is only view for you) <% break;
+
+            }
+        %>
 
     </form>
 </div>
