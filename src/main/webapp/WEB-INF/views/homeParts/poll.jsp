@@ -47,8 +47,11 @@
 <div class="card card-body">
 
     <div class="row">
-        <div class="col-sm-10">
-            <h3>Creator: <%=pollCreator.getFullName()%></h3>
+        <div class="col-sm-1">
+            <img class="media-object" src="<%=currentPoll.getCreator().getUrlAvatar()%>" width="80" height="80" alt="...">
+        </div>
+        <div class="col-sm-8">
+            <h3><%=pollCreator.getFullName()%></h3>
 
             <div class="row">
                 <div class="col">

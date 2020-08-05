@@ -15,6 +15,7 @@
     <form method="post" action="${pageContext.request.contextPath}/comment" >
         <input type="hidden" name="pollId" value="<%=currentPoll.getId()%>">
         <div class="d-flex">
+            <img class="media-object" src="<%=user==null?url_avatar_default:user.getUrlAvatar()%>" width="48" height="48" alt="...">
             <input class="form-control mr-sm-1" type="text" placeholder="Enter your comment" name="content">
             <button class="btn btn-primary" type="submit">Comment</button>
         </div>

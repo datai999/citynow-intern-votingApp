@@ -25,11 +25,11 @@
     <% for (int i =0; i < lsTopPoll.size(); i++) {
         Poll poll = lsTopPoll.get(i);
         UserAccount user = poll.getCreator();
-        if (user == null) user = new UserAccount(null,null,null,"null", "https://res.cloudinary.com/datai/image/upload/v1596599502/city_now/voting_app/avatar/defaul_avatar.png");
+        if (user == null) user = new UserAccount(null,null,null,"null", url_avatar_default);
     %>
 
     <div class="media mb-1" style="border: 0.5px solid; border-radius: 5px;">
-        <img class="media-object" src="https://res.cloudinary.com/dqhmtfvvj/image/upload/v1596531689/sample.jpg" width="64" height="64" alt="...">
+        <img class="media-object" src="<%=user.getUrlAvatar()%>" width="48" height="48" alt="...">
 
         <div class="media-body pl-2">
 

@@ -14,6 +14,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <%!
+    String url_avatar_default = "https://res.cloudinary.com/datai/image/upload/v1596601506/city_now/voting_app/avatar/avatar_defaul.png";
+
     UserAccount user;
 
     String time2String(long timeStamp){
