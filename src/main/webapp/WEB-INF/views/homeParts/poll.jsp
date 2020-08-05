@@ -8,23 +8,16 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <%!
-    Poll currentPoll;
+
     UserAccount pollCreator;
 
     boolean voted;
     int votedOptionId;
 
-    String getTime(long timeStamp){
-
-        SimpleDateFormat df1 = new SimpleDateFormat("yyyy-MM-dd");
-        SimpleDateFormat df2 = new SimpleDateFormat("HH:mm");
-
-        return df1.format(timeStamp*1000) + "T" + df2.format(timeStamp*1000);
-    }
 %>
 
 <%
-    currentPoll = (Poll) request.getAttribute("currentPoll");
+//    currentPoll = (Poll) request.getAttribute("currentPoll");
     if (currentPoll == null) {
         currentPoll = new PollBuilder().buildBase(0, 0, null, null, null).build();
         pollCreator = new UserAccount(null,null,null,"null", "https://res.cloudinary.com/datai/image/upload/v1596599502/city_now/voting_app/avatar/defaul_avatar.png");
@@ -39,10 +32,21 @@
         voted = false;
         votedOptionId = 0;
     }
+    finally {
+        //        Kiểm tra poll đã quá hạn hay chưa
+        int timeNow = (int) (System.currentTimeMillis()/1000);
+        if (timeNow > currentPoll.getTimeEnd()){
+            voted = true;
+        }
+    }
 
 %>
 
 <html>
+<head>
+
+</head>
+
 <body>
 <div class="card card-body">
 
@@ -67,18 +71,16 @@
 
         </div>
         <div class="col-sm">
-            <form method="post" action="/home">
-                <div class="d-flex justify-content-end">
-                        <button type="submit" class="btn btn-primary mr-3" name="previous">Previous</button>
-                        <button type="submit" class="btn btn-primary" name="next">Next</button>
-                </div>
-            </form>
+            <div class="d-flex justify-content-end">
+                <button class="btn btn-primary mr-3" onclick="nextPoll(-1)">Previous</button>
+                <button class="btn btn-primary" onclick="nextPoll(1)">Next</button>
+            </div>
         </div>
     </div>
 
     <br>
 
-    <h3>Title: <%=currentPoll.getTitle()%></h3>
+    <h3 id = "title">Title: <%=currentPoll.getTitle()%></h3>
     <h4><%=currentPoll.getQuestion()%></h4>
 
     <form method="post" action="/vote" >

@@ -48,7 +48,7 @@ public class HomeController extends HttpServlet {
 
 
 
-        List<Poll> lsPoll = userService.getPollBeforeEnd(timeNow - 24*60*60);
+        List<Poll> lsPoll = userService.getPollBeforeEnd(timeNow - 3*24*60*60);
         size = lsPoll.size();
 
         if (size < 1){
@@ -64,6 +64,7 @@ public class HomeController extends HttpServlet {
 
         Poll currentPoll = lsPoll.get(currentVote);
         request.setAttribute("currentPoll", currentPoll);
+        request.setAttribute("lsPoll", lsPoll);
 
 
 //        Kiểm tra user đã vote hay chưa

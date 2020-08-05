@@ -22,10 +22,20 @@
         SimpleDateFormat df = new SimpleDateFormat("MM/dd-HH:mm");
         return df.format(timeStamp*1000);
     }
+    Poll currentPoll;
+    List<Poll> lsPoll;
+    int current;
+    void next(){
+        if (current == lsPoll.size()-1) current = -1;
+        current ++;
+        currentPoll = lsPoll.get(current);
+    }
 %>
 
 <%
     user = (UserAccount) request.getAttribute("user");
+
+    lsPoll = (List<Poll>) request.getAttribute("lsPoll");
 %>
 
 <!DOCTYPE html>
@@ -35,6 +45,9 @@
     <title>Home Page</title>
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+
+
 
 </head>
 <body>
@@ -66,12 +79,18 @@
     <div class="container-fluid">
         <div class="row">
             <div class=" col-sm-8 pl-5">
+
+                <%for (Poll poll: lsPoll){ currentPoll = poll;%>
+                <div class="poll">
                 <div class="row">
                     <%@ include file="homeParts/poll.jsp" %>
                 </div>
                 <div class="row">
                     <%@ include file="homeParts/commentView.jsp" %>
                 </div>
+                </div>
+                <%}%>
+
                 <div class="row">
                     <%@ include file="homeParts/comment.jsp" %>
                 </div>
@@ -89,7 +108,25 @@
     </div>
 </div>
 
+<script>
 
+    let polls = document.getElementsByClassName("poll");
+    var pollIndex = polls.length-1;
+    showPoll(pollIndex);
+
+    function nextPoll(n) {
+        showPoll(pollIndex += n);
+    }
+
+    function showPoll(n) {
+        if (n === polls.length) {pollIndex = 0}
+        if (n < 0) {pollIndex = polls.length-1}
+        for (let i = 0; i < polls.length; i++) {
+            polls[i].style.display = "none";
+        }
+        polls[pollIndex].style.display = "block";
+    }
+</script>
 
 </body>
 </html>
