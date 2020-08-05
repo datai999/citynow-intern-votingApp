@@ -73,15 +73,14 @@
     <div class="container-fluid">
         <div class="row">
             <div class=" col-sm-8 pl-5">
-
                 <%for (Poll poll: lsPoll){ currentPoll = poll;%>
                 <div class="poll">
-                <div class="row">
-                    <%@ include file="homeParts/poll.jsp" %>
-                </div>
-                <div class="row">
-                    <%@ include file="homeParts/commentView.jsp" %>
-                </div>
+                    <div class="row">
+                        <%@ include file="homeParts/poll.jsp" %>
+                    </div>
+                    <div class="row">
+                        <%@ include file="homeParts/commentView.jsp" %>
+                    </div>
                 </div>
                 <%}%>
 
@@ -94,7 +93,7 @@
                 <div class="card card-body">
                     <h2>Top last 3 days</h2>
                     <%@ include file="homeParts/topVote.jsp" %>
-                    <%@ include file="homeParts/topCmt.jsp" %>
+<%--                    <%@ include file="homeParts/topCmt.jsp" %>--%>
                 </div>
             </div>
         </div>

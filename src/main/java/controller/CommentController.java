@@ -30,7 +30,10 @@ public class CommentController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws IOException {
-        response.sendRedirect(request.getContextPath() + "/home");
+
+
+
+        response.sendRedirect(request.getContextPath() + "/comment");
     }
 
     @Override

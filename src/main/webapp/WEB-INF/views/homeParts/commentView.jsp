@@ -14,7 +14,7 @@
 %>
 
 <%
-    lsComment = (List<CommentPoll>) request.getAttribute("lsComment");
+    lsComment = currentPoll.getLsCmt();
     if (lsComment == null) lsComment = new ArrayList<>();
 %>
 

@@ -23,6 +23,8 @@ public class VoteController extends HttpServlet {
         userService = new UserServiceImpl();
     }
 
+
+
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws IOException {
@@ -41,9 +43,9 @@ public class VoteController extends HttpServlet {
 
         int pollId = Integer.parseInt(request.getParameter("poll"));
 
-        Vote vote = new Vote(Integer.parseInt(options[0]), user.getId());
+        Vote vote = new Vote(pollId, Integer.parseInt(options[0]), user.getId());
 
-        boolean voteSuccess =  userService.vote(vote, pollId);
+        boolean voteSuccess =  userService.vote(vote);
 
         response.sendRedirect(request.getContextPath() + "/home");
     }

@@ -21,8 +21,6 @@ public class HomeController extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
     IUserService userService;
-    int currentVote = -1;
-    int size = 0;
     int day = 3;
 
     public HomeController() {
@@ -42,43 +40,31 @@ public class HomeController extends HttpServlet {
         request.setAttribute("user", user);
 
 
-        //        Get top vote
+//                Get top vote
         List<Poll> lsTopPoll = userService.getTopVote(timeNow - day*24*60*60, timeNow);
         request.setAttribute("lsTopPoll", lsTopPoll);
 
 
+        List<Poll> lsPoll = userService.getPollBeforeEnd(day);
 
-        List<Poll> lsPoll = userService.getPollBeforeEnd(timeNow - day*24*60*60);
-        size = lsPoll.size();
-
-        if (size < 1){
+        if (lsPoll.size() < 1){
             RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/WEB-INF/views/home.jsp");
             dispatcher.forward(request, response);
             return;
         }
 
 
-
-        if (currentVote < 0)
-            currentVote = size-1;
-
-        Poll currentPoll = lsPoll.get(currentVote);
         request.setAttribute("lsPoll", lsPoll);
 
 
 //        Kiểm tra user đã vote hay chưa
         if (user != null){
-            int votedOptionId = userService.getVoteOptionByUserId(currentPoll.getId(),user.getId());
-            if (votedOptionId > 0){
-                request.setAttribute("voted", true);
-                request.setAttribute("votedOptionId", votedOptionId);
-            }
+            userService.getVoteOptionByUserId(lsPoll,user.getId());
         }
 
 
 //        Get comment
-        List<CommentPoll> lsComment =  userService.getCommentByPollId(currentPoll.getId());
-        request.setAttribute("lsComment", lsComment);
+        userService.getCommentByPollId(lsPoll);
 
 
         RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/WEB-INF/views/home.jsp");

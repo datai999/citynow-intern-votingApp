@@ -25,20 +25,13 @@
     }
     else pollCreator = currentPoll.getCreator();
 
-    try{
-        voted = (boolean) request.getAttribute("voted");
-        votedOptionId = (int) request.getAttribute("votedOptionId");
-    }catch (Exception e){
-        voted = false;
-        votedOptionId = 0;
+    if (user != null){
+        votedOptionId = currentPoll.getVotedId();
+        voted = votedOptionId>0;
     }
-    finally {
-        //        Kiểm tra poll đã quá hạn hay chưa
-        int timeNow = (int) (System.currentTimeMillis()/1000);
-        if (timeNow > currentPoll.getTimeEnd()){
-            voted = true;
-        }
-    }
+
+    if (!voted)
+        voted = ((int) (System.currentTimeMillis()/1000)) > currentPoll.getTimeEnd();
 
 %>
 

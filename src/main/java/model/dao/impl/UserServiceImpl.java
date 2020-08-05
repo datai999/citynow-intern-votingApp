@@ -27,13 +27,13 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
-    public boolean vote(Vote vote, int pollId) {
-        return VoteService.getInstance().vote(vote, pollId);
+    public boolean vote(Vote vote) {
+        return VoteService.getInstance().vote(vote);
     }
 
     @Override
-    public int getVoteOptionByUserId(int pollId, int userId) {
-        return GetVoteService.getInstance().getVoteOptionByUserId(pollId, userId);
+    public void getVoteOptionByUserId(List<Poll> lsPoll, int userId) {
+         GetVoteService.getInstance().getVoteOptionByUserId(lsPoll, userId);
     }
 
     @Override
@@ -47,7 +47,7 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
-    public List<CommentPoll> getCommentByPollId(int pollId) {
-        return GetCommentService.getInstance().getCommentByPollId(pollId);
+    public void getCommentByPollId(List<Poll> lsPoll) {
+        GetCommentService.getInstance().getCommentByPollId(lsPoll);
     }
 }

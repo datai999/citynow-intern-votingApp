@@ -1,5 +1,7 @@
 package model.dto.poll;
 
+import model.dao.service.user.CommentService;
+import model.dto.comment.CommentPoll;
 import model.dto.user.UserAccount;
 import model.dto.user.UserRole;
 
@@ -26,7 +28,8 @@ public class Poll {
 
 //    Extend database
     UserAccount creator;
-
+    int votedId = 0;
+    List<CommentPoll> lsCmt;
 
     PollOption option1;
     PollOption option2;
@@ -138,6 +141,23 @@ public class Poll {
 
     public void setCreator(UserAccount creator) {
         this.creator = creator;
+    }
+
+    public int getVotedId() {
+        return votedId;
+    }
+
+    public void setVotedId(int votedId) {
+        this.votedId = votedId;
+    }
+
+    public List<CommentPoll> getLsCmt() {
+        return lsCmt;
+    }
+
+    public void addCmt(CommentPoll cmt) {
+        if (lsCmt == null) lsCmt = new ArrayList<>();
+        this.lsCmt.add(cmt);
     }
 
     public Object[] getArrObj(){
