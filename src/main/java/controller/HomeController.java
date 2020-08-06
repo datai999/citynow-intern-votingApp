@@ -1,12 +1,15 @@
 package controller;
 
+import cache.IPollCache;
+import cache.ITopPollCache;
+import cache.impl.PollCacheImpl;
+import cache.impl.TopPollCacheImpl;
 import controller.session_and_cookie.UserSession;
 import model.dto.poll.Poll;
 import model.dto.user.UserAccount;
 import model.dao.IUserService;
 import model.dao.impl.UserServiceImpl;
 import model.dto.user.UserRole;
-import cache.PollCache;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -22,11 +25,15 @@ public class HomeController extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
     IUserService userService;
+    ITopPollCache topPollCache;
+    IPollCache pollCache;
     int day = 3;
 
     public HomeController() {
         super();
         userService = new UserServiceImpl();
+        topPollCache = TopPollCacheImpl.getInstance();
+        pollCache = PollCacheImpl.getInstance();
     }
 
     @Override
@@ -37,10 +44,10 @@ public class HomeController extends HttpServlet {
         int timeNow = (int) (System.currentTimeMillis()/1000);
 
         //                Get top vote
-        List<Poll> lsTopPoll = PollCache.getInstance().getTopPull();
+        List<Poll> lsTopPoll = topPollCache.getTopPoll();
         if (lsTopPoll == null){
             lsTopPoll = userService.getTopVote(timeNow - day*24*60*60, timeNow);
-            PollCache.getInstance().setTopPollCache(lsTopPoll);
+            topPollCache.setTopPollCache(lsTopPoll);
         }
         request.setAttribute("lsTopPoll", lsTopPoll);
 
@@ -53,12 +60,13 @@ public class HomeController extends HttpServlet {
         UserRole viewRole = UserRole.GUEST;
         if (user != null)
             viewRole = UserRole.fromInteger(user.getRole());
-        List<Poll> lsPoll = PollCache.getInstance().getPoll(viewRole);
+
+        List<Poll> lsPoll = pollCache.getPoll(viewRole);
         if (lsPoll == null){
             lsPoll = userService.getPollBeforeEnd(day, viewRole);
             userService.getCommentByPollId(lsPoll);
-            PollCache.getInstance().setPollCache(lsPoll);
-            lsPoll = PollCache.getInstance().getPoll(viewRole);
+            pollCache.setPollCache(lsPoll);
+            lsPoll = pollCache.getPoll(viewRole);
         }
 
 

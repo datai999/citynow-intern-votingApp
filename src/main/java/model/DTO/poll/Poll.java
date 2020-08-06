@@ -118,6 +118,10 @@ public class Poll {
         return numBallot;
     }
 
+    public void setNumBallot(int numBallot) {
+        this.numBallot = numBallot;
+    }
+
     public String getTitle() {
         return title;
     }

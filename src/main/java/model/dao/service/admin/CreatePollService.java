@@ -1,16 +1,11 @@
 package model.dao.service.admin;
 
-import cache.PollCache;
-import model.dto.poll.PollBuilder;
+import cache.impl.PollCacheImpl;
 import model.dao.service.BaseDao;
-import model.dao.IAdminService;
 import model.dto.poll.Poll;
 
 import java.sql.SQLException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.logging.Logger;
@@ -65,7 +60,7 @@ public class CreatePollService extends BaseDao {
         List<Object> paramsOption = Arrays.asList(poll.getArrOptionObj());
         int countOption = execute(queryOption, paramsOption);
 
-        if (countOption > 0) PollCache.getInstance().clearPollCache();
+        if (countOption > 0) PollCacheImpl.getInstance().clearPollCache();
 
         return countOption>0;
     }

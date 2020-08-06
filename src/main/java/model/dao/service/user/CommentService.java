@@ -1,6 +1,6 @@
 package model.dao.service.user;
 
-import cache.PollCache;
+import cache.impl.PollCacheImpl;
 import model.dao.service.BaseDao;
 import model.dto.comment.CommentPoll;
 
@@ -24,7 +24,7 @@ public class CommentService extends BaseDao {
         List<Object> paramsInsert = Arrays.asList(comment.getArrObj());
         int count = execute(queryInsert, paramsInsert);
 
-        if (count >0 ) PollCache.getInstance().addComment(comment);
+        if (count >0 ) PollCacheImpl.getInstance().pushComment(comment);
 
         return count > 0;
     }

@@ -1,5 +1,7 @@
-package cache;
+package cache.impl;
 
+import cache.IPollCache;
+import model.dao.service.user.CommentService;
 import model.dto.comment.CommentPoll;
 import model.dto.poll.Poll;
 import model.dto.user.UserRole;
@@ -7,43 +9,24 @@ import model.dto.user.UserRole;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PollCache {
-
-
-    List<Poll> topPollCache;
-    int timeTopPollCache = 0;
+public class PollCacheImpl implements IPollCache {
 
     List<Poll> lsPollCache;
 
-    private PollCache(){
-    };
+    private PollCacheImpl(){};
     private static class LazyHolder{
-        public static final PollCache INSTANCE = new PollCache();
+        public static final PollCacheImpl INSTANCE = new PollCacheImpl();
     }
-    public static PollCache getInstance(){
-        return PollCache.LazyHolder.INSTANCE;
-    }
-
-
-    int getTimeNow(){return (int) (System.currentTimeMillis()/1000);}
-
-
-    public List<Poll> getTopPull(){
-        return  (getTimeNow() > timeTopPollCache + 5*60)?null:topPollCache;
+    public static PollCacheImpl getInstance(){
+        return PollCacheImpl.LazyHolder.INSTANCE;
     }
 
-    public void setTopPollCache(List<Poll> topPoll){
-        this.topPollCache = topPoll;
-        this.timeTopPollCache = (int) (System.currentTimeMillis()/1000);;
-    }
-
-
-
+    @Override
     public List<Poll> getPoll(UserRole viewRole) {
 
         if (lsPollCache == null) return null;
 
-        int timeNow = getTimeNow();
+        int timeNow = (int) (System.currentTimeMillis()/1000);
 
         List<Poll> result = new ArrayList<>();
 
@@ -59,19 +42,21 @@ public class PollCache {
         }
 
         return result;
-
     }
 
-    public void setPollCache(List<Poll> lsPoll){
+    @Override
+    public void setPollCache(List<Poll> lsPoll) {
+        if (lsPollCache !=null) lsPollCache.clear();
         lsPollCache = lsPoll;
     }
 
-    public void clearPollCache(){
+    @Override
+    public void clearPollCache() {
         lsPollCache.clear();
     }
 
-    public void addComment(CommentPoll cmt){
+    @Override
+    public void pushComment(CommentPoll cmt) {
         lsPollCache.forEach(poll ->  {if (poll.getId() == cmt.getPollId()) poll.addCmt(cmt);});
     }
-
 }

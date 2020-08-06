@@ -29,22 +29,20 @@ public class GetVoteService extends BaseDao{
 
         int firstPollId = lsPoll.get(0).getId();
 
+        lsPoll.forEach(poll -> poll.setVotedId(0));
+
         String query = "SELECT * FROM vote WHERE pollId >= ? AND vote.userId = ?";
         List<Object> params = Arrays.asList(new Object[]{firstPollId, userId});
 
         execute(query, params, rs ->{
             try {
-                int index = 0;
-                Poll currentPoll = lsPoll.get(index);
                 while (rs.next()) {
                     Vote vote = new Vote(rs);
-                    while (index < lsPoll.size()){
-                        if (vote.getPollId() == currentPoll.getId()){
-                            currentPoll.setVotedId(vote.getPollOptionId());
+                    for(Poll poll:lsPoll){
+                        if (vote.getPollId() == poll.getId()){
+                            poll.setVotedId(vote.getPollOptionId());
                             break;
                         }
-                        currentPoll.setVotedId(0);
-                        currentPoll = lsPoll.get(++index);
                     }
                 }
             } catch (SQLException throwables) {

@@ -1,5 +1,6 @@
 package model.dao.service.user;
 
+import cache.impl.TopPollCacheImpl;
 import model.dao.service.BaseDao;
 import model.dto.vote.Vote;
 
@@ -36,7 +37,7 @@ public class VoteService extends BaseDao {
         List<Object> paramsUpdateOption = Arrays.asList(new Object[]{vote.getPollOptionId()});
         int countUpdateOption = execute(queryUpdateOption, paramsUpdateOption);
 
-
+        if (countUpdateOption >0 ) TopPollCacheImpl.getInstance().pushVote(vote);
 
         return countUpdateOption>0;
     }
