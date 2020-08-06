@@ -23,7 +23,7 @@ public class GetCommentService extends BaseDao {
 
         int firstPollId = lsPoll.get(0).getId();
 
-
+        lsPoll.forEach(Poll::initLsCmt);
 
         String query = "SELECT * FROM comment INNER JOIN user ON comment.userId = user.id WHERE pollId >= ?";
         List<Object> params = Arrays.asList(new Object[]{firstPollId});
@@ -32,7 +32,6 @@ public class GetCommentService extends BaseDao {
             try {
                 int index = 0;
                 Poll currentPoll = lsPoll.get(index);
-                List<CommentPoll> lsComment = new ArrayList<>();
                 while (rs.next()) {
                     CommentPoll comment = new CommentPoll(rs);
                     comment.setCommentator(new UserAccount(rs));

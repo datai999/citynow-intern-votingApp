@@ -64,10 +64,10 @@ public class Poll {
     public Poll(int userId, int timeStart, int timeEnd, UserRole viewRole, UserRole voteRole, int minBallot, int maxBallot, int numBallot, String title, String question, String[] options) {
         this.userId = userId;
         this.timeCreate = (int) (System.currentTimeMillis()/1000);
-        this.timeStart = timeCreate;
+        this.timeStart = timeStart;
         this.timeEnd = timeEnd;
-        this.viewRole = UserRole.GUEST;
-        this.voteRole = UserRole.CUSTOMER;
+        this.viewRole = viewRole;
+        this.voteRole = voteRole;
         this.minBallot = 0;
         this.maxBallot = 9999;
         this.numBallot = 0;
@@ -94,12 +94,24 @@ public class Poll {
         this.option4.setPollId(id);
     }
 
+    public int getUserId() {
+        return userId;
+    }
+
     public int getTimeStart() {
         return timeStart;
     }
 
     public int getTimeEnd() {
         return timeEnd;
+    }
+
+    public UserRole getViewRole() {
+        return viewRole;
+    }
+
+    public UserRole getVoteRole() {
+        return voteRole;
     }
 
     public int getNumBallot() {
@@ -156,7 +168,7 @@ public class Poll {
     }
 
     public void addCmt(CommentPoll cmt) {
-        if (lsCmt == null) lsCmt = new ArrayList<>();
+        if (lsCmt == null) initLsCmt();
         this.lsCmt.add(cmt);
     }
 
@@ -171,5 +183,11 @@ public class Poll {
             lsObj.add(getOption(i).getContent());
         }
         return lsObj.toArray();
+    }
+
+    public void initLsCmt(){
+        if (lsCmt == null)
+            lsCmt = new ArrayList<>();
+        lsCmt.clear();
     }
 }

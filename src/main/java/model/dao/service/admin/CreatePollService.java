@@ -1,5 +1,6 @@
 package model.dao.service.admin;
 
+import cache.PollCache;
 import model.dto.poll.PollBuilder;
 import model.dao.service.BaseDao;
 import model.dao.IAdminService;
@@ -64,6 +65,7 @@ public class CreatePollService extends BaseDao {
         List<Object> paramsOption = Arrays.asList(poll.getArrOptionObj());
         int countOption = execute(queryOption, paramsOption);
 
+        if (countOption > 0) PollCache.getInstance().clearPollCache();
 
         return countOption>0;
     }

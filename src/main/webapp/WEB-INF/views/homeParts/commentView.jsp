@@ -7,22 +7,12 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
-<%!
-    List<CommentPoll> lsComment;
-
-
-%>
-
-<%
-    lsComment = currentPoll.getLsCmt();
-    if (lsComment == null) lsComment = new ArrayList<>();
-%>
 
 <html>
 <body>
 <div class="card card-body">
 
-    <% for (int i =0; i < lsComment.size(); i++) { CommentPoll cmt = lsComment.get(i); %>
+    <% for (int i =0; i < currentPoll.getLsCmt().size(); i++) { CommentPoll cmt = currentPoll.getLsCmt().get(i); %>
 
     <div class="media mb-1" style="border: 0.5px solid; border-radius: 5px;">
         <img class="media-object" src="<%=cmt.getCommentator().getUrlAvatar()%>" width="48" height="48" alt="...">
