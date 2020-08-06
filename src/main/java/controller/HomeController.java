@@ -56,30 +56,29 @@ public class HomeController extends HttpServlet {
         List<Poll> lsPoll = PollCache.getInstance().getPoll(viewRole);
         if (lsPoll == null){
             lsPoll = userService.getPollBeforeEnd(day, viewRole);
+            userService.getCommentByPollId(lsPoll);
             PollCache.getInstance().setPollCache(lsPoll);
             lsPoll = PollCache.getInstance().getPoll(viewRole);
         }
 
 
-        if (lsPoll.size() < 1){
+        if (lsPoll == null || lsPoll.size() < 1){
             RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/WEB-INF/views/home.jsp");
             dispatcher.forward(request, response);
             return;
         }
 
 
-        request.setAttribute("lsPoll", lsPoll);
 
-
-//        Kiểm tra user đã vote hay chưa
+//        Kiểm tra user vote
         if (user != null){
             userService.getVoteOptionByUserId(lsPoll,user.getId());
         }
 
 
-//        Get comment
-        userService.getCommentByPollId(lsPoll);
 
+
+        request.setAttribute("lsPoll", lsPoll);
 
         RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/WEB-INF/views/home.jsp");
         dispatcher.forward(request, response);

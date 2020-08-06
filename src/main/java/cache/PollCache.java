@@ -1,7 +1,6 @@
 package cache;
 
-import model.dao.IUserService;
-import model.dao.impl.UserServiceImpl;
+import model.dto.comment.CommentPoll;
 import model.dto.poll.Poll;
 import model.dto.user.UserRole;
 
@@ -10,7 +9,6 @@ import java.util.List;
 
 public class PollCache {
 
-    IUserService userService;
 
     List<Poll> topPollCache;
     int timeTopPollCache = 0;
@@ -18,7 +16,6 @@ public class PollCache {
     List<Poll> lsPollCache;
 
     private PollCache(){
-        userService = new UserServiceImpl();
     };
     private static class LazyHolder{
         public static final PollCache INSTANCE = new PollCache();
@@ -55,14 +52,14 @@ public class PollCache {
                 if (poll.getTimeEnd() >= timeNow - 3*24*60*60){
                     if (poll.getViewRole().value <= viewRole.value){
                         result.add(poll);
-                        continue;
                     }
                 }
-                lsPollCache.remove(poll);
+                else lsPollCache.remove(poll);
             }
         }
 
         return result;
+
     }
 
     public void setPollCache(List<Poll> lsPoll){
@@ -71,6 +68,10 @@ public class PollCache {
 
     public void clearPollCache(){
         lsPollCache.clear();
+    }
+
+    public void addComment(CommentPoll cmt){
+        lsPollCache.forEach(poll ->  {if (poll.getId() == cmt.getPollId()) poll.addCmt(cmt);});
     }
 
 }

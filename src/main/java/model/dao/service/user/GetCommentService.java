@@ -30,16 +30,16 @@ public class GetCommentService extends BaseDao {
 
         execute(query, params, rs ->{
             try {
-                int index = 0;
-                Poll currentPoll = lsPoll.get(index);
                 while (rs.next()) {
                     CommentPoll comment = new CommentPoll(rs);
                     comment.setCommentator(new UserAccount(rs));
 
-                    while (comment.getPollId() != currentPoll.getId() && index < lsPoll.size()){
-                        currentPoll = lsPoll.get(++index);
+                    for (Poll poll: lsPoll){
+                        if (poll.getId() == comment.getPollId()) {
+                            poll.addCmt(comment);
+                            break;
+                        }
                     }
-                    currentPoll.addCmt(comment);
                 }
             } catch (SQLException throwables) {
                 throwables.printStackTrace();

@@ -47,6 +47,7 @@ public class CommentController extends HttpServlet {
         UserAccount user = UserSession.getUserLoginSuccess(request.getSession());
 
         CommentPoll comment = new CommentPoll(pollId, user.getId(), replyCommentId, content);
+        comment.setCommentator(user);
 
         boolean isSuccess = userService.comment(comment);
 

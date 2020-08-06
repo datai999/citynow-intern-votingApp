@@ -1,5 +1,6 @@
 package model.dao.service.user;
 
+import cache.PollCache;
 import model.dao.service.BaseDao;
 import model.dto.comment.CommentPoll;
 
@@ -22,6 +23,8 @@ public class CommentService extends BaseDao {
         String queryInsert = "INSERT INTO comment (pollId, userId, timeCreate,replyCommentId, content) VALUES (?, ?, ?, ?, ?)";
         List<Object> paramsInsert = Arrays.asList(comment.getArrObj());
         int count = execute(queryInsert, paramsInsert);
+
+        if (count >0 ) PollCache.getInstance().addComment(comment);
 
         return count > 0;
     }
