@@ -25,7 +25,6 @@
     Poll currentPoll;
     List<Poll> lsPoll;
 
-    int currentPollId = 0;
 %>
 
 <%
@@ -46,7 +45,7 @@
 
 
 </head>
-<body onload="showPoll(pollIndex)">
+<body onload="load()">
 
 <div>
 
@@ -74,13 +73,13 @@
 
     <div class="container-fluid">
         <div class="row">
-            <div class=" col-sm-8 pl-5">
+            <div class=" col-sm-8 pl-5" style="height: 90vh">
                 <%for (Poll poll: lsPoll){ currentPoll = poll;%>
                 <div class="poll">
-                    <div class="row">
+                    <div class="row" style="height: 45vh">
                         <%@ include file="homeParts/poll.jsp" %>
                     </div>
-                    <div class="row">
+                    <div class="row" style="height: 35vh">
                         <%@ include file="homeParts/commentView.jsp" %>
                     </div>
                 </div>
@@ -108,11 +107,13 @@
     let polls = document.getElementsByClassName("poll");
     let pollIds = document.getElementsByName("poll");
     let poll = document.getElementById("pollIdCmt");
-    var pollIndex = polls.length-1;
-
+    let pollIndex = polls.length - 1;
+    let cmtViewIndex = 0;
 
     function nextPoll(n) {
         showPoll(pollIndex += n);
+        cmtViewIndex = 0;
+        showCmtView(cmtViewIndex, pollIds[pollIndex].value);
     }
 
     function showPoll(n) {
@@ -123,6 +124,28 @@
         }
         polls[pollIndex].style.display = "block";
         poll.value = pollIds[pollIndex].value;
+    }
+
+
+
+    function nextCmtView(n, pollId) {
+        showCmtView(cmtViewIndex += n, pollId);
+    }
+
+    function showCmtView(n, pollId) {
+        let cmtViews = document.getElementsByName("commentView"+ pollId);
+
+        if (n === cmtViews.length) {cmtViewIndex--; return;}
+        if (n < 0) {cmtViewIndex = 0; return;}
+        for (let i = 0; i < cmtViews.length; i++) {
+            cmtViews[i].style.display = "none";
+        }
+        cmtViews[cmtViewIndex].style.display = "block";
+    }
+
+    function load() {
+        showPoll(pollIndex);
+        showCmtView(cmtViewIndex, <%=lsPoll.get(lsPoll.size()-1).getId()%>);
     }
 
 </script>

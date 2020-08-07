@@ -10,6 +10,11 @@
 
 
 <html>
+
+<head>
+
+</head>
+
 <body>
 <div class="card card-body p-1">
     <form method="post" action="/comment" >
@@ -21,5 +26,6 @@
         </div>
     </form>
 </div>
+
 </body>
 </html>

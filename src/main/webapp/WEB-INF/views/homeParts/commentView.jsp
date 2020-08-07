@@ -12,24 +12,35 @@
 <body>
 <div class="card card-body">
 
-    <% for (int i =0; i < currentPoll.getLsCmt().size(); i++) { CommentPoll cmt = currentPoll.getLsCmt().get(i); %>
+    <% for (int i =0; i < currentPoll.getLsCmt().size()/4 +1; i++) { %>
+    <div name="commentView<%=currentPoll.getId()%>" style="height: 28vh">
+        <%for (int j=0; j < 4; j++){
+            if (i*4+j == currentPoll.getLsCmt().size()) break;
+            CommentPoll cmt = currentPoll.getLsCmt().get(i*4+j); %>
 
-    <div class="media mb-1" style="border: 0.5px solid; border-radius: 5px;">
-        <img class="media-object" src="<%=cmt.getCommentator().getUrlAvatar()%>" width="48" height="48" alt="...">
 
-        <div class="media-body pl-2">
-            <div class="d-flex">
-                <h6 class="mr-auto"><%=cmt.getCommentator().getFullName()%></h6>
-                <p class="p-0 my-1 mr-1" style="font-size: 0.6em"><%=time2String(cmt.getTimeCreate())%></p>
+        <div class="media mb-1" style="border: 0.5px solid; border-radius: 5px;">
+            <img class="media-object" src="<%=cmt.getCommentator().getUrlAvatar()%>" width="48" height="48" alt="...">
+
+            <div class="media-body pl-2">
+                <div class="d-flex">
+                    <h6 class="mr-auto"><%=cmt.getCommentator().getFullName()%></h6>
+                    <p class="p-0 my-1 mr-1" style="font-size: 0.6em"><%=time2String(cmt.getTimeCreate())%></p>
+                </div>
+                <p style="font-size: 0.8em"><%=cmt.getContent()%></p>
             </div>
-            <p style="font-size: 0.8em"><%=cmt.getContent()%></p>
+
         </div>
-
+        <%}%>
     </div>
-
     <% } %>
 
+    <div class="mt-2" style="text-align:center;">
+        <button class="btn btn-primary btn-sm" onclick="nextCmtView(-1, <%=currentPoll.getId()%>)">Previous</button>
+        <button class="btn btn-primary btn-sm" onclick="nextCmtView(1, <%=currentPoll.getId()%>)">Next</button>
+    </div>
 
 </div>
+
 </body>
 </html>
