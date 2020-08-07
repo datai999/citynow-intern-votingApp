@@ -2,8 +2,8 @@ package model.dao.service.root;
 
 import model.dao.IRootService;
 import model.dao.service.BaseDao;
-import model.dto.user.UserAccount;
-import model.dto.user.UserRole;
+import model.dtO.user.UserAccount;
+import model.dtO.user.UserRole;
 import model.dao.impl.RootServiceImpl;
 
 import java.util.ArrayList;

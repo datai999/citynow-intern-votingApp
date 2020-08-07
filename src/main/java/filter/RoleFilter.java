@@ -1,8 +1,8 @@
 package filter;
 
 import controller.session_and_cookie.UserSession;
-import model.dto.user.UserAccount;
-import model.dto.user.UserRole;
+import model.dtO.user.UserAccount;
+import model.dtO.user.UserRole;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;

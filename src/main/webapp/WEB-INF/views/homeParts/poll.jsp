@@ -1,4 +1,4 @@
-<%@ page import="model.dto.poll.PollBuilder" %><%--
+<%@ page import="model.dtO.poll.PollBuilder" %><%--
   Created by IntelliJ IDEA.
   User: HP
   Date: 8/4/2020

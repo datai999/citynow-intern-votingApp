@@ -3,12 +3,10 @@ package model.dao.service.user;
 import cache.impl.PollCacheImpl;
 import cache.impl.TopPollCacheImpl;
 import model.dao.service.BaseDao;
-import model.dto.vote.Vote;
+import model.dtO.vote.Vote;
 
-import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
 
 public class VoteService extends BaseDao {
 

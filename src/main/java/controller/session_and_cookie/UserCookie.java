@@ -1,6 +1,6 @@
 package controller.session_and_cookie;
 
-import model.dto.user.UserAccount;
+import model.dtO.user.UserAccount;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;

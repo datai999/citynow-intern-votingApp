@@ -1,12 +1,10 @@
 package cache.impl;
 
 import cache.IPollCache;
-import model.dao.service.user.CommentService;
-import model.dto.comment.CommentPoll;
-import model.dto.poll.Poll;
-import model.dto.poll.PollOption;
-import model.dto.user.UserRole;
-import model.dto.vote.Vote;
+import model.dtO.comment.CommentPoll;
+import model.dtO.poll.Poll;
+import model.dtO.user.UserRole;
+import model.dtO.vote.Vote;
 
 import java.util.ArrayList;
 import java.util.List;

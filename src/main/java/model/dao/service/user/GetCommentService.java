@@ -1,12 +1,11 @@
 package model.dao.service.user;
 
 import model.dao.service.BaseDao;
-import model.dto.comment.CommentPoll;
-import model.dto.poll.Poll;
-import model.dto.user.UserAccount;
+import model.dtO.comment.CommentPoll;
+import model.dtO.poll.Poll;
+import model.dtO.user.UserAccount;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 

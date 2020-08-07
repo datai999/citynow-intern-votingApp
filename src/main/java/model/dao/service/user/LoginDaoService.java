@@ -1,7 +1,7 @@
 package model.dao.service.user;
 
 import model.dao.service.BaseDao;
-import model.dto.user.UserAccount;
+import model.dtO.user.UserAccount;
 
 import java.sql.*;
 import java.util.Arrays;

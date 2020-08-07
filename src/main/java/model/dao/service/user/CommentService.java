@@ -2,7 +2,7 @@ package model.dao.service.user;
 
 import cache.impl.PollCacheImpl;
 import model.dao.service.BaseDao;
-import model.dto.comment.CommentPoll;
+import model.dtO.comment.CommentPoll;
 
 import java.util.Arrays;
 import java.util.List;

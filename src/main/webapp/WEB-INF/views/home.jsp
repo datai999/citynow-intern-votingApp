@@ -1,10 +1,10 @@
-<%@ page import="model.dto.user.UserAccount" %>
-<%@ page import="model.dto.user.UserRole" %>
-<%@ page import="model.dto.poll.Poll" %>
+<%@ page import="model.dtO.user.UserAccount" %>
+<%@ page import="model.dtO.user.UserRole" %>
+<%@ page import="model.dtO.poll.Poll" %>
 <%@ page import="java.util.List" %>
 <%@ page import="java.text.SimpleDateFormat" %>
 <%@ page import="java.util.ArrayList" %>
-<%@ page import="model.dto.comment.CommentPoll" %><%--
+<%@ page import="model.dtO.comment.CommentPoll" %><%--
   Created by IntelliJ IDEA.
   User: HP
   Date: 7/20/2020
