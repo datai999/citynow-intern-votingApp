@@ -63,6 +63,8 @@ public class UpdateRoleService extends BaseDao {
     List<UserAccount> getUserChangeRole(String[] lsId){
 
         List<Integer> newIdAdmins = new ArrayList<>();
+
+        if (lsId != null)
         for (String str : lsId) newIdAdmins.add(Integer.parseInt(str));
 
 

@@ -27,14 +27,14 @@ public class ManageController extends HttpServlet {
     public ManageController() {
         super();
         rootService = new RootServiceImpl();
-        lsUser = rootService.getAllUser();
+
         _logger = Logger.getLogger(this.getClass().getName());
     }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
+        lsUser = rootService.getAllUser();
         request.setAttribute("lsUser", lsUser);
 
 //        lsUser.forEach(System.out::println);
@@ -50,17 +50,9 @@ public class ManageController extends HttpServlet {
 
         String[] lsId = request.getParameterValues("checkboxes");
 
-        if (lsId != null){
-            if (UpdateRoleService.getInstance().updateRole(lsId)){
-                lsUser.clear();
-                lsUser = rootService.getAllUser();
-            }
-            else {
-                _logger.info("Update role failed");
-            }
-        }
-        else {
-            _logger.info("lsId is null");
+        if (rootService.updateRole(lsId)){
+//            lsUser.clear();
+//            lsUser = rootService.getAllUser();
         }
 
         doGet(request,response);
