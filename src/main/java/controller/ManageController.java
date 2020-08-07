@@ -33,6 +33,10 @@ public class ManageController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+
+        request.setCharacterEncoding("UTF-8");
+        response.setCharacterEncoding("UTF-8");
+
         lsUser = rootService.getAllUser();
         request.setAttribute("lsUser", lsUser);
 
@@ -46,6 +50,9 @@ public class ManageController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        request.setCharacterEncoding("UTF-8");
+        response.setCharacterEncoding("UTF-8");
 
         String[] lsId = request.getParameterValues("checkboxes");
 

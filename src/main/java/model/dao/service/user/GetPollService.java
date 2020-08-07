@@ -32,7 +32,7 @@ public class GetPollService extends BaseDao {
         String query = "SELECT * FROM poll ";
                 query += "INNER JOIN user ON poll.userId = user.id ";
                 query += "INNER JOIN poll_option ON poll.id = poll_option.pollId ";
-                query += "WHERE timeEnd >= ?";
+                query += "WHERE timeEnd >= ? ORDER BY timeEnd";
         List<Object> params = Arrays.asList(new Object[]{timeNow - day*24*60*60});
 
         execute(query, params, rs ->{

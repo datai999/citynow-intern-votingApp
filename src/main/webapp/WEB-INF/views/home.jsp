@@ -53,7 +53,7 @@
 
         <button type="button" class="btn btn-primary" onclick="location.href ='/home'">App</button>
 
-        <h3>Home page: <%=user==null?"GUEST":user.getUsername()%></h3>
+        <h3>Home page: <%=user==null?"GUEST":user.getFullName()%></h3>
 
         <div>
 
@@ -112,7 +112,7 @@
     let polls = document.getElementsByClassName("poll");
     let pollIds = document.getElementsByName("poll");
     let poll = document.getElementById("pollIdCmt");
-    let pollIndex = polls.length - 1;
+    let pollIndex = 0;
     let cmtViewIndex = 0;
 
     function nextPoll(n) {

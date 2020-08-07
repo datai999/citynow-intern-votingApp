@@ -40,6 +40,9 @@ public class HomeController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
+        request.setCharacterEncoding("UTF-8");
+        response.setCharacterEncoding("UTF-8");
+
 
         int timeNow = (int) (System.currentTimeMillis()/1000);
 
@@ -62,7 +65,7 @@ public class HomeController extends HttpServlet {
             viewRole = UserRole.fromInteger(user.getRole());
 
         List<Poll> lsPoll = pollCache.getPoll(viewRole);
-        if (lsPoll == null){
+        if (lsPoll == null || lsPoll.size() == 0){
             lsPoll = userService.getPollBeforeEnd(day, viewRole);
             userService.getCommentByPollId(lsPoll);
             pollCache.setPollCache(lsPoll);

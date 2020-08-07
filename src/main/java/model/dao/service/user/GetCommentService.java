@@ -24,7 +24,7 @@ public class GetCommentService extends BaseDao {
 
         lsPoll.forEach(Poll::initLsCmt);
 
-        String query = "SELECT * FROM comment INNER JOIN user ON comment.userId = user.id WHERE pollId >= ?";
+        String query = "SELECT * FROM comment INNER JOIN user ON comment.userId = user.id WHERE pollId >= ? ORDER BY pollId, comment.id";
         List<Object> params = Arrays.asList(new Object[]{firstPollId});
 
         execute(query, params, rs ->{

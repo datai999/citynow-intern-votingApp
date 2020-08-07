@@ -30,7 +30,8 @@ public class CommentController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws IOException {
-
+        request.setCharacterEncoding("UTF-8");
+        response.setCharacterEncoding("UTF-8");
 
 
         response.sendRedirect(request.getContextPath() + "/comment");
@@ -38,6 +39,9 @@ public class CommentController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+
+        request.setCharacterEncoding("UTF-8");
+        response.setCharacterEncoding("UTF-8");
 
         int pollId = Integer.parseInt(request.getParameter("pollId"));
 //        int replyCommentId = Integer.parseInt(request.getParameter("replyCommentId"));

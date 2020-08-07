@@ -40,6 +40,9 @@ public class CreatePollController extends HttpServlet {
             throws ServletException, IOException {
 
 
+        request.setCharacterEncoding("UTF-8");
+        response.setCharacterEncoding("UTF-8");
+
         RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/WEB-INF/views/create.jsp");
 
         response.setContentType("text/html;charset=UTF-8");
@@ -52,8 +55,8 @@ public class CreatePollController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 
-        response.setContentType("text/html;charset=UTF-8");
-        request.setCharacterEncoding("utf-8");
+        request.setCharacterEncoding("UTF-8");
+        response.setCharacterEncoding("UTF-8");
 
         String title = request.getParameter("title");
         String question = request.getParameter("question");
