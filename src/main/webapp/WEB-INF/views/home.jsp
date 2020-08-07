@@ -4,7 +4,7 @@
 <%@ page import="java.util.List" %>
 <%@ page import="java.text.SimpleDateFormat" %>
 <%@ page import="java.util.ArrayList" %>
-<%@ page import="model.dtO.comment.CommentPoll" %><%--
+<%@ page import="model.dto.comment.CommentPoll" %><%--
   Created by IntelliJ IDEA.
   User: HP
   Date: 7/20/2020
