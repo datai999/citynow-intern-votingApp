@@ -56,6 +56,11 @@
         <h3>Home page: <%=user==null?"GUEST":user.getUsername()%></h3>
 
         <div>
+
+            <% if (user != null && user.getRole() == UserRole.ROOT.value)  {%>
+            <button type="button" class="btn btn-primary" onclick="location.href ='/root'">Manager</button>
+            <%  } %>
+
             <% if (user != null && user.getRole() != UserRole.CUSTOMER.value)  {%>
             <button type="button" class="btn btn-primary" onclick="location.href ='/create'">Create</button>
             <%  } %>

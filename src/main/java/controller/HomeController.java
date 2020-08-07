@@ -45,7 +45,7 @@ public class HomeController extends HttpServlet {
 
         //                Get top vote
         List<Poll> lsTopPoll = topPollCache.getTopPoll();
-        if (lsTopPoll == null){
+        if (lsTopPoll == null || lsTopPoll.size() == 0){
             lsTopPoll = userService.getTopVote(timeNow - day*24*60*60, timeNow);
             topPollCache.setTopPollCache(lsTopPoll);
         }

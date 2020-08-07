@@ -4,7 +4,9 @@ import cache.IPollCache;
 import model.dao.service.user.CommentService;
 import model.dto.comment.CommentPoll;
 import model.dto.poll.Poll;
+import model.dto.poll.PollOption;
 import model.dto.user.UserRole;
+import model.dto.vote.Vote;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -58,5 +60,20 @@ public class PollCacheImpl implements IPollCache {
     @Override
     public void pushComment(CommentPoll cmt) {
         lsPollCache.forEach(poll ->  {if (poll.getId() == cmt.getPollId()) poll.addCmt(cmt);});
+    }
+
+    @Override
+    public void pushVote(Vote vote) {
+        if (lsPollCache == null) return;
+        for (Poll poll: lsPollCache){
+            if (poll.getId() == vote.getPollId()){
+                poll.setNumBallot(poll.getNumBallot() + 1);
+                for (int i = 0; i < 4; i++){
+                    if (poll.getOption(i).getId() == vote.getPollOptionId())
+                        poll.getOption(i).setCount(poll.getOption(i).getCount()+1);
+                }
+                break;
+            }
+        }
     }
 }

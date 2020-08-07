@@ -3,6 +3,7 @@ package cache;
 import model.dto.comment.CommentPoll;
 import model.dto.poll.Poll;
 import model.dto.user.UserRole;
+import model.dto.vote.Vote;
 
 import java.util.List;
 
@@ -15,4 +16,6 @@ public interface IPollCache {
 
 //    Comment
     void pushComment(CommentPoll cmt);
+
+    void pushVote(Vote vote);
 }
