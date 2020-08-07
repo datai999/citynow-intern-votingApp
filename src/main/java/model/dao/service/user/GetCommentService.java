@@ -1,7 +1,8 @@
 package model.dao.service.user;
 
 import model.dao.service.BaseDao;
-import model.dto.comment.Comment;
+import model.dto.comment.CommentPoll;
+import model.dto.poll.Poll;
 import model.dto.user.UserAccount;
 
 import java.sql.SQLException;
@@ -18,25 +19,31 @@ public class GetCommentService extends BaseDao {
         return GetCommentService.LazyHolder.INSTANCE;
     }
 
-    public List<Comment> getCommentByPollId(int pollId){
+    public void getCommentByPollId(List<Poll> lsPoll){
 
-        List<Comment> lsComment = new ArrayList<>();
+        int firstPollId = lsPoll.get(0).getId();
 
-        String query = "SELECT * FROM comment INNER JOIN user ON comment.userId = user.id WHERE pollId = ?";
-        List<Object> params = Arrays.asList(new Object[]{pollId});
+        lsPoll.forEach(Poll::initLsCmt);
+
+        String query = "SELECT * FROM comment INNER JOIN user ON comment.userId = user.id WHERE pollId >= ?";
+        List<Object> params = Arrays.asList(new Object[]{firstPollId});
 
         execute(query, params, rs ->{
             try {
                 while (rs.next()) {
-                    Comment comment = new Comment(rs);
-                    comment.setCommentByUser(new UserAccount(rs));
-                    lsComment.add(comment);
+                    CommentPoll comment = new CommentPoll(rs);
+                    comment.setCommentator(new UserAccount(rs));
+
+                    for (Poll poll: lsPoll){
+                        if (poll.getId() == comment.getPollId()) {
+                            poll.addCmt(comment);
+                            break;
+                        }
+                    }
                 }
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
             }
         });
-
-        return lsComment;
     }
 }

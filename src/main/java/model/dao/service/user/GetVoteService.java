@@ -2,14 +2,14 @@ package model.dao.service.user;
 
 import model.dao.service.BaseDao;
 import model.dto.poll.Poll;
-import model.dto.poll.PollOption;
 import model.dto.user.UserAccount;
+import model.dto.vote.Vote;
 
-import java.sql.Array;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class GetVoteService extends BaseDao{
 
@@ -25,36 +25,36 @@ public class GetVoteService extends BaseDao{
 
 
 
-    public List<Object> getVoteByUserId(int timeEnd, int minPollId, int userId){
+    public void getVoteOptionByUserId(List<Poll> lsPoll, int userId){
 
-        List<Integer> lsPollId = new ArrayList<>();
-        List<Integer> lsPollOptionId = new ArrayList<>();
+        int firstPollId = lsPoll.get(0).getId();
 
-        String query = "SELECT pollId,pollOptionId FROM poll_option ";
-                query += "INNER JOIN vote ON poll_option.id = vote.pollOptionId ";
-                query += "INNER JOIN poll ON poll_option.pollId = poll.id ";
-                query += "WHERE poll.timeEnd >= ? AND poll_option.pollId >= ? AND vote.userId = ?";
+        lsPoll.forEach(poll -> poll.setVotedId(0));
 
-
-        List<Object> params = Arrays.asList(new Object[]{timeEnd, minPollId, userId});
+        String query = "SELECT * FROM vote WHERE pollId >= ? AND vote.userId = ?";
+        List<Object> params = Arrays.asList(new Object[]{firstPollId, userId});
 
         execute(query, params, rs ->{
             try {
                 while (rs.next()) {
-                    lsPollId.add(rs.getInt("pollId"));
-                    lsPollOptionId.add(rs.getInt("pollOptionId"));
+                    Vote vote = new Vote(rs);
+                    for(Poll poll:lsPoll){
+                        if (vote.getPollId() == poll.getId()){
+                            poll.setVotedId(vote.getPollOptionId());
+                            break;
+                        }
+                    }
                 }
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
             }
         });
-        return Arrays.asList(new Object[]{lsPollId, lsPollOptionId});
+
     }
 
-    public List<Object> getTopVote(int timeLeft, int timeRight){
+    public List<Poll> getTopVote(int timeLeft, int timeRight){
 
         List<Poll> lsPoll = new ArrayList<>();
-        List<UserAccount> lsUser = new ArrayList<>();
 
         String query = "SELECT * FROM poll INNER JOIN user ON poll.userId = user.id ";
                 query += "WHERE timeStart >= ? AND timeStart <= ? ORDER BY numBallot DESC LIMIT ?";
@@ -64,14 +64,14 @@ public class GetVoteService extends BaseDao{
         execute(query, params, rs ->{
             try {
                 while (rs.next()) {
-                    lsPoll.add(new Poll(rs));
-                    lsUser.add(new UserAccount(rs));
+                    Poll poll = new Poll(rs);
+                    poll.setCreator(new UserAccount(rs));
+                    lsPoll.add(poll);
                 }
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
             }
         });
-
-        return Arrays.asList(new Object[]{lsPoll,lsUser});
+        return lsPoll;
     }
 }

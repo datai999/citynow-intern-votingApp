@@ -2,11 +2,9 @@
 <%@ page import="model.dto.user.UserRole" %>
 <%@ page import="model.dto.poll.Poll" %>
 <%@ page import="java.util.List" %>
-<%@ page import="java.util.Date" %>
 <%@ page import="java.text.SimpleDateFormat" %>
-<%@ page import="model.dto.poll.PollBuilder" %>
 <%@ page import="java.util.ArrayList" %>
-<%@ page import="model.dto.comment.Comment" %><%--
+<%@ page import="model.dto.comment.CommentPoll" %><%--
   Created by IntelliJ IDEA.
   User: HP
   Date: 7/20/2020
@@ -15,215 +13,147 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <title>Home Page</title>
-</head>
-<body>
-
-
 <%!
+    String url_avatar_default = "https://res.cloudinary.com/datai/image/upload/v1596601506/city_now/voting_app/avatar/avatar_defaul.png";
+
     UserAccount user;
-    Poll currentPoll;
-    UserAccount currentPollUser;
-    boolean voted;
-    int votedOptionId;
 
-    List<Poll> lsTopPoll;
-    List<UserAccount> lsTopPollUser;
-    List<Comment> lsComment;
-
-
-    String getTime(long timeStamp){
-
-        SimpleDateFormat df1 = new SimpleDateFormat("yyyy-MM-dd");
-        SimpleDateFormat df2 = new SimpleDateFormat("HH:mm");
-
-        return df1.format(timeStamp*1000) + "T" + df2.format(timeStamp*1000);
+    String time2String(long timeStamp){
+        SimpleDateFormat df = new SimpleDateFormat("MM/dd-HH:mm");
+        return df.format(timeStamp*1000);
     }
+    Poll currentPoll;
+    List<Poll> lsPoll;
+
 %>
 
 <%
     user = (UserAccount) request.getAttribute("user");
 
-    try{
-        voted = (boolean) request.getAttribute("voted");
-        votedOptionId = (int) request.getAttribute("votedOptionId");
-    }catch (Exception e){
-        voted = false;
-        votedOptionId = 0;
-    }
-
-
-    currentPoll = (Poll) request.getAttribute("currentPoll");
-    currentPollUser = (UserAccount) request.getAttribute("currentPollUser");
-    if (currentPoll == null) currentPoll = new PollBuilder().buildBase(0, 0, null, null, null).build();
-    if (currentPollUser == null) {
-        currentPollUser = new UserAccount(null,null,null,"null");
-        voted = true;
-    }
-
-
-    lsTopPoll = (List<Poll>) request.getAttribute("lsTopPoll");
-    lsTopPollUser = (List<UserAccount>) request.getAttribute("lsTopPollUser");
-    if (lsTopPoll == null) lsTopPoll = new ArrayList<>();
-    if (lsTopPollUser == null) lsTopPollUser = new ArrayList<>();
-
-
-    lsComment = (List<Comment>) request.getAttribute("lsComment");
+    lsPoll = (List<Poll>) request.getAttribute("lsPoll");
 %>
 
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Home Page</title>
 
-
-<div class="container">
-    <button type="button" onclick="location.href ='/home'">App</button>
-    <h3>Home page: <%=user==null?"GUEST":user.getUsername()%></h3>
-
-    <% if (user != null && user.getRole() != UserRole.CUSTOMER.value)  {%>
-        <button type="button" onclick="location.href ='/create'">Create</button>
-        <br><br>
-    <%  } %>
-
-    <% if(user!=null){ %>
-        <button type="button" onclick="location.href ='/logout'">Logout</button>
-    <% } else { %>
-        <button type="button" onclick="location.href ='/login'">Login</button>
-    <%}%>
-</div>
-
-<br>
-
-<br><br>
-<div class="container">
-
-    <form method="post" action="/home">
-        <button type="submit" name="previous">Previous</button>
-        <button type="submit" name="next">Next</button>
-    </form>
-
-    <br>
-
-
-    <h2>Vote create by: <%=currentPollUser.getFullName()%></h2>
-
-    <label>Begin: <input type="datetime-local" disabled="disabled" value="<%=getTime(currentPoll.getTimeStart())%>"></label>
-    <br>
-
-    <h2><%=currentPoll.getTitle()%></h2>
-    <p><%=currentPoll.getQuestion()%></p>
-
-
-    <form method="post" action="/vote" >
-
-        <input style="visibility: hidden" name="poll" value="<%=currentPoll.getId()%>">
-        <br>
-        <% for (int i=0; i < 4; i ++) {  %>
-
-            <label ><b>Option <%=i+1%>:</b></label>
-            <label>
-                <input type="radio"  name="options"
-                    <%if (currentPoll.getOption(i).getId() == votedOptionId) {%>
-                       checked="checked"
-                    <%}%>
-                    <%if (voted) {%>
-                       disabled="disabled"
-                    <%}%>
-                       value="<%=currentPoll.getOption(i).getId()%>">
-                 <%=currentPoll.getOption(i).getContent()%>
-            </label>
-            <br>
-
-        <%}%>
-        <br>
-        <button type="submit"
-                <%if (voted) {%>
-                disabled="disabled"
-                <%}%>
-        >
-            Vote
-        </button>
-
-        <br>
-        <br>
-        <p><%=currentPoll.getNumBallot()%><label> Vote</label></p>
-        <label>Deadline: <input type="datetime-local" disabled="disabled" value="<%=getTime(currentPoll.getTimeEnd())%>"></label>
-        <br>
-    </form>
-
-</div>
-
-<br>
-<br>
-
-<h2>Comment</h2>
-<table>
-    <tr>
-        <th>Comment by user</th>
-        <th>Time comment</th>
-        <th>Content</th>
-    </tr>
-
-    <% for (int i =0; i < lsComment.size(); i++) { Comment cmt = lsComment.get(i); %>
-    <tr >
-        <th><%=cmt.getCommentByUser().getFullName()%></th>
-        <th><%=cmt.getTimeCreate()%></th>
-        <th><%=cmt.getContent()%></th>
-    </tr>
-    <% } %>
-
-</table>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
 
 
-<br>
-<br>
+
+</head>
+<body onload="load()">
+
 <div>
-    <form method="post" action="/comment" >
 
-        <input style="visibility: hidden" name="pollId" value="<%=currentPoll.getId()%>">
-        <br>
-        <input type="text" placeholder="Enter your comment" name="content"
-            <%if (user == null) {%>
-               disabled="disabled"
+    <nav class="navbar navbar-light bg-light justify-content-between">
+
+        <button type="button" class="btn btn-primary" onclick="location.href ='/home'">App</button>
+
+        <h3>Home page: <%=user==null?"GUEST":user.getUsername()%></h3>
+
+        <div>
+
+            <% if (user != null && user.getRole() == UserRole.ROOT.value)  {%>
+            <button type="button" class="btn btn-primary" onclick="location.href ='/root'">Manager</button>
+            <%  } %>
+
+            <% if (user != null && user.getRole() != UserRole.CUSTOMER.value)  {%>
+            <button type="button" class="btn btn-primary" onclick="location.href ='/create'">Create</button>
+            <%  } %>
+
+            <% if (user != null){ %>
+            <button type="button" class="btn btn-primary" onclick="location.href ='/logout'">Logout</button>
+            <% } else { %>
+            <button type="button" class="btn btn-primary" onclick="location.href ='/login'">Login</button>
             <%}%>
-        >
-        <button type="submit"
-                <%if (user == null) {%>
-                disabled="disabled"
+        </div>
+
+    </nav>
+
+    <br>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class=" col-sm-8 pl-5" style="height: 90vh">
+                <%for (Poll poll: lsPoll){ currentPoll = poll;%>
+                <div class="poll">
+                    <div class="row" style="height: 45vh">
+                        <%@ include file="homeParts/poll.jsp" %>
+                    </div>
+                    <div class="row" style="height: 35vh">
+                        <%@ include file="homeParts/commentView.jsp" %>
+                    </div>
+                </div>
                 <%}%>
-        >
-            Comment
-        </button>
-    </form>
+
+                <div class="row">
+                    <%@ include file="homeParts/comment.jsp" %>
+                </div>
+            </div>
+
+            <div class=" col-sm-4">
+                <div class="card card-body">
+                    <h2>Top last 3 days</h2>
+                    <%@ include file="homeParts/topVote.jsp" %>
+<%--                    <%@ include file="homeParts/topCmt.jsp" %>--%>
+                </div>
+            </div>
+        </div>
+
+    </div>
 </div>
 
-<h2>Top poll</h2>
-<table>
-    <tr>
-        <th>No</th>
-        <th>Tittle</th>
-        <th>Create by</th>
-        <th>Start</th>
-        <th>End</th>
-        <th>Ballot</th>
-    </tr>
+<script>
 
-    <% for (int i =0; i < lsTopPoll.size(); i++) { Poll poll = lsTopPoll.get(i); UserAccount user = lsTopPollUser.get(i); %>
-    <tr >
-        <th><%=i+1%></th>
-        <th><%=poll.getTitle()%></th>
-        <th><%=user.getFullName()%></th>
-        <th><%=poll.getTimeStart()%></th>
-        <th><%=poll.getTimeEnd()%></th>
-        <th><%=poll.getNumBallot()%></th>
-    </tr>
-    <% } %>
+    let polls = document.getElementsByClassName("poll");
+    let pollIds = document.getElementsByName("poll");
+    let poll = document.getElementById("pollIdCmt");
+    let pollIndex = polls.length - 1;
+    let cmtViewIndex = 0;
 
-</table>
+    function nextPoll(n) {
+        showPoll(pollIndex += n);
+        cmtViewIndex = 0;
+        showCmtView(cmtViewIndex, pollIds[pollIndex].value);
+    }
+
+    function showPoll(n) {
+        if (n === polls.length) {pollIndex = 0}
+        if (n < 0) {pollIndex = polls.length-1}
+        for (let i = 0; i < polls.length; i++) {
+            polls[i].style.display = "none";
+        }
+        polls[pollIndex].style.display = "block";
+        poll.value = pollIds[pollIndex].value;
+    }
 
 
+
+    function nextCmtView(n, pollId) {
+        showCmtView(cmtViewIndex += n, pollId);
+    }
+
+    function showCmtView(n, pollId) {
+        let cmtViews = document.getElementsByName("commentView"+ pollId);
+
+        if (n === cmtViews.length) {cmtViewIndex--; return;}
+        if (n < 0) {cmtViewIndex = 0; return;}
+        for (let i = 0; i < cmtViews.length; i++) {
+            cmtViews[i].style.display = "none";
+        }
+        cmtViews[cmtViewIndex].style.display = "block";
+    }
+
+    function load() {
+        showPoll(pollIndex);
+        showCmtView(cmtViewIndex, <%=lsPoll.get(lsPoll.size()-1).getId()%>);
+    }
+
+</script>
 
 </body>
 </html>

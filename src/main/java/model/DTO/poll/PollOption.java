@@ -45,6 +45,10 @@ public class PollOption {
         return count;
     }
 
+    public void setCount(int count) {
+        this.count = count;
+    }
+
     public String getContent() {
         return content;
     }

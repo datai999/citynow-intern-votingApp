@@ -1,5 +1,8 @@
 package model.dto.poll;
 
+import model.dao.service.user.CommentService;
+import model.dto.comment.CommentPoll;
+import model.dto.user.UserAccount;
 import model.dto.user.UserRole;
 
 import java.sql.ResultSet;
@@ -23,6 +26,10 @@ public class Poll {
     String question;
 
 
+//    Extend database
+    UserAccount creator;
+    int votedId = 0;
+    List<CommentPoll> lsCmt;
 
     PollOption option1;
     PollOption option2;
@@ -57,10 +64,10 @@ public class Poll {
     public Poll(int userId, int timeStart, int timeEnd, UserRole viewRole, UserRole voteRole, int minBallot, int maxBallot, int numBallot, String title, String question, String[] options) {
         this.userId = userId;
         this.timeCreate = (int) (System.currentTimeMillis()/1000);
-        this.timeStart = timeCreate;
+        this.timeStart = timeStart;
         this.timeEnd = timeEnd;
-        this.viewRole = UserRole.GUEST;
-        this.voteRole = UserRole.CUSTOMER;
+        this.viewRole = viewRole;
+        this.voteRole = voteRole;
         this.minBallot = 0;
         this.maxBallot = 9999;
         this.numBallot = 0;
@@ -87,6 +94,10 @@ public class Poll {
         this.option4.setPollId(id);
     }
 
+    public int getUserId() {
+        return userId;
+    }
+
     public int getTimeStart() {
         return timeStart;
     }
@@ -95,12 +106,28 @@ public class Poll {
         return timeEnd;
     }
 
+    public UserRole getViewRole() {
+        return viewRole;
+    }
+
+    public UserRole getVoteRole() {
+        return voteRole;
+    }
+
     public int getNumBallot() {
         return numBallot;
     }
 
+    public void setNumBallot(int numBallot) {
+        this.numBallot = numBallot;
+    }
+
     public String getTitle() {
         return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public String getQuestion() {
@@ -124,6 +151,31 @@ public class Poll {
         option4 = lsOption.get(3);
     }
 
+    public UserAccount getCreator() {
+        return creator;
+    }
+
+    public void setCreator(UserAccount creator) {
+        this.creator = creator;
+    }
+
+    public int getVotedId() {
+        return votedId;
+    }
+
+    public void setVotedId(int votedId) {
+        this.votedId = votedId;
+    }
+
+    public List<CommentPoll> getLsCmt() {
+        return lsCmt;
+    }
+
+    public void addCmt(CommentPoll cmt) {
+        if (lsCmt == null) initLsCmt();
+        this.lsCmt.add(cmt);
+    }
+
     public Object[] getArrObj(){
         return new Object[]{userId, timeCreate, timeStart, timeEnd, viewRole.value, voteRole.value, minBallot, maxBallot, numBallot, title, question};
     }
@@ -135,5 +187,11 @@ public class Poll {
             lsObj.add(getOption(i).getContent());
         }
         return lsObj.toArray();
+    }
+
+    public void initLsCmt(){
+        if (lsCmt == null)
+            lsCmt = new ArrayList<>();
+        lsCmt.clear();
     }
 }

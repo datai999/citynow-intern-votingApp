@@ -9,36 +9,57 @@
 
 <html>
 <head>
-    <title>Title</title>
+    <title>Login page</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
 </head>
 <body>
 
-
-<div class="container">
-    <button type="button" onclick="location.href ='/home'">App</button>
-    <h3>Login page</h3>
-    <button type="button" onclick="location.href ='/register'">Register</button>
-    <br>
-</div>
-
-<br>
-
 <div>
 
-    <form method="post" action="/login">
 
-        <div class="container">
-            <label ><b>Username</b></label>
-            <input type="text" placeholder="Enter Username" name="username" required>
-            <br><br>
-            <label ><b>Password</b></label>
-            <input type="password" placeholder="Enter Password" name="password" required>
-            <br><br>
-            <button type="submit" onclick="">Login</button>
+    <nav class="navbar navbar-light bg-light justify-content-between">
+
+        <button type="button" class="btn btn-primary" onclick="location.href ='/home'">App</button>
+        <h3>Login page</h3>
+        <button type="button" class="btn btn-primary" onclick="location.href ='/register'">Register</button>
+    </nav>
+
+    <br>
+
+    <div class="container">
+        <div class="card">
+            <div class="card-body">
+                <form action="<%=request.getContextPath()%>/login" method="post">
+
+                    <div class="form-group row">
+                        <div class="col-sm-2"></div>
+                        <label class="col-sm-2 col-form-label">User Name</label>
+                        <div class="col-sm-5">
+                            <input type="text" class="form-control" name="username"
+                                   placeholder="Enter user name" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-sm-2"></div>
+                        <label class="col-sm-2 col-form-label">Passwrod</label>
+                        <div class="col-sm-5">
+                            <input type="password" class="form-control" name="password"
+                                   placeholder="Enter Password" required>
+                        </div>
+                    </div>
+
+                    <div class="d-flex justify-content-center">
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+
+                </form>
+            </div>
         </div>
-
-    </form>
+    </div>
 
 </div>
 

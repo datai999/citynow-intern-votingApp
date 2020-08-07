@@ -4,6 +4,7 @@ import model.dto.poll.Poll;
 import model.dao.service.BaseDao;
 import model.dto.poll.PollOption;
 import model.dto.user.UserAccount;
+import model.dto.user.UserRole;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -22,47 +23,39 @@ public class GetPollService extends BaseDao {
         return GetPollService.LazyHolder.INSTANCE;
     }
 
-    public List<Object> getPollBeforeEnd(int timeNow){
+    public List<Poll> getPollBeforeEnd(int day, UserRole viewRole){
 
         List<Poll> lsPoll = new ArrayList<>();
-        List<UserAccount> lsUser = new ArrayList<>();
 
-        // TODO: 7/31/2020 select where time > now + 1 day 
+        int timeNow = (int) (System.currentTimeMillis()/1000);
 
-        String query = "SELECT * FROM poll INNER JOIN user ON poll.userId = user.id WHERE timeEnd >= ?";
-        List<Object> params = Arrays.asList(new Object[]{timeNow});
+        String query = "SELECT * FROM poll ";
+                query += "INNER JOIN user ON poll.userId = user.id ";
+                query += "INNER JOIN poll_option ON poll.id = poll_option.pollId ";
+                query += "WHERE timeEnd >= ?";
+        List<Object> params = Arrays.asList(new Object[]{timeNow - day*24*60*60});
 
         execute(query, params, rs ->{
             try {
                 while (rs.next()) {
                     Poll poll = new Poll(rs);
-                    List<PollOption> lsPollOption = getOptionsByPollId(poll.getId());
-                    poll.setOptions(lsPollOption);
-                    lsPoll.add(poll);
-                    lsUser.add(new UserAccount(rs));
-                }
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
-            }
-        });
-        return Arrays.asList(new Object[]{lsPoll, lsUser});
-    }
+                    poll.setCreator(new UserAccount(rs));
 
-    List<PollOption> getOptionsByPollId(int pollId){
-        List<PollOption> lsPollOption = new ArrayList<>();
-        String query = "SELECT * FROM poll_option WHERE pollId = ?";
-
-        List<Object> params = Arrays.asList(new Object[]{pollId});
-
-        execute(query, params, rs ->{
-            try {
-                while (rs.next()) {
+                    List<PollOption> lsPollOption = new ArrayList<>();
                     lsPollOption.add(new PollOption(rs));
+
+                    for (int i=0; i<3; i++){
+                        rs.next();
+                        lsPollOption.add(new PollOption(rs));
+                    }
+                    poll.setOptions(lsPollOption);
+
+                    lsPoll.add(poll);
                 }
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
             }
         });
-        return lsPollOption;
+        return lsPoll;
     }
 }

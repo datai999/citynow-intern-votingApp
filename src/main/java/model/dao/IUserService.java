@@ -1,7 +1,9 @@
 package model.dao;
 
-import model.dto.comment.Comment;
+import model.dto.comment.CommentPoll;
+import model.dto.poll.Poll;
 import model.dto.user.UserAccount;
+import model.dto.user.UserRole;
 import model.dto.vote.Vote;
 
 import java.util.List;
@@ -12,15 +14,19 @@ public interface IUserService {
 
     boolean register(UserAccount user);
 
-    List<Object> getPollBeforeEnd(int timeNow);
+    List<Poll> getPollBeforeEnd(int timeNow, UserRole viewRole);
 
-    boolean vote(Vote vote, int pollId);
+    boolean vote(Vote vote);
 
-    List<Object> getVoteByUserId(int timeEnd, int minPollId, int userId);
+    /*
+    * return 0 if user didn't vote
+    * return Poll Option Id ip user voted
+    * */
+    void getVoteOptionByUserId(List<Poll> lsPoll, int userId);
 
-    List<Object> getTopVote(int timeLeft, int timeRight);
+    List<Poll> getTopVote(int timeLeft, int timeRight);
 
-    boolean comment(Comment comment);
+    boolean comment(CommentPoll comment);
 
-    List<Comment> getCommentByPollId(int pollId);
+    void getCommentByPollId(List<Poll> lsPoll);
 }

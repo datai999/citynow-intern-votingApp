@@ -1,5 +1,7 @@
 package model.dao.service.user;
 
+import cache.impl.PollCacheImpl;
+import cache.impl.TopPollCacheImpl;
 import model.dao.service.BaseDao;
 import model.dto.vote.Vote;
 
@@ -18,23 +20,29 @@ public class VoteService extends BaseDao {
         return VoteService.LazyHolder.INSTANCE;
     }
 
-    public boolean vote(Vote vote, int pollId){
+    public boolean vote(Vote vote){
 
-        String queryInsert = "INSERT INTO vote (pollOptionId, userId, timeCreate) VALUES (?, ?, ?)";
+        String queryInsert = "INSERT INTO vote (pollOptionId, pollId, userId, timeCreate) VALUES (?,?, ?, ?)";
         List<Object> paramsInsert = Arrays.asList(vote.getArrObj());
         int countInsert = execute(queryInsert, paramsInsert);
 
+        if (countInsert < 1) return false;
 
         String queryUpdatePoll = "UPDATE poll SET numBallot = numBallot + 1 WHERE id = ? ";
-        List<Object> paramsUpdatePoll = Arrays.asList(new Object[]{pollId});
+        List<Object> paramsUpdatePoll = Arrays.asList(new Object[]{vote.getPollId()});
         int countUpdatePoll = execute(queryUpdatePoll, paramsUpdatePoll);
+
+        if (countUpdatePoll < 1) return false;
 
         String queryUpdateOption = "UPDATE poll_option SET count = count + 1 WHERE id = ? ";
         List<Object> paramsUpdateOption = Arrays.asList(new Object[]{vote.getPollOptionId()});
         int countUpdateOption = execute(queryUpdateOption, paramsUpdateOption);
 
+        if (countUpdateOption >0 ) {
+            TopPollCacheImpl.getInstance().pushVote(vote);
+            PollCacheImpl.getInstance().pushVote(vote);
+        }
 
-
-        return countInsert>0 && countUpdatePoll>0 && countUpdateOption>0;
+        return countUpdateOption>0;
     }
 }

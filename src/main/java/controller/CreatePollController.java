@@ -2,8 +2,12 @@ package controller;
 
 import controller.session_and_cookie.UserSession;
 import model.dao.IAdminService;
+import model.dto.poll.IPollBuilder;
+import model.dto.poll.Poll;
+import model.dto.poll.PollBuilder;
 import model.dto.user.UserAccount;
 import model.dao.impl.AdminServiceImpl;
+import model.dto.user.UserRole;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -13,6 +17,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.logging.Logger;
 
 @WebServlet(urlPatterns = { "/create" })
@@ -51,13 +58,22 @@ public class CreatePollController extends HttpServlet {
         String title = request.getParameter("title");
         String question = request.getParameter("question");
         String[] options = request.getParameterValues("options");
+        String[] viewRole = request.getParameterValues("viewRole");
+        String[] voteRole = request.getParameterValues("voteRole");
+        String startTime = request.getParameter("startTime");
         String deadline = request.getParameter("deadline");
 
         HttpSession session = request.getSession();
         UserAccount userInSession = UserSession.getUserLoginSuccess(session);
         int userId = userInSession.getId();
 
-        boolean isSuccess = adminService.createPoll(userId, deadline, title, question, options);
+        IPollBuilder builder = new PollBuilder().buildBase(userId, convert(deadline), title, question, options);
+        builder.buildViewRole(UserRole.fromInteger(Integer.parseInt(viewRole[0])));
+        builder.buildVoteRole(UserRole.fromInteger(Integer.parseInt(voteRole[0])));
+        builder.buildTimeStart(convert(startTime));
+        Poll poll = builder.build();
+
+        boolean isSuccess = adminService.createPoll(poll);
         if (isSuccess){
             response.sendRedirect(request.getContextPath() + "/home");
         }
@@ -65,5 +81,21 @@ public class CreatePollController extends HttpServlet {
             _logger.info("Create question fail");
             doGet(request,response);
         }
+    }
+
+    int convert(String strDeadline){
+
+        strDeadline = strDeadline.substring(0,10) + "+" + strDeadline.substring(11);
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd+HH:mm");
+
+        Date date = null;
+        try {
+            date = dateFormat.parse(strDeadline);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        assert date != null;
+        return (int) (date.getTime()/1000);
     }
 }
