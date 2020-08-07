@@ -1,10 +1,10 @@
 package model.dao.service.user;
 
-import model.dtO.poll.Poll;
+import model.dto.poll.Poll;
 import model.dao.service.BaseDao;
-import model.dtO.poll.PollOption;
-import model.dtO.user.UserAccount;
-import model.dtO.user.UserRole;
+import model.dto.poll.PollOption;
+import model.dto.user.UserAccount;
+import model.dto.user.UserRole;
 
 import java.sql.SQLException;
 import java.util.ArrayList;

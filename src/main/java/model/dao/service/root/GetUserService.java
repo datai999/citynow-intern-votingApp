@@ -1,6 +1,6 @@
 package model.dao.service.root;
 
-import model.dtO.user.UserAccount;
+import model.dto.user.UserAccount;
 import model.dao.service.BaseDao;
 
 import java.sql.SQLException;

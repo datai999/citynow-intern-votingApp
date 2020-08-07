@@ -1,9 +1,9 @@
 package model.dao.service.user;
 
 import model.dao.service.BaseDao;
-import model.dtO.poll.Poll;
-import model.dtO.user.UserAccount;
-import model.dtO.vote.Vote;
+import model.dto.poll.Poll;
+import model.dto.user.UserAccount;
+import model.dto.vote.Vote;
 
 import java.sql.SQLException;
 import java.util.ArrayList;

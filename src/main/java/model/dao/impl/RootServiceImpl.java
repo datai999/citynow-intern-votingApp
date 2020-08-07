@@ -3,7 +3,7 @@ package model.dao.impl;
 import model.dao.IRootService;
 import model.dao.service.root.GetUserService;
 import model.dao.service.root.UpdateRoleService;
-import model.dtO.user.UserAccount;
+import model.dto.user.UserAccount;
 
 import java.util.List;
 

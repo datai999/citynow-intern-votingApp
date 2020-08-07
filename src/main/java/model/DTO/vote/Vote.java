@@ -5,7 +5,7 @@ import model.dto.user.UserAccount;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class Vvote {
+public class Vote {
 
 //
     int id;
@@ -23,7 +23,7 @@ public class Vvote {
         return String.format("Vote[%d,%d,%d,%d,%d]",id,pollId,pollOptionId,userId,timeCreate);
     }
 
-    public Vvote(ResultSet rs) throws SQLException {
+    public Vote(ResultSet rs) throws SQLException {
         id = rs.getInt("id");
         pollId = rs.getInt("pollId");
         pollOptionId = rs.getInt("pollOptionId");
@@ -32,7 +32,7 @@ public class Vvote {
 
     }
 
-    public Vvote(int pollId , int pollOptionId, int userId){
+    public Vote(int pollId , int pollOptionId, int userId){
         this.pollId = pollId;
         this.pollOptionId = pollOptionId;
         this.userId = userId;

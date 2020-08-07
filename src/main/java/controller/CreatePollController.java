@@ -2,12 +2,12 @@ package controller;
 
 import controller.session_and_cookie.UserSession;
 import model.dao.IAdminService;
-import model.dtO.poll.IPollBuilder;
-import model.dtO.poll.Poll;
-import model.dtO.poll.PollBuilder;
-import model.dtO.user.UserAccount;
+import model.dto.poll.IPollBuilder;
+import model.dto.poll.Poll;
+import model.dto.poll.PollBuilder;
+import model.dto.user.UserAccount;
 import model.dao.impl.AdminServiceImpl;
-import model.dtO.user.UserRole;
+import model.dto.user.UserRole;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;

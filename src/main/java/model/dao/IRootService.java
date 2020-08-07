@@ -1,6 +1,6 @@
 package model.dao;
 
-import model.dtO.user.UserAccount;
+import model.dto.user.UserAccount;
 
 import java.util.List;
 

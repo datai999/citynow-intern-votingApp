@@ -1,7 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page import="model.dtO.user.UserAccount" %>
+<%@ page import="model.dto.user.UserAccount" %>
 <%@ page import="java.util.List" %>
-<%@ page import="model.dtO.user.UserRole" %><%--
+<%@ page import="model.dto.user.UserRole" %><%--
   Created by IntelliJ IDEA.
   User: HP
   Date: 7/23/2020

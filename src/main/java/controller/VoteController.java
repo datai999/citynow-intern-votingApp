@@ -3,8 +3,8 @@ package controller;
 import controller.session_and_cookie.UserSession;
 import model.dao.IUserService;
 import model.dao.impl.UserServiceImpl;
-import model.dtO.user.UserAccount;
-import model.dtO.vote.Vote;
+import model.dto.user.UserAccount;
+import model.dto.vote.Vote;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;

@@ -3,7 +3,7 @@ package model.dao.service.user;
 import cache.impl.PollCacheImpl;
 import cache.impl.TopPollCacheImpl;
 import model.dao.service.BaseDao;
-import model.dtO.vote.Vote;
+import model.dto.vote.Vote;
 
 import java.util.Arrays;
 import java.util.List;

@@ -2,7 +2,7 @@ package model.dao.service.user;
 
 import database.CloudinaryConnection;
 import model.dao.service.BaseDao;
-import model.dtO.user.UserAccount;
+import model.dto.user.UserAccount;
 
 import java.util.Arrays;
 import java.util.List;

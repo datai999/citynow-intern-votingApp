@@ -2,7 +2,7 @@ package controller;
 
 import model.dao.*;
 import model.dao.impl.RootServiceImpl;
-import model.dtO.user.UserAccount;
+import model.dto.user.UserAccount;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;

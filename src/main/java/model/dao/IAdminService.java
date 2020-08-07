@@ -1,7 +1,7 @@
 package model.dao;
 
 
-import model.dtO.poll.Poll;
+import model.dto.poll.Poll;
 
 public interface IAdminService {
 

@@ -5,11 +5,11 @@ import cache.ITopPollCache;
 import cache.impl.PollCacheImpl;
 import cache.impl.TopPollCacheImpl;
 import controller.session_and_cookie.UserSession;
-import model.dtO.poll.Poll;
-import model.dtO.user.UserAccount;
+import model.dto.poll.Poll;
+import model.dto.user.UserAccount;
 import model.dao.IUserService;
 import model.dao.impl.UserServiceImpl;
-import model.dtO.user.UserRole;
+import model.dto.user.UserRole;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;

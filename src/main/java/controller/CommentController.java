@@ -3,8 +3,8 @@ package controller;
 import controller.session_and_cookie.UserSession;
 import model.dao.IUserService;
 import model.dao.impl.UserServiceImpl;
-import model.dtO.comment.CommentPoll;
-import model.dtO.user.UserAccount;
+import model.dto.comment.CommentPoll;
+import model.dto.user.UserAccount;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;

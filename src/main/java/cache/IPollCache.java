@@ -1,9 +1,9 @@
 package cache;
 
-import model.dtO.comment.CommentPoll;
-import model.dtO.poll.Poll;
-import model.dtO.user.UserRole;
-import model.dtO.vote.Vote;
+import model.dto.comment.CommentPoll;
+import model.dto.poll.Poll;
+import model.dto.user.UserRole;
+import model.dto.vote.Vote;
 
 import java.util.List;
 

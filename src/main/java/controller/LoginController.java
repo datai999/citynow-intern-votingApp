@@ -2,8 +2,8 @@ package controller;
 
 import controller.session_and_cookie.UserSession;
 import model.dao.IUserService;
-import model.dtO.user.UserAccount;
-import model.dtO.user.UserRole;
+import model.dto.user.UserAccount;
+import model.dto.user.UserRole;
 import model.dao.impl.UserServiceImpl;
 
 import javax.servlet.RequestDispatcher;

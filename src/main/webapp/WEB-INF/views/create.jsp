@@ -1,7 +1,7 @@
 <%@ page import="java.util.Date" %>
 <%@ page import="java.text.SimpleDateFormat" %>
-<%@ page import="model.dtO.user.UserAccount" %>
-<%@ page import="model.dtO.user.UserRole" %><%--
+<%@ page import="model.dto.user.UserAccount" %>
+<%@ page import="model.dto.user.UserRole" %><%--
   Created by IntelliJ IDEA.
   User: HP
   Date: 7/20/2020

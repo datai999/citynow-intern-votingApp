@@ -1,7 +1,7 @@
 package controller;
 
 import model.dao.IUserService;
-import model.dtO.user.UserAccount;
+import model.dto.user.UserAccount;
 import model.dao.impl.UserServiceImpl;
 
 import javax.servlet.RequestDispatcher;

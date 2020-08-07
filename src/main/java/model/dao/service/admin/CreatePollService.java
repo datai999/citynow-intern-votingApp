@@ -2,7 +2,7 @@ package model.dao.service.admin;
 
 import cache.impl.PollCacheImpl;
 import model.dao.service.BaseDao;
-import model.dtO.poll.Poll;
+import model.dto.poll.Poll;
 
 import java.sql.SQLException;
 import java.util.Arrays;

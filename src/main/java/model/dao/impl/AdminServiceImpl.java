@@ -2,7 +2,7 @@ package model.dao.impl;
 
 import model.dao.IAdminService;
 import model.dao.service.admin.CreatePollService;
-import model.dtO.poll.Poll;
+import model.dto.poll.Poll;
 
 public class AdminServiceImpl implements IAdminService {
     @Override
