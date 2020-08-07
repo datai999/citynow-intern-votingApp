@@ -11,13 +11,15 @@
 
     UserAccount pollCreator;
 
-    boolean voted;
+    boolean voted = false;
     int votedOptionId;
 
     int typeNote = 0;
 %>
 
 <%
+
+    voted = false;
 
     if (currentPoll == null) {
         currentPoll = new PollBuilder().buildBase(0, 0, null, null, null).build();
@@ -81,50 +83,103 @@
 
     <br>
 
-    <h3 id = "title">Title: <%=currentPoll.getTitle()%></h3>
-    <h4><%=currentPoll.getQuestion()%></h4>
+    <div class="row">
 
-    <form method="post" action="/vote" >
+        <div class="col-sm-8">
 
-        <input type="hidden" name="poll" value="<%=currentPoll.getId()%>">
+            <h3 id = "title">Title: <%=currentPoll.getTitle()%></h3>
+            <h4><%=currentPoll.getQuestion()%></h4>
 
-        <% for (int i=0; i < 4; i ++) {  %>
+            <form method="post" action="/vote" >
 
-        <label ><b>Option <%=i+1%>:</b></label>
-        <label>
-            <input type="radio"  name="options"
-                <%if (currentPoll.getOption(i).getId() == votedOptionId) {%>
-                   checked="checked"
+                <input type="hidden" name="poll" value="<%=currentPoll.getId()%>">
+
+                <% for (int i=0; i < 4; i ++) {  %>
+
+                <label ><b>Option <%=i+1%>:</b></label>
+                <label>
+                    <input type="radio"  name="options"
+                        <%if (currentPoll.getOption(i).getId() == votedOptionId) {%>
+                           checked="checked"
+                        <%}%>
+                        <%if (voted) {%>
+                           disabled="disabled"
+                        <%}%>
+                           value="<%=currentPoll.getOption(i).getId()%>">
+                    <%=currentPoll.getOption(i).getContent()%>
+                </label>
+                <br>
+
                 <%}%>
-                <%if (voted) {%>
-                   disabled="disabled"
-                <%}%>
-                   value="<%=currentPoll.getOption(i).getId()%>">
-            <%=currentPoll.getOption(i).getContent()%>
-        </label>
-        <br>
+        <%--        <br>--%>
+                <button type="submit" class="btn btn-primary"
+                        <%if (voted) {%>
+                        disabled="disabled"
+                        <%}%>
+                >
+                    Vote
+                </button>
 
-        <%}%>
-<%--        <br>--%>
-        <button type="submit" class="btn btn-primary"
-                <%if (voted) {%>
-                disabled="disabled"
-                <%}%>
-        >
-            Vote
-        </button>
+                <%
+                    switch (typeNote){
+                        default: break;
+                        case 1: %> (You have already voted) <% break;
+                        case 2: %> (The poll is out of date) <% break;
+                        case 3: %> (The poll is only view for you) <% break;
 
-        <%
-            switch (typeNote){
-                default: break;
-                case 1: %> (You have already voted) <% break;
-                case 2: %> (The poll is out of date) <% break;
-                case 3: %> (The poll is only view for you) <% break;
+                    }
+                %>
 
-            }
-        %>
+            </form>
 
-    </form>
+
+        </div>
+
+
+        <div class="col-sm-4">
+
+            <%if (voted){%>
+
+            <p class="mb-1 mt-3">Option 1</p>
+            <div style="width: 100%; background-color: #ddd;">
+                <div style="text-align: right; color: white; background-color: #4CAF50;
+                        width: <%=(float)currentPoll.getOption(0).getCount()/(currentPoll.getNumBallot()+0.00000000000001)*100%>%">
+                    <%=currentPoll.getOption(0).getCount()%>
+                </div>
+            </div>
+
+            <p class="mb-1 mt-3">Option 2</p>
+            <div style="width: 100%; background-color: #ddd;">
+                <div style="text-align: right; color: white; background-color: #2196F3;
+                        width: <%=(float)currentPoll.getOption(1).getCount()/(currentPoll.getNumBallot()+0.00000000000001)*100%>%">
+                    <%=currentPoll.getOption(1).getCount()%>
+                </div>
+            </div>
+
+            <p class="mb-1 mt-3">Option 3</p>
+            <div style="width: 100%; background-color: #ddd;">
+                <div style="text-align: right; color: white; background-color: #f44336;
+                        width: <%=(float)currentPoll.getOption(2).getCount()/(currentPoll.getNumBallot()+0.00000000000001)*100%>%">
+                    <%=currentPoll.getOption(2).getCount()%>
+                </div>
+            </div>
+
+            <p class="mb-1 mt-3">Option 4</p>
+            <div style="width: 100%; background-color: #ddd;">
+                <div style="text-align: right; color: white; background-color: #808080;
+                        width: <%=(float)currentPoll.getOption(3).getCount()/(currentPoll.getNumBallot()+0.00000000000001)*100%>%">
+                    <%=currentPoll.getOption(3).getCount()%>
+                </div>
+            </div>
+
+            <%}%>
+
+        </div>
+
+
+
+    </div>
+
 </div>
 </body>
 </html>
