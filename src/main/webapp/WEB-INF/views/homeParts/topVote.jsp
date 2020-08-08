@@ -19,7 +19,22 @@
 <html>
 <body>
 <div class="card card-body">
-    <h4>Top poll has many vote</h4>
+
+
+    <h4 class="mb-3">Top poll has many vote</h4>
+
+    <div class="row ml-3">
+        <div class="col-sm-8 pl-2">
+            Title/User
+        </div>
+        <div class="col-sm-2 p-0 d-flex justify-content-center">
+            Time
+        </div>
+        <div class="col-sm-2 p-0 d-flex justify-content-center">
+            Ballot
+        </div>
+    </div>
+
 
 
     <% for (int i =0; i < lsTopPoll.size(); i++) {
