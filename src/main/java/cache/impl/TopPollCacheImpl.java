@@ -2,14 +2,15 @@ package cache.impl;
 
 import cache.ITopPollCache;
 import model.dto.poll.Poll;
+import model.dto.user.UserRole;
 import model.dto.vote.Vote;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class TopPollCacheImpl implements ITopPollCache {
 
     List<Poll> topPollCache;
-    int timeTopPollCache = 0;
 
     private TopPollCacheImpl(){};
     private static class LazyHolder{
@@ -19,11 +20,27 @@ public class TopPollCacheImpl implements ITopPollCache {
         return TopPollCacheImpl.LazyHolder.INSTANCE;
     }
 
-    int getTimeNow(){return (int) (System.currentTimeMillis()/1000);}
-
     @Override
-    public List<Poll> getTopPoll() {
-        return (getTimeNow() < timeTopPollCache + 5*60)?topPollCache:null;
+    public List<Poll> getTopPoll(UserRole viewRole) {
+
+        if (topPollCache == null) return null;
+
+        int timeNow = (int) (System.currentTimeMillis()/1000);
+
+        List<Poll> result = new ArrayList<>();
+
+        for (Poll poll: topPollCache) {
+            if (poll.getTimeStart() <= timeNow){
+                if (poll.getTimeEnd() >= timeNow - 3*24*60*60){
+                    if (poll.getViewRole().value <= viewRole.value){
+                        result.add(poll);
+                    }
+                }
+                else topPollCache.remove(poll);
+            }
+        }
+
+        return result;
     }
 
     @Override

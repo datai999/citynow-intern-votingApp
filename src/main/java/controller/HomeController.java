@@ -44,33 +44,19 @@ public class HomeController extends HttpServlet {
         response.setCharacterEncoding("UTF-8");
 
 
-        int timeNow = (int) (System.currentTimeMillis()/1000);
-
-        //                Get top vote
-        List<Poll> lsTopPoll = topPollCache.getTopPoll();
-        if (lsTopPoll == null || lsTopPoll.size() == 0){
-            lsTopPoll = userService.getTopVote(timeNow - day*24*60*60, timeNow);
-            topPollCache.setTopPollCache(lsTopPoll);
-        }
-        request.setAttribute("lsTopPoll", lsTopPoll);
-
 
         UserAccount user = UserSession.getUserLoginSuccess(request.getSession());
         request.setAttribute("user", user);
 
 
-//        Get poll
         UserRole viewRole = UserRole.GUEST;
         if (user != null)
             viewRole = UserRole.fromInteger(user.getRole());
 
-        List<Poll> lsPoll = pollCache.getPoll(viewRole);
-        if (lsPoll == null || lsPoll.size() == 0){
-            lsPoll = userService.getPollBeforeEnd(day, viewRole);
-            userService.getCommentByPollId(lsPoll);
-            pollCache.setPollCache(lsPoll);
-            lsPoll = pollCache.getPoll(viewRole);
-        }
+
+        request.setAttribute("lsTopPoll", getTopPoll(viewRole));
+
+        List<Poll> lsPoll = getPoll(viewRole);
 
 
         if (lsPoll == null || lsPoll.size() < 1){
@@ -94,5 +80,32 @@ public class HomeController extends HttpServlet {
         RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/WEB-INF/views/home.jsp");
         dispatcher.forward(request, response);
 
+    }
+
+    List<Poll> getTopPoll(UserRole viewRole){
+
+        int timeNow = (int) (System.currentTimeMillis()/1000);
+        List<Poll> lsTopPoll = topPollCache.getTopPoll(viewRole);
+
+        if (lsTopPoll == null || lsTopPoll.size() == 0){
+            lsTopPoll = userService.getTopVote(timeNow - day*24*60*60, timeNow);
+            topPollCache.setTopPollCache(lsTopPoll);
+            lsTopPoll = topPollCache.getTopPoll(viewRole);
+        }
+        return lsTopPoll;
+    }
+
+    List<Poll> getPoll(UserRole viewRole){
+
+        List<Poll> lsPoll = pollCache.getPoll(viewRole);
+
+        if (lsPoll == null || lsPoll.size() == 0){
+            lsPoll = userService.getPollBeforeEnd(day, viewRole);
+            userService.getCommentByPollId(lsPoll);
+            pollCache.setPollCache(lsPoll);
+            lsPoll = pollCache.getPoll(viewRole);
+        }
+
+        return lsPoll;
     }
 }

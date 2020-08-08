@@ -58,7 +58,7 @@ public class GetVoteService extends BaseDao{
         String query = "SELECT * FROM poll INNER JOIN user ON poll.userId = user.id ";
                 query += "WHERE timeStart >= ? AND timeStart <= ? ORDER BY numBallot DESC LIMIT ?";
 
-        List<Object> params = Arrays.asList(new Object[]{timeLeft, timeRight, 10});
+        List<Object> params = Arrays.asList(new Object[]{timeLeft, timeRight, 5});
 
         execute(query, params, rs ->{
             try {
