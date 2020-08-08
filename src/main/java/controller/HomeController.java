@@ -1,7 +1,6 @@
 package controller;
 
 import cache.IPollCache;
-import cache.ITopPollCache;
 import cache.impl.PollCacheImpl;
 import cache.impl.TopPollCacheImpl;
 import controller.session_and_cookie.UserSession;
@@ -25,7 +24,7 @@ public class HomeController extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
     IUserService userService;
-    ITopPollCache topPollCache;
+    IPollCache topPollCache;
     IPollCache pollCache;
     int day = 3;
 
@@ -85,12 +84,12 @@ public class HomeController extends HttpServlet {
     List<Poll> getTopPoll(UserRole viewRole){
 
         int timeNow = (int) (System.currentTimeMillis()/1000);
-        List<Poll> lsTopPoll = topPollCache.getTopPoll(viewRole);
+        List<Poll> lsTopPoll = topPollCache.getPoll(viewRole);
 
         if (lsTopPoll == null || lsTopPoll.size() == 0){
             lsTopPoll = userService.getTopVote(timeNow - day*24*60*60, timeNow);
-            topPollCache.setTopPollCache(lsTopPoll);
-            lsTopPoll = topPollCache.getTopPoll(viewRole);
+            topPollCache.setPollCache(lsTopPoll);
+            lsTopPoll = topPollCache.getPoll(viewRole);
         }
         return lsTopPoll;
     }

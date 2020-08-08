@@ -1,6 +1,7 @@
 package cache.impl;
 
-import cache.ITopPollCache;
+import cache.IPollCache;
+import model.dto.comment.CommentPoll;
 import model.dto.poll.Poll;
 import model.dto.user.UserRole;
 import model.dto.vote.Vote;
@@ -8,7 +9,7 @@ import model.dto.vote.Vote;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TopPollCacheImpl implements ITopPollCache {
+public class TopPollCacheImpl implements IPollCache {
 
     List<Poll> topPollCache;
 
@@ -21,7 +22,7 @@ public class TopPollCacheImpl implements ITopPollCache {
     }
 
     @Override
-    public List<Poll> getTopPoll(UserRole viewRole) {
+    public List<Poll> getPoll(UserRole viewRole) {
 
         if (topPollCache == null) return null;
 
@@ -44,9 +45,19 @@ public class TopPollCacheImpl implements ITopPollCache {
     }
 
     @Override
-    public void setTopPollCache(List<Poll> topPoll) {
+    public void setPollCache(List<Poll> topPoll) {
         if (topPollCache != null) topPollCache.clear();
         this.topPollCache = topPoll;
+    }
+
+    @Override
+    public void clearPollCache() {
+        this.topPollCache.clear();
+    }
+
+    @Override
+    public void pushComment(CommentPoll cmt) {
+
     }
 
     @Override
