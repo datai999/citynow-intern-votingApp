@@ -65,13 +65,10 @@ public class HomeController extends HttpServlet {
         }
 
 
-
 //        Kiểm tra user vote
         if (user != null){
             userService.getVoteOptionByUserId(lsPoll,user.getId());
         }
-
-
 
 
         request.setAttribute("lsPoll", lsPoll);
@@ -80,6 +77,7 @@ public class HomeController extends HttpServlet {
         dispatcher.forward(request, response);
 
     }
+
 
     List<Poll> getTopPoll(UserRole viewRole){
 
