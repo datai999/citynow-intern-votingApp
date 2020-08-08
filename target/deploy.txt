@@ -1,0 +1,2 @@
+heroku buildpacks:clear --app citynow-intern-tai-demo
+heroku war:deploy target/VotingApplication.war --app citynow-intern-tai-demo
