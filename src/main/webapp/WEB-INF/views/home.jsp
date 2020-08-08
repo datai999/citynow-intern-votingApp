@@ -112,6 +112,8 @@
     let polls = document.getElementsByClassName("poll");
     let pollIds = document.getElementsByName("poll");
     let poll = document.getElementById("pollIdCmt");
+    let currentCmtView = document.getElementsByName("currentCmtView");
+    let totalCmtView = document.getElementsByName("totalCmtView");
     let pollIndex = 0;
     let cmtViewIndex = 0;
 
@@ -129,6 +131,8 @@
         }
         polls[pollIndex].style.display = "block";
         poll.value = pollIds[pollIndex].value;
+        totalCmtView[pollIndex].innerHTML  = document.getElementsByName("commentView"+ poll.value).length.toString();
+        // totalCmtView.innerHTML = "0";
     }
 
 
@@ -146,7 +150,9 @@
             cmtViews[i].style.display = "none";
         }
         cmtViews[cmtViewIndex].style.display = "block";
+        currentCmtView[pollIndex].innerHTML = (cmtViewIndex +1).toString() ;
     }
+
 
     function load() {
         showPoll(pollIndex);

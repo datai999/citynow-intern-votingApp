@@ -48,6 +48,23 @@ public class PollCacheImpl implements IPollCache {
     public void setPollCache(List<Poll> lsPoll) {
         if (lsPollCache !=null) lsPollCache.clear();
         lsPollCache = lsPoll;
+        sortPollByOutDate();
+    }
+
+    void sortPollByOutDate(){
+        int currentTime = (int) (System.currentTimeMillis()/1000);
+        int index = 0;
+        for (Poll poll:lsPollCache){
+            if (poll.getTimeEnd() > currentTime){
+                index = lsPollCache.indexOf(poll);
+                break;
+            }
+        }
+        if (index < 1) return;
+        List<Poll> result = new ArrayList<>(lsPollCache.subList(index, lsPollCache.size()));
+        result.addAll(lsPollCache.subList(0,index));
+        lsPollCache.clear();
+        lsPollCache = result;
     }
 
     @Override

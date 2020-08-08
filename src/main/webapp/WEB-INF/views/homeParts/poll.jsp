@@ -75,8 +75,13 @@
         </div>
         <div class="col-sm">
             <div class="d-flex justify-content-end">
-                <button class="btn btn-primary mr-3" onclick="nextPoll(-1)">Previous</button>
-                <button class="btn btn-primary" onclick="nextPoll(1)">Next</button>
+                <button class="btn btn-primary mr-2" onclick="nextPoll(-1)">Previous</button>
+                <div class="mt-2" style="font-weight: bold">
+                    <label ><%=lsPoll.indexOf(currentPoll)+1%></label>
+                    <label>/</label>
+                    <label ><%=lsPoll.size()%></label>
+                </div>
+                <button class="btn btn-primary ml-2" onclick="nextPoll(1)">Next</button>
             </div>
         </div>
     </div>

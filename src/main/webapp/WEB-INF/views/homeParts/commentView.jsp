@@ -12,7 +12,7 @@
 <body>
 <div class="card card-body">
 
-    <% for (int i =0; i < currentPoll.getLsCmt().size()/4 +1; i++) { %>
+    <%for (int i =0; i < (currentPoll.getLsCmt().size()-1)/4 +1; i++) { %>
     <div name="commentView<%=currentPoll.getId()%>" style="height: 28vh">
         <%for (int j=0; j < 4; j++){
             if (i*4+j == currentPoll.getLsCmt().size()) break;
@@ -37,6 +37,9 @@
 
     <div class="mt-2" style="text-align:center;">
         <button class="btn btn-primary btn-sm" onclick="nextCmtView(-1, <%=currentPoll.getId()%>)">Previous</button>
+        <label name="currentCmtView">1</label>
+        <label>/</label>
+        <label name="totalCmtView">1</label>
         <button class="btn btn-primary btn-sm" onclick="nextCmtView(1, <%=currentPoll.getId()%>)">Next</button>
     </div>
 
