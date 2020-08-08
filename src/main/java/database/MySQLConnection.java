@@ -17,7 +17,7 @@ public class MySQLConnection {
         String userName = "sql12357362";
         String password = "WvPadqUhXe";
 
-        String connectionURL = "jdbc:mysql://" + hostName + ":3306/" + dbName;
+        String connectionURL = "jdbc:mysql://" + hostName + ":3306/" + dbName +"?characterEncoding=UTF-8";
         _logger = Logger.getLogger(this.getClass().getName());
 
 //        DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver ());
