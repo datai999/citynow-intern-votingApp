@@ -17,13 +17,13 @@
     String url_avatar_default = "https://res.cloudinary.com/datai/image/upload/v1596601506/city_now/voting_app/avatar/avatar_defaul.png";
 
     UserAccount user;
+    Poll currentPoll;
+    List<Poll> lsPoll;
 
     String time2String(long timeStamp){
         SimpleDateFormat df = new SimpleDateFormat("MM/dd-HH:mm");
         return df.format(timeStamp*1000);
     }
-    Poll currentPoll;
-    List<Poll> lsPoll;
 
 %>
 
@@ -105,6 +105,8 @@
         </div>
 
     </div>
+
+    <p class="pl-2 mb-0" style="font-size: 10px">v1.2.11.8.51</p>
 </div>
 
 <script>

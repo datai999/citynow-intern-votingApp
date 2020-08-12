@@ -35,27 +35,13 @@ public class LoginFilter implements Filter {
         UserAccount userInSession = UserSession.getUserLoginSuccess(session);
 
         if (userInSession != null) {
-//            session.setAttribute("COOKIE_CHECKED", "CHECKED");
             filterChain.doFilter(servletRequest, servletResponse);
             return;
         }
 
-        // TODO: 7/29/2020 Cookie
-//        String checked = (String) session.getAttribute("COOKIE_CHECKED");
-//        if (checked == null) {
-//            String userName = UserCookie.getUserNameInCookie(req);
-//            IRootService service = new RootServiceImpl();
-//            UserAccount user = service.getUserByUsername(userName);
-//            if (user != null){
-//                UserSession.storeLoginSuccess(session, user);
-//                session.setAttribute("COOKIE_CHECKED", "CHECKED");
-//                filterChain.doFilter(servletRequest, servletResponse);
-//            }
-//        }
-
         String path = req.getRequestURI();
 
-        if (path.matches("/|/login/?|/register/?|/home/?|/vote/?")){
+        if (path.matches("/|/login/?|/register/?|/home/?")){
             filterChain.doFilter(servletRequest, servletResponse);
             return;
         }

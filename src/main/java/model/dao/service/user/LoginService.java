@@ -7,15 +7,15 @@ import java.sql.*;
 import java.util.Arrays;
 import java.util.List;
 
-public class LoginDaoService extends BaseDao {
+public class LoginService extends BaseDao {
 
-    private LoginDaoService(){
+    private LoginService(){
         super();
     }
     private static class LazyHolder{
-        public static final LoginDaoService INSTANCE = new LoginDaoService();
+        public static final LoginService INSTANCE = new LoginService();
     }
-    public static LoginDaoService getInstance(){
+    public static LoginService getInstance(){
         return LazyHolder.INSTANCE;
     }
 

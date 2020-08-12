@@ -143,7 +143,7 @@
 
         <div class="col-sm-4">
 
-            <%if (voted){%>
+            <%if (typeNote == 1 || typeNote == 2){%>
 
             <p class="mb-1 mt-3">Option 1</p>
             <div style="width: 100%; background-color: #ddd;">

@@ -14,7 +14,7 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     public UserAccount login(String username, String password) {
-        return LoginDaoService.getInstance().login(username, password);
+        return LoginService.getInstance().login(username, password);
     }
 
     @Override

@@ -22,7 +22,7 @@ public class PollCacheImpl extends BasePollCacheImpl {
 
 
     @Override
-    public void setPollCache(List<Poll> lsPoll) {
+        public void setPollCache(List<Poll> lsPoll) {
         super.setPollCache(lsPoll);
         sortPollByOutDate();
     }
